@@ -1,5 +1,7 @@
 language: c
 
+sudo: required
+
 matrix:
   include:
     - env: TEST=MAIN GHC_VER=8.6.3 BUILD=CABAL CABAL_VER=2.4
@@ -11,6 +13,12 @@ matrix:
             - texlive-binaries
           sources:
             - hvr-ghc
+
+before_install:
+  - mkdir -p ~/.local/bin &&
+  - ARCH=https://www.stackage.org/stack/linux-x86_64
+  - travis_retry curl -L $ARCH | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+  - export PATH=$HOME/.local/bin:$PATH;
 
 install:
   - mkdir -p ~/.agda/libs/cubical
