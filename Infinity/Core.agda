@@ -59,6 +59,6 @@ fill : ∀ {ℓ : I → Level} (A : ∀ i → Set (ℓ i)) {φ : I} (u : ∀ i �
 fill A {φ = φ} u u0 i = comp (λ j → A (i ∧ j))
        (λ j → λ { (φ = i1) → u (i ∧ j) 1=1 ; (i = i0) → ouc u0 }) (inc {φ = φ ∨ (~ i)} (ouc {φ = φ} u0))
 
-transpFill : ∀ {ℓ} {A':Set ℓ} (φ:I) (A:(i:I) → Set ℓ[φ ↦ (λ _ → A')])
-             → (u0: ouc (A i0)) → PathP (λ i → ouc (A i)) u0 (transp (λ i → ouc (A i)) φ u0)
+transpFill : ∀ {ℓ} {A' : Set ℓ} (φ : I) (A : (i : I) → Set ℓ [ φ ↦ (λ _ → A') ])
+             → (u0 : ouc (A i0)) → PathP (λ i → ouc (A i)) u0 (transp (λ i → ouc (A i)) φ u0)
 transpFill φ A u0 i = transp (λ j → ouc (A (i ∧ j))) (~ i ∨ φ) u0
