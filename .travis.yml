@@ -23,7 +23,8 @@ install:
   - ls .stack-work/install
   - ls .stack-work/install/x86_64-linux
   - ls .stack-work/install/x86_64-linux/ghc-8.6.3
-  - ls .stack-work/install/x86_64-linux/ghc-8.6.3/bin
+  - ls .stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3
+  - ls .stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3/bin
   - AGDA=./.stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3/bin/agda
   - cd ..
 
