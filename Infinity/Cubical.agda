@@ -12,6 +12,7 @@ open import Infinity.Reason hiding ( _≡_ ; _≡⟨_⟩_ ; _∎ )
 open import Infinity.Top.Space
 open import Infinity.Top.Cantor
 open import Infinity.Top.Predicate
+open import Infinity.HIT.Interval public
 open import Infinity.HIT.Trunc public
 open import Infinity.HIT.S1 public
 open import Infinity.HIT.Pushout public
