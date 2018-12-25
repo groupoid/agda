@@ -1,5 +1,16 @@
-ghc:
-  - "8.0.2"
+language: c
+
+matrix:
+  include:
+    - env: TEST=MAIN GHC_VER=8.6.3 BUILD=CABAL CABAL_VER=2.4
+      addons:
+        apt:
+          packages:
+            - cabal-install-2.4
+            - ghc-8.6.3
+            - texlive-binaries
+          sources:
+            - hvr-ghc
 
 install:
   - mkdir -p ~/.agda/libs/cubical
