@@ -1,22 +1,8 @@
-language: c
-
-sudo: required
+language: generic
 
 cache:
   directories:
   - $HOME/.stack
-
-matrix:
-  include:
-    - env: GHC_VER=8.6.3 CABAL_VER=2.4
-      addons:
-        apt:
-          packages:
-            - cabal-install-2.4
-            - ghc-8.6.3
-            - texlive-binaries
-          sources:
-            - hvr-ghc
 
 before_install:
   - mkdir -p ~/.local/bin
@@ -31,7 +17,7 @@ install:
   - printf " cubical" >> ~/.agda/libs/cubical/cubical.agda-lib
   - printf "cubical" > ~/.agda/defaults
   - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
-  - stack build
+  - stack build --no-terminal
   - AGDA=$(stack path --local-install-root)/bin/agda
   - cd ..
 
