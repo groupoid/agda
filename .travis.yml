@@ -1,20 +1,5 @@
-language: c
-
-sudo: true
-
-cache:
-  directories:
-    - $HOME/.cabal/packages
-    - $HOME/.cabal/store
-
-matrix:
-  include:
-    - env: GHCVER=8.0.2 SCRIPT=bootstrap USE_GOLD=YES
-      sudo: required
-      os: linux
-    - compiler: "ghc-8.0.2"
-      addons: {apt: {packages: [ghc-ppa-tools,cabal-install-head,ghc-8.0.2,alex-3.1.7,happy-1.19.5],
-                      sources: [hvr-ghc]}}
+ghc:
+  - "8.0.2"
 
 install:
   - mkdir -p ~/.agda/libs/cubical
