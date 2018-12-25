@@ -8,7 +8,7 @@ cache:
 
 matrix:
   include:
-    - env: TEST=MAIN GHC_VER=8.6.3 BUILD=CABAL CABAL_VER=2.4
+    - env: GHC_VER=8.6.3 CABAL_VER=2.4
       addons:
         apt:
           packages:
@@ -31,18 +31,14 @@ install:
   - printf " cubical" >> ~/.agda/libs/cubical/cubical.agda-lib
   - printf "cubical" > ~/.agda/defaults
   - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
-  - cabal --version
-  - ghc --version
-  - cabal update
-  - git clone git://github.com/agda/agda && cd agda
-  - cabal install alex happy
-  - cabal install --only-dependencies
-  - cabal install
-#  - cabal install Agda
-  - locate agda
-  - ls dist/build/Agda
-  - ls
+  - stack build
+  - AGDA=$(stack path --local-install-root)/bin/agda
   - cd ..
 
 script:
-  - ./dist/build/Agda/agda Infinity/Cubical.agda
+  - $AGDA Infinity/Cubical.agda
+
+branches:
+  only:
+    - master
+
