@@ -1,11 +1,9 @@
 {-# OPTIONS --cubical --safe #-}
 module Infinity.Path where
 
-open import Agda.Builtin.Sigma public renaming (fst to π⃐; snd to π⃑)
-open import Agda.Builtin.Nat public using (zero; suc; _+_; _*_) renaming (Nat to ℕ)
 open import Infinity.Core public
-open import Infinity.Proto public
-open import Infinity.Sigma public using (Σ-syntax)
+open import Infinity.Proto
+open import Infinity.Sigma
 
 module _ {ℓ} {A : Set ℓ} where
 
