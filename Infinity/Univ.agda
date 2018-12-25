@@ -2,6 +2,7 @@
 module Infinity.Univ where
 
 open import Infinity.Proto
+open import Infinity.Sigma
 open import Agda.Builtin.Cubical.Glue public
   using ( isEquiv       -- isEquiv {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) : Set (ℓ ⊔ ℓ')
 
@@ -32,30 +33,31 @@ open import Agda.Builtin.Cubical.Glue public
 
 open isEquiv public
 
-fiber : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) (y : B) → Set (ℓ-max ℓ ℓ')
-fiber {A = A} f y = Σ[ x ∈ A ] f x ≡ y
+fiber : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) (y : B) → Set (ℓ ⊔ ℓ')
+fiber {A = A} f y = Σ[ x ∈ A ] (f x ≡ y)
+  where open import Infinity.Sigma using (Σ-syntax)
 
 equivIsEquiv : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) → isEquiv (equivFun e)
-equivIsEquiv e = snd e
+equivIsEquiv e = π⃑ e
 
 equivCtr : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) (y : B) → fiber (equivFun e) y
-equivCtr e y = e .snd .equiv-proof y .fst
+equivCtr e y = e .π⃑ .equiv-proof y .π⃐
 
 equivCtrPath : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) (y : B) →
   (v : fiber (equivFun e) y) → Path _ (equivCtr e y) v
-equivCtrPath e y = e .snd .equiv-proof y .snd
+equivCtrPath e y = e .π⃑ .equiv-proof y .π⃑
 
 
 -- We uncurry Glue to make it a bit more pleasant to use
 Glue : ∀ {ℓ ℓ'} (A : Set ℓ) {φ : I}
        → (Te : Partial φ (Σ[ T ∈ Set ℓ' ] T ≃ A))
        → Set ℓ'
-Glue A Te = primGlue A (λ x → Te x .fst) (λ x → Te x .snd)
+Glue A Te = primGlue A (λ x → Te x .π⃐) (λ x → Te x .π⃑)
 
 
 -- The identity equivalence
 idIsEquiv : ∀ {ℓ} → (A : Set ℓ) → isEquiv (λ (a : A) → a)
-equiv-proof (idIsEquiv A) y = (y , refl) , λ z i → z .snd (~ i) , λ j → z .snd (~ i ∨ j)
+equiv-proof (idIsEquiv A) y = (y , refl) , λ z i → z .π⃑ (~ i) , λ j → z .π⃑ (~ i ∨ j)
 
 idEquiv : ∀ {ℓ} → (A : Set ℓ) → A ≃ A
 idEquiv A = (λ a → a) , idIsEquiv A
@@ -74,17 +76,17 @@ unglueIsEquiv : ∀ {ℓ} (A : Set ℓ) (φ : I)
                 isEquiv {A = Glue A f} (unglue {φ = φ})
 equiv-proof (unglueIsEquiv A φ f) = λ (b : A) →
   let u : I → Partial φ A
-      u i = λ{ (φ = i1) → equivCtr (f 1=1 .snd) b .snd (~ i) }
+      u i = λ{ (φ = i1) → equivCtr (f 1=1 .π⃑) b .π⃑ (~ i) }
       ctr : fiber (unglue {φ = φ}) b
-      ctr = ( glue (λ { (φ = i1) → equivCtr (f 1=1 .snd) b .fst }) (hcomp u b)
+      ctr = ( glue (λ { (φ = i1) → equivCtr (f 1=1 .π⃑) b .π⃐ }) (hcomp u b)
             , λ j → hfill u (inc b) (~ j))
   in ( ctr
      , λ (v : fiber (unglue {φ = φ}) b) i →
          let u' : I → Partial (φ ∨ ~ i ∨ i) A
-             u' j = λ { (φ = i1) → equivCtrPath (f 1=1 .snd) b v i .snd (~ j)
+             u' j = λ { (φ = i1) → equivCtrPath (f 1=1 .π⃑) b v i .π⃑ (~ j)
                       ; (i = i0) → hfill u (inc b) j
-                      ; (i = i1) → v .snd (~ j) }
-         in ( glue (λ { (φ = i1) → equivCtrPath (f 1=1 .snd) b v i .fst }) (hcomp u' b)
+                      ; (i = i1) → v .π⃑ (~ j) }
+         in ( glue (λ { (φ = i1) → equivCtrPath (f 1=1 .π⃑) b v i .π⃐ }) (hcomp u' b)
             , λ j → hfill u' (inc b) (~ j)))
 
 -- Any partial family of equivalences can be extended to a total one

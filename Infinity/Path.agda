@@ -27,8 +27,8 @@ open import Infinity.Proto public
            ; isContr to isContrPath
            ; isProp  to isPropPath
            ; isSet   to isSetPath
-           ; fst     to pr₁ -- as in the HoTT book
-           ; snd     to pr₂
+           ; π⃐       to pr₁ -- as in the HoTT book
+           ; π⃑       to pr₂
            )
 open import Infinity.Univ
   renaming ( fiber        to fiberPath
@@ -42,6 +42,7 @@ open import Infinity.Trunc public
   renaming ( squash to squashPath
            ; recPropTrunc to recPropTruncPath
            ; elimPropTrunc to elimPropTruncPath )
+open import Infinity.Sigma
 
 {- BUILTIN ID Id -}
 
@@ -80,7 +81,7 @@ module _ {ℓ} {A : Set ℓ} where
   transport : ∀ {ℓ'} (B : A → Set ℓ') {x y : A}
            → x ≡ y → B x → B y
   transport B {x} p b = J (λ y p → B y) b p
-
+  
   _⁻¹ : {x y : A} → x ≡ y → y ≡ x
   _⁻¹ {x} p = J (λ z _ → z ≡ x) refl p
 
@@ -130,8 +131,8 @@ funExt p = pathToId (λ i x → idToPath (p x) i)
 
 -- Equivalences expressed using Id
 
-fiber : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) (y : B) → Set (ℓ-max ℓ ℓ')
-fiber {A = A} f y = Σ[ x ∈ A ] f x ≡ y
+fiber : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) (y : B) → Set (ℓ ⊔ ℓ')
+fiber {A = A} f y = Σ[ x ∈ A ] (f x ≡ y)
 
 module _ {ℓ} where
   isContr : Set ℓ → Set ℓ
@@ -143,7 +144,7 @@ module _ {ℓ} where
   isSet : Set ℓ → Set ℓ
   isSet A = (x y : A) → isProp (x ≡ y)
 
-record isEquiv {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) : Set (ℓ-max ℓ ℓ') where
+record isEquiv {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) : Set (ℓ ⊔ ℓ') where
   field
     equiv-proof : (y : B) → isContr (fiber f y)
 
@@ -151,7 +152,7 @@ open isEquiv public
 
 infix 4 _≃_
 
-_≃_ : ∀ {ℓ ℓ'} (A : Set ℓ) (B : Set ℓ') → Set (ℓ-max ℓ ℓ')
+_≃_ : ∀ {ℓ ℓ'} (A : Set ℓ) (B : Set ℓ') → Set (ℓ ⊔ ℓ')
 A ≃ B = Σ[ f ∈ (A → B) ] (isEquiv f)
 
 equivFun : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} → A ≃ B → A → B

@@ -1,8 +1,13 @@
 {-# OPTIONS --cubical --safe #-}
 module Infinity.Proto where
 
-open import Agda.Builtin.Sigma public
+open import Agda.Builtin.Sigma public 
+  renaming (fst to π⃐; snd to π⃑) 
 
+open import Agda.Builtin.Nat public 
+  using (zero; suc; _+_; _*_)
+  renaming (Nat to ℕ)
+  
 open import Infinity.Core public
 
 -- Basic theory about paths. These proofs should typically be
@@ -77,25 +82,11 @@ module _ {ℓ ℓ'} {A : Set ℓ} {x : A}
   JRefl i = transp (λ _ → P x refl) i d
 
 
--- Σ-types
-
-_×_ : ∀ {ℓ ℓ'} (A : Set ℓ) (B : Set ℓ') → Set (ℓ-max ℓ ℓ')
-A × B = Σ A (λ _ → B)
-
-infixr 5 _×_
-infix 2 Σ-syntax
-
-Σ-syntax : ∀ {ℓ ℓ'} (A : Set ℓ) (B : A → Set ℓ') → Set (ℓ-max ℓ ℓ')
-Σ-syntax = Σ
-
-syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
-
-
 -- Contractibility of singletons
 
 module _ {ℓ} {A : Set ℓ} where
   singl : (a : A) → Set ℓ
-  singl a = Σ[ x ∈ A ] (a ≡ x)
+  singl a = Σ A (λ x → a ≡ x)
 
   contrSingl : {a b : A} (p : a ≡ b) → Path (singl a) (a , refl) (b , p)
   contrSingl p i = (p i , λ j → p (i ∧ j))
@@ -117,14 +108,40 @@ module _ {ℓ} {A : I → Set ℓ} {x : A i0} {y : A i1} where
 
 module _ {ℓ} where
   isContr : Set ℓ → Set ℓ
-  isContr A = Σ[ x ∈ A ] (∀ y → x ≡ y)
+  isContr A = Σ A (λ x → ∀ y → x ≡ y)
 
   isProp : Set ℓ → Set ℓ
   isProp A = (x y : A) → x ≡ y
 
   isSet : Set ℓ → Set ℓ
   isSet A = (x y : A) → isProp (x ≡ y)
+  
 
-open import Agda.Builtin.Nat public
-  using (zero; suc; _+_; _*_)
-  renaming (Nat to ℕ)
+-- Combinators
+
+module _ {ℓ₁ ℓ₂ ℓ₃} {A : Set ℓ₁} where 
+  flip : ∀ {B : Set ℓ₂} {C : A → B → Set ℓ₃} → ((x : A) (y : B) → C x y) → ((y : B) (x : A) → C x y)
+  flip f = λ y x → f x y
+  
+  infixr 80 _∘_
+  _∘_ : ∀ {B : A → Set ℓ₂} {C : (a : A) → (B a → Set ℓ₃)}
+      (g : {a : A} → (x : B a) → (C a x)) → (f : (x : A) → B x) → (x : A) → C x (f x)
+  g ∘ f = λ x → g (f x)
+
+  _⦂_ : ∀ {B : A → Set ℓ₂} {C : (a : A) → (B a → Set ℓ₃)} {D : (a : A) → (b : B a) → C a b → Set ℓ₃}
+      → (g : {a : A} {b : B a} → (x : C a b) → D a b x) → (f : (x : A) → (y : B x) → C x y) → (x : A) → (y : B x) → D x y (f x y)
+  g ⦂ f = λ x y → g (f x y)
+
+apply : ∀ {ℓ} {A B : Set ℓ} (f : A → B) (x : A) → B
+apply f x = f x 
+
+typeof : ∀ {ℓ} {A : Set ℓ} → A → Set ℓ
+typeof {A = A} _ = A 
+
+record ⇑ {ℓ₁ ℓ₂} (X : Set ℓ₁) : Set (ℓ₁ ⊔ ℓ₂) where
+    constructor ↑
+    field ↓ : X 
+open ⇑ public
+
+coe : ∀ {ℓ : Level} {A B : Set ℓ} → A ≡ B → A → B
+coe p a = primComp (λ i → p i) i0 (λ _ → empty) a 

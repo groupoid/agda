@@ -5,19 +5,18 @@ open import Agda.Builtin.Cubical.Path public
 open import Agda.Builtin.Cubical.Sub public
 
 open import Agda.Primitive.Cubical public
-  renaming ( primIMin       to _∧_  -- I → I → I
-           ; primIMax       to _∨_  -- I → I → I
-           ; primINeg       to ~_   -- I → I
+  renaming ( primIMin       to _∧_
+           ; primIMax       to _∨_
+           ; primINeg       to ~_ 
            ; isOneEmpty     to empty
-           ; primComp       to compCCHM  -- This should not be used
+           -- ; primComp       to compCCHM  -- This should not be used
            ; primHComp      to hcomp
            ; primTransp     to transp
            ; itIsOne        to 1=1 )
 open import Agda.Primitive public
-  using    ( Level )
+  using    ( Level ; _⊔_ )
   renaming ( lzero to ℓ-zero
-           ; lsuc  to ℓ-suc
-           ; _⊔_   to ℓ-max )
+           ; lsuc  to ℓ-suc )
 
 -- This file document the Cubical Agda primitives. The primitives
 -- themselves are bound by the Agda files imported above.
