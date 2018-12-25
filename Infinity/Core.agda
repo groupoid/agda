@@ -26,6 +26,7 @@ _[_≡_] = PathP
 Path : ∀ {ℓ} (A : Set ℓ) → A → A → Set ℓ
 Path A a b = PathP (λ _ → A) a b
 
+{-
 private
 
   sys : ∀ i → Partial (i ∨ ~ i) Set₁
@@ -40,6 +41,7 @@ private
 
   sys3 : Partial i0 Set₁
   sys3 = λ { () }
+-}
 
 _[_↦_] : ∀ {ℓ} (A : Set ℓ) (φ : I) (u : Partial φ A) → Agda.Primitive.Setω
 A [ φ ↦ u ] = Sub A φ u
