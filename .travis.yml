@@ -5,15 +5,11 @@ cache:
     - $HOME/.cabal/packages
     - $HOME/.cabal/store
 
-addons:
-  apt:
-    packages:
-      - cabal-install
-
 matrix:
   include:
-    - compiler: "ghc-8.6.2"
-      addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.2], sources: [hvr-ghc]}}
+    - compiler: "ghc-8.0.2"
+      addons: {apt: {packages: [ghc-ppa-tools,cabal-install-head,ghc-8.0.2,alex-3.1.7,happy-1.19.5],
+                      sources: [hvr-ghc]}}
 
 install:
   - mkdir -p ~/.agda/libs/cubical
@@ -24,6 +20,7 @@ install:
   - git clone git://github.com/agda/agda && cd agda
   - cabal sandbox init
   - cabal install
+  - cd ..
 
 script:
   - ./.cabal-sandbox/bin/agda Infinity/Cubical.agda
