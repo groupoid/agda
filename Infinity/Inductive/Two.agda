@@ -2,6 +2,7 @@
 module Infinity.Inductive.Two where
 
 open import Infinity.Proto
+open import Infinity.Sigma
 
 -- Boolean
 

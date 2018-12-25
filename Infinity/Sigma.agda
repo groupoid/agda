@@ -1,9 +1,8 @@
 {-# OPTIONS --cubical --safe #-}
-
 module Infinity.Sigma where
 
+open import Agda.Builtin.Sigma public renaming (fst to π⃐; snd to π⃑)
 open import Infinity.Proto
-open import Infinity.Path
 open import Infinity.Inductive.Empty
 
 Σ-map : ∀ {ℓ} {A : Set ℓ} {B C : A → Set ℓ} → ((a : A) → B a → C a) → Σ A B → Σ A C
@@ -12,22 +11,11 @@ open import Infinity.Inductive.Empty
 Σ-ind : ∀ {ℓ₁ ℓ₂} {S : Set ℓ₁} {T : S → Set ℓ₁} { P : Σ S T → Set ℓ₂} → ((s : S)(t : T s) → P (s , t)) → (p : Σ S T) → P p
 (Σ-ind p) (s , t) = p s t
 
-nonDepPath : ∀ {ℓ} {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)
-nonDepPath _ _ = refl
-
--- lemTransp : ∀ {ℓ} {A : Set ℓ} (a : A) → Path a (transport (λ _ → A) a)
--- lemTransp {A} a i = safeFill (λ _ → A) i0 (λ _ → empty) (inc a) i
-
 ∃ : ∀ {ℓ₁ ℓ₂} {A : Set ℓ₁} → (A → Set ℓ₂) → Set (ℓ₁ ⊔ ℓ₂)
 ∃ = Σ _
 
 ∄ : ∀ {ℓ₁ ℓ₂} {A : Set ℓ₁} → (A → Set ℓ₂) → Set (ℓ₁ ⊔ ℓ₂)
 ∄ P = ¬ ∃ P
-
--- Σ! : ∀ {ℓ₁ ℓ₂} (A : Set ℓ₁) (B : A → Set ℓ₂) → Set (ℓ₁ ⊔ ℓ₂)
--- Σ! = isContr ⦂ Σ
-
--- syntax Σ! A (λ x → B) = Σ[ x ∈ A ] B
 
 infix 2 Σ-syntax
 

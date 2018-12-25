@@ -3,6 +3,7 @@ module Infinity.Inductive.Z where
 
 open import Infinity.Proto
 open import Infinity.Path
+open import Infinity.Equiv
 open import Infinity.Univ
 
 data ℤ : Set where
@@ -36,3 +37,10 @@ oneℤ = pos (suc zero)
 
 twoℤ : ℤ
 twoℤ = pos (suc (suc zero))
+
+suc-equiv : ℤ ≃ ℤ
+suc-equiv .π⃐ = sucℤ
+suc-equiv .π⃑ = isoToIsEquiv sucℤ predℤ sucPred predSuc
+
+sucPathInt : ℤ ≡ ℤ
+sucPathInt = ua suc-equiv

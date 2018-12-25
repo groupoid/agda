@@ -4,6 +4,7 @@ module Infinity.Univ where
 open import Agda.Builtin.Sigma renaming ( snd to π⃑; fst to π⃐)
 open import Infinity.Proto
 open import Infinity.Path
+open import Infinity.Equiv
 open import Infinity.Sigma
 open import Agda.Builtin.Cubical.Glue public
      using ( isEquiv
@@ -27,6 +28,7 @@ fiber {A = A} f y = Σ[ x ∈ A ] (f x ≡ y)
 equivIsEquiv : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) → isEquiv (equivFun e)
 equivIsEquiv e = π⃑ e
 
+
 equivCtr : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) (y : B) → fiber (equivFun e) y
 equivCtr e y = e .π⃑ .equiv-proof y .π⃐
 
@@ -45,6 +47,9 @@ idEquiv A = (λ a → a) , idIsEquiv A
 
 ua : ∀ {ℓ} {A B : Set ℓ} → A ≃ B → A ≡ B
 ua {_} {A} {B} e i = Glue B (λ { (i = i0) → (A , e) ; (i = i1) → (B , idEquiv B) })
+
+isoToPath : ∀ {ℓ} {A B : Set ℓ} (f : A → B)(g : B → A)(s : (y : B) → f (g y) ≡ y)(t : (x : A) → g (f x) ≡ x) → A ≡ B
+isoToPath f g s t = ua (isoToEquiv f g s t)
 
 unglueIsEquiv : ∀ {ℓ} (A : Set ℓ) (φ : I) (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) →
                 isEquiv {A = Glue A f} (unglue {φ = φ})

@@ -2,7 +2,10 @@
 module Infinity.Path where
 
 open import Agda.Builtin.Sigma public renaming (fst to π⃐; snd to π⃑)
+open import Agda.Builtin.Nat public using (zero; suc; _+_; _*_) renaming (Nat to ℕ)
 open import Infinity.Core public
+open import Infinity.Proto public
+open import Infinity.Sigma public using (Σ-syntax)
 
 module _ {ℓ} {A : Set ℓ} where
 
@@ -69,3 +72,54 @@ module _ {ℓ} where
 
   isSet : Set ℓ → Set ℓ
   isSet A = (x y : A) → isProp (x ≡ y)
+
+Σ! : ∀ {ℓ₁ ℓ₂} (A : Set ℓ₁) (B : A → Set ℓ₂) → Set (ℓ₁ ⊔ ℓ₂)
+Σ! = isContr ⦂ Σ
+
+syntax Σ! A (λ x → B) = Σ-[ x ∈ A ] B
+
+nonDepPath : ∀ {ℓ} {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)
+nonDepPath _ _ = refl
+
+-- lemTransp : ∀ {ℓ} {A : Set ℓ} (a : A) → Path a (transport (λ _ → A) a)
+-- lemTransp {A} a i = safeFill (λ _ → A) i0 (λ _ → empty) (inc a) i
+
+isOfHLevel : ∀ {ℓ} → ℕ → Set ℓ → Set ℓ
+isOfHLevel zero A = isContr A
+isOfHLevel (suc n) A = (x y : A) → isOfHLevel n (x ≡ y)
+
+HLevel : ∀ {ℓ} → ℕ → Set _
+HLevel {ℓ} n = Σ[ A ∈ Set ℓ ] (isOfHLevel n A)
+
+isContr→isProp : ∀ {ℓ} {A : Set ℓ} → isContr A → isProp A
+isContr→isProp (x , p) a b i =
+  hcomp (λ j → λ { (i = i0) → p a j
+                 ; (i = i1) → p b j }) x
+
+isProp→isSet : ∀ {ℓ} {A : Set ℓ} → isProp A → isSet A
+isProp→isSet h a b p q j i =
+  hcomp (λ k → λ { (i = i0) → h a a k
+                 ; (i = i1) → h a b k
+                 ; (j = i0) → h a (p i) k
+                 ; (j = i1) → h a (q i) k }) a
+
+inhProp→isContr : ∀ {ℓ} {A : Set ℓ} → A → isProp A → isContr A
+inhProp→isContr x h = x , h x
+
+isPropIsOfHLevel1 : ∀ {ℓ} {A : Set ℓ} → isProp A → isOfHLevel 1 A
+isPropIsOfHLevel1 h x y = inhProp→isContr (h x y) (isProp→isSet h x y)
+
+isPropIsContr : ∀ {ℓ} {A : Set ℓ} → isProp (isContr A)
+isPropIsContr z0 z1 j =
+  ( z0 .π⃑ (z1 .π⃐) j
+  , λ x i → hcomp (λ k → λ { (i = i0) → z0 .π⃑ (z1 .π⃐) j
+                           ; (i = i1) → z0 .π⃑ x (j ∨ k)
+                           ; (j = i0) → z0 .π⃑ x (i ∧ k)
+                           ; (j = i1) → z1 .π⃑ x i })
+                  (z0 .π⃑ (z1 .π⃑ x i) j))
+
+isPropIsProp : ∀ {ℓ} {A : Set ℓ} → isProp (isProp A)
+isPropIsProp f g i a b = isProp→isSet f a b (f a b) (g a b) i
+
+isPropIsSet : ∀ {ℓ} {A : Set ℓ} → isProp (isSet A)
+isPropIsSet f g i a b = isPropIsProp (f a b) (g a b) i
