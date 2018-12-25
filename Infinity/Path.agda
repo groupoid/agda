@@ -74,13 +74,10 @@ module _ {ℓ} where
 Σ! : ∀ {ℓ₁ ℓ₂} (A : Set ℓ₁) (B : A → Set ℓ₂) → Set (ℓ₁ ⊔ ℓ₂)
 Σ! = isContr ⦂ Σ
 
-syntax Σ! A (λ x → B) = Σ-[ x ∈ A ] B
+syntax Σ! A (λ x → B) = Σ![ x ∈ A ] B
 
 nonDepPath : ∀ {ℓ} {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)
 nonDepPath _ _ = refl
-
--- lemTransp : ∀ {ℓ} {A : Set ℓ} (a : A) → Path a (transport (λ _ → A) a)
--- lemTransp {A} a i = safeFill (λ _ → A) i0 (λ _ → empty) (inc a) i
 
 isOfHLevel : ∀ {ℓ} → ℕ → Set ℓ → Set ℓ
 isOfHLevel zero A = isContr A
@@ -113,8 +110,7 @@ isPropIsContr z0 z1 j =
   , λ x i → hcomp (λ k → λ { (i = i0) → z0 .π⃑ (z1 .π⃐) j
                            ; (i = i1) → z0 .π⃑ x (j ∨ k)
                            ; (j = i0) → z0 .π⃑ x (i ∧ k)
-                           ; (j = i1) → z1 .π⃑ x i })
-                  (z0 .π⃑ (z1 .π⃑ x i) j))
+                           ; (j = i1) → z1 .π⃑ x i }) (z0 .π⃑ (z1 .π⃑ x i) j))
 
 isPropIsProp : ∀ {ℓ} {A : Set ℓ} → isProp (isProp A)
 isPropIsProp f g i a b = isProp→isSet f a b (f a b) (g a b) i
