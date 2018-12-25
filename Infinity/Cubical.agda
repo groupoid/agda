@@ -4,7 +4,7 @@ module Infinity.Cubical where
 
 open import Infinity.Core public
 open import Infinity.Proto public
-open import Infinity.Univalence public
+open import Infinity.Univ public
 open import Infinity.Sigma public
 open import Infinity.Omega public
 open import Infinity.Trunc public

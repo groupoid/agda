@@ -30,7 +30,7 @@ open import Infinity.Proto public
            ; π⃐       to pr₁ -- as in the HoTT book
            ; π⃑       to pr₂
            )
-open import Infinity.Univalence
+open import Infinity.Univ
   renaming ( fiber        to fiberPath
            ; isEquiv      to isEquivPath
            ; _≃_          to EquivPath
