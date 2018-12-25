@@ -1,14 +1,14 @@
 {-# OPTIONS --cubical --safe #-}
-module Proto where
+module Infinity.Reason where
 
 open import Agda.Builtin.Sigma public
-
-open import Core public
+open import Infinity.Core public
 
 -- Basic theory about paths. These proofs should typically be
 -- inlined. This module also makes equational reasoning work with
 -- (non-dependent) paths.
 module _ {ℓ} {A : Set ℓ} where
+
   refl : {x : A} → x ≡ x
   refl {x} = λ _ → x
 

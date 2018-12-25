@@ -1,7 +1,7 @@
 {-# OPTIONS --cubical --safe #-}
-module Univ where
+module Infinity.Univ where
 
-open import Proto
+open import Infinity.Proto
 open import Agda.Builtin.Cubical.Glue public
   using ( isEquiv       -- isEquiv {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) : Set (ℓ ⊔ ℓ')
 

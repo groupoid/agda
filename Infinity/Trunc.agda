@@ -1,7 +1,7 @@
 {-# OPTIONS --cubical --safe #-}
-module Trunc where
+module Infinity.Trunc where
 
-open import Proto
+open import Infinity.Proto
 
 -- Propositional truncation as a higher inductive type:
 

@@ -1,0 +1,33 @@
+language: c
+
+cache:
+  directories:
+    - $HOME/.cabal/packages
+    - $HOME/.cabal/store
+
+before_cache:
+  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/build-reports.log
+  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/00-index.*
+  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/*.json
+  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/01-index.cache
+  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/01-index.tar
+  - rm -fv $HOME/.cabal/packages/hackage.haskell.org/01-index.tar.idx
+  - rm -rfv $HOME/.cabal/packages/head.hackage
+
+matrix:
+  include:
+    - compiler: "ghc-8.6.2"
+      addons: {apt: {packages: [cabal-install-2.4,ghc-8.6.2], sources: [hvr-ghc]}}
+
+install:
+  - mkdir -p ~/.agda/libs/cubical
+  - printf "name: cubical\ninclude: src" > ~/.agda/libs/cubical/cubical.agda-lib
+  - echo cubical >> ~/.agda/defaults
+  - echo "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
+  - git clone git://github.com/agda/agda && cd agda
+  - cabal init
+  - cabal install
+
+script:
+  - ./.cabal-sandbox/bin/agda Infinity/Cubical.agda
+

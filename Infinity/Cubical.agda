@@ -1,11 +1,11 @@
 {-# OPTIONS --cubical --safe #-}
-module Cubical where
+module Infinity.Cubical where
 
-open import Core public
-open import Proto public
-open import Univ public
-open import Trunc public
-open import Path
+open import Infinity.Core public
+open import Infinity.Proto public
+open import Infinity.Univ public
+open import Infinity.Trunc public
+open import Infinity.Path
   hiding ( _≡_ ; _≡⟨_⟩_ ; _∎ )
   renaming ( _≃_           to EquivId
            ; EquivContr    to EquivContrId

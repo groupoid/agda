@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
-module Core where
+module Infinity.Core where
 
 open import Agda.Builtin.Cubical.Path public
 open import Agda.Builtin.Cubical.Sub public

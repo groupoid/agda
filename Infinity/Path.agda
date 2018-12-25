@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
-module Path where
+module Infinity.Path where
 
 open import Agda.Builtin.Cubical.Id public
   renaming ( conid to ⟨_,_⟩
@@ -15,8 +15,8 @@ open import Agda.Builtin.Cubical.Id public
                                    -- {y : A} (w' : x ≡ y) → P y w'
            )
   hiding ( primIdJ ) -- this should not be used as it is using compCCHM
-open import Core public  hiding ( _≡_ )
-open import Proto public
+open import Infinity.Core public  hiding ( _≡_ )
+open import Infinity.Proto public
   hiding ( _≡_ ; ≡-proof_ ; begin_ ; _≡⟨⟩_ ; _≡⟨_⟩_ ; _≡-qed ; _∎ )
   renaming ( refl    to reflPath
            ; J       to JPath
@@ -30,7 +30,7 @@ open import Proto public
            ; fst     to pr₁ -- as in the HoTT book
            ; snd     to pr₂
            )
-open import Univ
+open import Infinity.Univ
   renaming ( fiber        to fiberPath
            ; isEquiv      to isEquivPath
            ; _≃_          to EquivPath
@@ -38,7 +38,7 @@ open import Univ
            ; equivIsEquiv to equivIsEquivPath
            ; equivCtr     to equivCtrPath
            ; EquivContr   to EquivContrPath )
-open import Trunc public
+open import Infinity.Trunc public
   renaming ( squash to squashPath
            ; recPropTrunc to recPropTruncPath
            ; elimPropTrunc to elimPropTruncPath )
