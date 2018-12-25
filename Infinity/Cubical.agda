@@ -8,6 +8,12 @@ open import Infinity.Sigma public
 open import Infinity.Path public
 open import Infinity.Equiv public
 open import Infinity.Univ public
+open import Infinity.Inductive.Z public
+open import Infinity.Inductive.Either public
+open import Infinity.Inductive.Empty public
+open import Infinity.Inductive.One public
+open import Infinity.Inductive.Two public
+open import Infinity.Inductive.Fin public
 open import Infinity.Reason hiding ( _≡_ ; _≡⟨_⟩_ ; _∎ ) public
 open import Infinity.Top.Space public
 open import Infinity.Top.Cantor public
