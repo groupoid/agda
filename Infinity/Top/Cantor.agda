@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Top.Cantor where
 
@@ -18,3 +18,4 @@ decreasing f = (i : ℕ) → f i ≥ f (suc i)
 
 -- ∞ : ℕ∞
 -- ∞ = (λ _ → 𝟙) , λ _ → {!!} (𝟙 ≡ 𝟙)
+

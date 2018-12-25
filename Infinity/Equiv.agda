@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 module Infinity.Equiv where
 
 open import Infinity.Path public

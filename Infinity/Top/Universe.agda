@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --safe }
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Top.Universe
 
