@@ -17,6 +17,7 @@ install:
   - printf " cubical" >> ~/.agda/libs/cubical/cubical.agda-lib
   - printf "cubical" > ~/.agda/defaults
   - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
+  - stack solver
   - stack build --no-terminal
   - AGDA=$(stack path --local-install-root)/bin/agda
   - cd ..
