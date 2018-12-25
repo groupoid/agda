@@ -36,6 +36,7 @@ install:
   - cabal install
 #  - cabal install Agda
   - locate agda
+  - ls dist/build/Agda
   - ls
   - cd ..
 
