@@ -18,6 +18,7 @@ before_install:
   - mkdir -p ~/.local/bin
   - ARCH=https://www.stackage.org/stack/linux-x86_64
   - travis_retry curl -L $ARCH | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+  - export PATH=/opt/ghc/$GHC_VER/bin:/opt/cabal/$CABAL_VER/bin:$PATH;
   - export PATH=$HOME/.local/bin:$PATH;
 
 install:
