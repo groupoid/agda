@@ -40,4 +40,4 @@ install:
   - cd ..
 
 script:
-  - agda Infinity/Cubical.agda
+  - ./dist/build/Agda/agda Infinity/Cubical.agda
