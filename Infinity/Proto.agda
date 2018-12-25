@@ -20,6 +20,9 @@ module _ {ℓ₁ ℓ₂ ℓ₃} {A : Set ℓ₁} where
         → (x : A) → (y : B x) → D x y (f x y)
   g ⦂ f = λ x y → g (f x y)
 
+idFun : ∀ {ℓ} → (A : Set ℓ) → A → A
+idFun A x = x
+
 apply : ∀ {ℓ} {A B : Set ℓ} (f : A → B) (x : A) → B
 apply f x = f x
 
