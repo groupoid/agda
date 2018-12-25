@@ -2,6 +2,10 @@ language: c
 
 sudo: required
 
+cache:
+  directories:
+  - $HOME/.stack
+
 matrix:
   include:
     - env: TEST=MAIN GHC_VER=8.6.3 BUILD=CABAL CABAL_VER=2.4
