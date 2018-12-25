@@ -6,32 +6,17 @@ open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.Sigma
 open import Agda.Builtin.Cubical.Glue public
-  using ( isEquiv       -- isEquiv {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) : Set (ℓ ⊔ ℓ')
-
-        ; _≃_           -- ∀ {ℓ ℓ'} (A : Set ℓ) (B : Set ℓ') → Set (ℓ-max ℓ ℓ')
-
-        ; equivFun      -- ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} → A ≃ B → A → B
-
-        ; equivProof    -- ∀ {la lt} (T : Set la) (A : Set lt) → (w : T ≃ A) → (a : A)
-                        -- → ∀ ψ → (Partial ψ (fiber (equivFun w) a)) → fiber (equivFun w) a
-
-        ; primGlue      -- ∀ {ℓ ℓ'} (A : Set ℓ) {φ : I}
-                        -- → (T : Partial φ (Set ℓ')) → (e : PartialP φ (λ o → T o ≃ A))
-                        -- → Set ℓ'
-
-        -- Needed for transp in Glue.
-        ; primFaceForall -- (I → I) → I
-        )
-  renaming ( prim^glue   to glue         -- ∀ {ℓ ℓ'} {A : Set ℓ} {φ : I}
-                                         -- → {T : Partial φ (Set ℓ')} → {e : PartialP φ (λ o → T o ≃ A)}
-                                         -- → PartialP φ T → A → primGlue A T e
-
-           ; prim^unglue to unglue       -- ∀ {ℓ ℓ'} {A : Set ℓ} {φ : I}
-                                         -- → {T : Partial φ (Set ℓ')} → {e : PartialP φ (λ o → T o ≃ A)}
-                                         -- → primGlue A T e → A
-
-           ; pathToEquiv to lineToEquiv  -- {ℓ : I → Level} (P : (i : I) → Set (ℓ i)) → P i0 ≃ P i1
+     using ( isEquiv
+           ; _≃_
+           ; equivFun
+           ; equivProof
+           ; primGlue
+           ; primFaceForall
            )
+     renaming ( prim^glue   to glue
+              ; prim^unglue to unglue
+              ; pathToEquiv to lineToEquiv
+              )
 
 open isEquiv public
 
@@ -45,36 +30,23 @@ equivIsEquiv e = π⃑ e
 equivCtr : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) (y : B) → fiber (equivFun e) y
 equivCtr e y = e .π⃑ .equiv-proof y .π⃐
 
-equivCtrPath : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) (y : B) →
-  (v : fiber (equivFun e) y) → Path _ (equivCtr e y) v
+equivCtrPath : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e : A ≃ B) (y : B)
+               → (v : fiber (equivFun e) y) → Path _ (equivCtr e y) v
 equivCtrPath e y = e .π⃑ .equiv-proof y .π⃑
 
-
--- We uncurry Glue to make it a bit more pleasant to use
-Glue : ∀ {ℓ ℓ'} (A : Set ℓ) {φ : I}
-       → (Te : Partial φ (Σ[ T ∈ Set ℓ' ] T ≃ A))
-       → Set ℓ'
+Glue : ∀ {ℓ ℓ'} (A : Set ℓ) {φ : I} → (Te : Partial φ (Σ[ T ∈ Set ℓ' ] T ≃ A)) → Set ℓ'
 Glue A Te = primGlue A (λ x → Te x .π⃐) (λ x → Te x .π⃑)
 
-
--- The identity equivalence
 idIsEquiv : ∀ {ℓ} → (A : Set ℓ) → isEquiv (λ (a : A) → a)
 equiv-proof (idIsEquiv A) y = (y , refl) , λ z i → z .π⃑ (~ i) , λ j → z .π⃑ (~ i ∨ j)
 
 idEquiv : ∀ {ℓ} → (A : Set ℓ) → A ≃ A
 idEquiv A = (λ a → a) , idIsEquiv A
 
--- The ua constant
 ua : ∀ {ℓ} {A B : Set ℓ} → A ≃ B → A ≡ B
-ua {_} {A} {B} e i =
-  Glue B (λ { (i = i0) → (A , e)
-            ; (i = i1) → (B , idEquiv B) })
+ua {_} {A} {B} e i = Glue B (λ { (i = i0) → (A , e) ; (i = i1) → (B , idEquiv B) })
 
--- Proof of univalence using that unglue is an equivalence:
-
--- unglue is an equivalence
-unglueIsEquiv : ∀ {ℓ} (A : Set ℓ) (φ : I)
-                (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) →
+unglueIsEquiv : ∀ {ℓ} (A : Set ℓ) (φ : I) (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) →
                 isEquiv {A = Glue A f} (unglue {φ = φ})
 equiv-proof (unglueIsEquiv A φ f) = λ (b : A) →
   let u : I → Partial φ A
@@ -91,23 +63,9 @@ equiv-proof (unglueIsEquiv A φ f) = λ (b : A) →
          in ( glue (λ { (φ = i1) → equivCtrPath (f 1=1 .π⃑) b v i .π⃐ }) (hcomp u' b)
             , λ j → hfill u' (inc b) (~ j)))
 
--- Any partial family of equivalences can be extended to a total one
--- from Glue [ φ ↦ (T,f) ] A to A
-unglueEquiv : ∀ {ℓ} (A : Set ℓ) (φ : I)
-              (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) →
-              (Glue A f) ≃ A
+unglueEquiv : ∀ {ℓ} (A : Set ℓ) (φ : I) (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) → (Glue A f) ≃ A
 unglueEquiv A φ f = ( unglue {φ = φ} , unglueIsEquiv A φ f )
 
-
--- The following is a formulation of univalence proposed by Martín Escardó:
--- https://groups.google.com/forum/#!msg/homotopytypetheory/HfCB_b-PNEU/Ibb48LvUMeUJ
--- See also Theorem 5.8.4 of the HoTT Book.
---
--- The reason we have this formulation in the core library and not the
--- standard one is that this one is more direct to prove using that
--- unglue is an equivalence. The standard formulation can be found in
--- Cubical/Basics/Univalence.
---
 EquivContr : ∀ {ℓ} (A : Set ℓ) → isContr (Σ[ T ∈ Set ℓ ] T ≃ A)
 EquivContr {ℓ} A =
   ( ( A , idEquiv A)

@@ -9,7 +9,7 @@ open import Infinity.Inductive.Empty
 Σ-map : ∀ {ℓ} {A : Set ℓ} {B C : A → Set ℓ} → ((a : A) → B a → C a) → Σ A B → Σ A C
 Σ-map f (a , b) = (a , f a b)
 
-Σ-ind : ∀ {ℓ₁ ℓ₂} {S : Set ℓ₁} {T : S → Set ℓ₁} {P : Σ S T → Set ℓ₂} → ((s : S)(t : T s) → P (s , t)) → (p : Σ S T) → P p
+Σ-ind : ∀ {ℓ₁ ℓ₂} {S : Set ℓ₁} {T : S → Set ℓ₁} { P : Σ S T → Set ℓ₂} → ((s : S)(t : T s) → P (s , t)) → (p : Σ S T) → P p
 (Σ-ind p) (s , t) = p s t
 
 nonDepPath : ∀ {ℓ} {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)

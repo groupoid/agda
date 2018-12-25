@@ -17,7 +17,8 @@ module _ {ℓ₁ ℓ₂ ℓ₃} {A : Set ℓ₁} where
   g ∘ f = λ x → g (f x)
 
   _⦂_ : ∀ {B : A → Set ℓ₂} {C : (a : A) → (B a → Set ℓ₃)} {D : (a : A) → (b : B a) → C a b → Set ℓ₃}
-        → (g : {a : A} {b : B a} → (x : C a b) → D a b x) → (f : (x : A) → (y : B x) → C x y) → (x : A) → (y : B x) → D x y (f x y)
+        → (g : {a : A} {b : B a} → (x : C a b) → D a b x) → (f : (x : A) → (y : B x) → C x y)
+        → (x : A) → (y : B x) → D x y (f x y)
   g ⦂ f = λ x y → g (f x y)
 
 apply : ∀ {ℓ} {A B : Set ℓ} (f : A → B) (x : A) → B
