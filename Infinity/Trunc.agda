@@ -1,7 +1,9 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Trunc where
 
 open import Infinity.Proto
+-- open import Infinity.Path
 
 -- Propositional truncation as a higher inductive type:
 

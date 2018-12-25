@@ -77,20 +77,6 @@ module _ {ℓ ℓ'} {A : Set ℓ} {x : A}
   JRefl i = transp (λ _ → P x refl) i d
 
 
--- Σ-types
-
-_×_ : ∀ {ℓ ℓ'} (A : Set ℓ) (B : Set ℓ') → Set (ℓ-max ℓ ℓ')
-A × B = Σ A (λ _ → B)
-
-infixr 5 _×_
-infix 2 Σ-syntax
-
-Σ-syntax : ∀ {ℓ ℓ'} (A : Set ℓ) (B : A → Set ℓ') → Set (ℓ-max ℓ ℓ')
-Σ-syntax = Σ
-
-syntax Σ-syntax A (λ x → B) = Σ[ x ∈ A ] B
-
-
 -- Contractibility of singletons
 
 module _ {ℓ} {A : Set ℓ} where
