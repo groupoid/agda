@@ -18,8 +18,7 @@ install:
   - printf "cubical" > ~/.agda/defaults
   - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
   - git clone --single-branch --branch master git://github.com/agda/agda && cd agda
-#  - stack init --solver
-  - stack build --no-terminal
+  - stack build --stack-yaml stack-8.6.3.yaml
   - AGDA=$(stack path --local-install-root)/bin/agda
   - cd ..
 
