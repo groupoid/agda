@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe }
 
-module Infinity.Top.Suspension
+module Infinity.HIT.Suspension
 
 open imoprt Infinity.Proto

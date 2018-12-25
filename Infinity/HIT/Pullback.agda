@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical #-}
 
-module Infinity.Pullback where
+module Infinity.HIT.Pullback where
 
 open import Infinity.Proto

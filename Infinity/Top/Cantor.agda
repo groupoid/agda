@@ -5,7 +5,7 @@ module Infinity.Top.Cantor where
 open import Infinity.Proto
 open import Infinity.Sigma
 open import Infinity.Path
-open import Infinity.Two
+open import Infinity.Inductive.Two
 
 Cantor : Set 
 Cantor = ℕ → 𝟚

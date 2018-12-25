@@ -1,9 +1,9 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Trunc where
+module Infinity.HIT.Trunc where
 
 open import Infinity.Proto
--- open import Infinity.Path
+open import Infinity.Path
 
 -- Propositional truncation as a higher inductive type:
 
@@ -33,3 +33,4 @@ elimPropTrunc' : ∀ {ℓ} {A : Set ℓ} {P : ∥ A ∥ → Set ℓ} → ((a : �
                  ((x : A) → P ∣ x ∣) → (a : ∥ A ∥) → P a
 elimPropTrunc' {P = P} Pprop f a =
   recPropTrunc (Pprop a) (λ x → transp (λ i → P (squash ∣ x ∣ a i)) i0 (f x)) a
+

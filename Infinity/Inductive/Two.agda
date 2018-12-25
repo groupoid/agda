@@ -1,17 +1,16 @@
 {-# OPTIONS --cubical --safe #-}
-
-module Infinity.Two where 
+module Infinity.Inductive.Two where
 
 open import Infinity.Proto
 
 -- Boolean
 
-data 𝟚 : Set where 
+data 𝟚 : Set where
     𝟘 : 𝟚
     𝟙 : 𝟚
-    
-𝟚-ind : ∀ {ℓ} {P : 𝟚 → Set ℓ} → P 𝟙 → P 𝟘 → (b : 𝟚) → P b 
-𝟚-ind t _ 𝟙 = t 
+
+𝟚-ind : ∀ {ℓ} {P : 𝟚 → Set ℓ} → P 𝟙 → P 𝟘 → (b : 𝟚) → P b
+𝟚-ind t _ 𝟙 = t
 𝟚-ind _ f 𝟘 = f
 
 _⊎_ : ∀ {ℓ} → Set ℓ → Set ℓ → Set ℓ

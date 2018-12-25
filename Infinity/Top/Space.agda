@@ -1,13 +1,12 @@
 {-# OPTIONS --cubical --safe #-}
-
-module Infinity.Top.Space where 
+module Infinity.Top.Space where
 
 open import Infinity.Proto
 open import Infinity.Sigma
-open import Infinity.Absurd
-open import Infinity.One
-open import Infinity.Two
-open import Infinity.Fin
+open import Infinity.Inductive.Empty
+open import Infinity.Inductive.One
+open import Infinity.Inductive.Two
+open import Infinity.Inductive.Fin
 
 open import Infinity.Top.Predicate
 

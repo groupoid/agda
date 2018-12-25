@@ -1,10 +1,9 @@
 {-# OPTIONS --cubical --safe #-}
+module Infinity.Inductive.Z where
 
-module Infinity.Z where 
-
-open import Infinity.Proto 
--- open import Infinity.Path
-open import Infinity.Univalence
+open import Infinity.Proto
+open import Infinity.Path
+open import Infinity.Univ
 
 data ℤ : Set where
   pos    : (n : ℕ) → ℤ

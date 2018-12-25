@@ -1,4 +1,4 @@
-module Infinity.Fin where 
+module Infinity.Inductive.Fin where
 
 open import Infinity.Proto
 

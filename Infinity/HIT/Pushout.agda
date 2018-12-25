@@ -1,5 +1,4 @@
 {-# OPTIONS --cubical --rewriting #-}
-
-module Infinity.Pushout where 
+module Infinity.HIT.Pushout where
 
 open import Infinity.Proto
