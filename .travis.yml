@@ -21,7 +21,8 @@ matrix:
 
 install:
   - mkdir -p ~/.agda/libs/cubical
-  - printf "name: cubical" > ~/.agda/libs/cubical/cubical.agda-lib
+  - printf "name:" > ~/.agda/libs/cubical/cubical.agda-lib
+  - printf " cubical" >> ~/.agda/libs/cubical/cubical.agda-lib
   - printf "cubical" > ~/.agda/defaults
   - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
   - git clone git://github.com/agda/agda && cd agda
