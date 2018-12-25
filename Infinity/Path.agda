@@ -5,7 +5,11 @@ open import Infinity.Core public
 open import Infinity.Proto
 open import Infinity.Sigma
 
+
 module _ {ℓ} {A : Set ℓ} where
+
+  trans : {x y z : A} → Path A x y → Path A y z → Path A x z
+  trans {x} {y} p q = λ i → primComp (λ j → A) _ (λ j → λ { (i = i1) → q j ; (i = i0) → x }) (p i)
 
   refl : {x : A} → x ≡ x
   refl {x} = λ _ → x
