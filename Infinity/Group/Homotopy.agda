@@ -27,7 +27,7 @@ record Ω-Spectrum : Set where
   constructor _⋊_
   field
     spect : (n : ℕ) → Set₊
-    chain : (n : ℕ) → (spect n) ≡ (Ω (spect (suc n)))
+    chain : (n : ℕ) → (spect n) ≡ (Ω (spect (succ n)))
 open Ω-Spectrum
 
 record Ω-Map (E F : Ω-Spectrum) : Set where

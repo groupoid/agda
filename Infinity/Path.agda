@@ -90,33 +90,26 @@ HLevel : ∀ {ℓ} → ℕ → Set _
 HLevel {ℓ} n = Σ[ A ∈ Set ℓ ] (isOfHLevel n A)
 
 isContr→isProp : ∀ {ℓ} {A : Set ℓ} → isContr A → isProp A
-isContr→isProp (x , p) a b i =
-  hcomp (λ j → λ { (i = i0) → p a j
-                 ; (i = i1) → p b j }) x
-
-isProp→isSet : ∀ {ℓ} {A : Set ℓ} → isProp A → isSet A
-isProp→isSet h a b p q j i =
-  hcomp (λ k → λ { (i = i0) → h a a k
-                 ; (i = i1) → h a b k
-                 ; (j = i0) → h a (p i) k
-                 ; (j = i1) → h a (q i) k }) a
+isContr→isProp (x , p) a b i = hcomp (λ j → λ { (i = i0) → p a j ; (i = i1) → p b j }) x
 
 inhProp→isContr : ∀ {ℓ} {A : Set ℓ} → A → isProp A → isContr A
 inhProp→isContr x h = x , h x
 
+isProp→isSet : ∀ {ℓ} {A : Set ℓ} → isProp A → isSet A
+isProp→isSet h a b p q j i = hcomp (λ k → λ { (i = i0) → h a a k ; (i = i1) → h a b k
+                                            ; (j = i0) → h a (p i) k ; (j = i1) → h a (q i) k }) a
+
 isPropIsOfHLevel1 : ∀ {ℓ} {A : Set ℓ} → isProp A → isOfHLevel 1 A
 isPropIsOfHLevel1 h x y = inhProp→isContr (h x y) (isProp→isSet h x y)
-
-isPropIsContr : ∀ {ℓ} {A : Set ℓ} → isProp (isContr A)
-isPropIsContr z0 z1 j =
-  ( z0 .π⃑ (z1 .π⃐) j
-  , λ x i → hcomp (λ k → λ { (i = i0) → z0 .π⃑ (z1 .π⃐) j
-                           ; (i = i1) → z0 .π⃑ x (j ∨ k)
-                           ; (j = i0) → z0 .π⃑ x (i ∧ k)
-                           ; (j = i1) → z1 .π⃑ x i }) (z0 .π⃑ (z1 .π⃑ x i) j))
 
 isPropIsProp : ∀ {ℓ} {A : Set ℓ} → isProp (isProp A)
 isPropIsProp f g i a b = isProp→isSet f a b (f a b) (g a b) i
 
 isPropIsSet : ∀ {ℓ} {A : Set ℓ} → isProp (isSet A)
 isPropIsSet f g i a b = isPropIsProp (f a b) (g a b) i
+
+isPropIsContr : ∀ {ℓ} {A : Set ℓ} → isProp (isContr A)
+isPropIsContr z0 z1 j = ( z0 .π⃑ (z1 .π⃐) j , λ x i → hcomp (λ k → λ { (i = i0) → z0 .π⃑ (z1 .π⃐) j
+                                                                     ; (i = i1) → z0 .π⃑ x (j ∨ k)
+                                                                     ; (j = i0) → z0 .π⃑ x (i ∧ k)
+                                                                     ; (j = i1) → z1 .π⃑ x i }) (z0 .π⃑ (z1 .π⃑ x i) j))
