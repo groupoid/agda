@@ -15,12 +15,15 @@ open import Infinity.Inductive.One public
 open import Infinity.Inductive.Two public
 open import Infinity.Inductive.Fin public
 open import Infinity.Reason hiding ( _≡_ ; _≡⟨_⟩_ ; _∎ ) public
+open import Infinity.Group.Hopf public
 open import Infinity.Top.Space public
 open import Infinity.Top.Cantor public
 open import Infinity.Top.Predicate public
 open import Infinity.HIT.Interval public
 open import Infinity.HIT.Trunc public
 open import Infinity.HIT.S1 public
+open import Infinity.HIT.S2 public
+open import Infinity.HIT.Susp public
 open import Infinity.HIT.Pushout public
 open import Infinity.HIT.Pullback public
 

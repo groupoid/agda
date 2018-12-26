@@ -6,7 +6,7 @@ open import Infinity.Proto
 open import Infinity.Sigma
 open import Infinity.Inductive.Empty
 
-Pred : ∀ {l} → Set l → Set (ℓ-suc l)
+Pred : ∀ {l} → Set l → Set (ℓ-succ l)
 Pred {l} A = A → Set l
 
 module _ {ℓ} {A : Set ℓ} where

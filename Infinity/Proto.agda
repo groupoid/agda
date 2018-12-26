@@ -1,7 +1,7 @@
 {-# OPTIONS --cubical --safe #-}
 module Infinity.Proto where
 
-open import Agda.Builtin.Nat public using (zero; suc; _+_; _*_) renaming (Nat to ℕ)
+open import Agda.Builtin.Nat public using (zero; _+_; _*_) renaming (Nat to ℕ ; suc to succ)
 open import Infinity.Core public
 
 module _ {ℓ₁ ℓ₂ ℓ₃} {A : Set ℓ₁} where

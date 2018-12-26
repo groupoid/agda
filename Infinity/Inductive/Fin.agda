@@ -3,14 +3,14 @@ module Infinity.Inductive.Fin where
 open import Infinity.Proto
 
 data Fin : ℕ → Set where
-  zero : {n : ℕ} → Fin (suc n)
-  suc  : {n : ℕ} (i : Fin n) → Fin (suc n)
+  fz : {n : ℕ} → Fin (succ n)
+  fs : {n : ℕ} (i : Fin n) → Fin (succ n)
 
 toℕ : ∀ {n} → Fin n → ℕ
-toℕ zero    = 0
-toℕ (suc i) = suc (toℕ i)
+toℕ fz    = zero
+toℕ (fs i) = succ (toℕ i)
 
-fromℕ : (n : ℕ) → Fin (suc n)
-fromℕ zero    = zero
-fromℕ (suc n) = suc (fromℕ n)
+fromℕ : (n : ℕ) → Fin (succ n)
+fromℕ zero    = fz
+fromℕ (succ n) = fs (fromℕ n)
 

@@ -5,11 +5,13 @@ open import Infinity.Core public
 open import Infinity.Proto
 open import Infinity.Sigma
 
-
 module _ {ℓ} {A : Set ℓ} where
 
-  trans : {x y z : A} → Path A x y → Path A y z → Path A x z
-  trans {x} {y} p q = λ i → primComp (λ j → A) _ (λ j → λ { (i = i1) → q j ; (i = i0) → x }) (p i)
+  compPath : {x y z : A} → Path A x y → Path A y z → Path A x z
+  compPath {x} {y} p q = λ i → primComp (λ j → A) _ (λ j → λ { (i = i1) → q j ; (i = i0) → x }) (p i)
+
+  trans : {x y z : A} → x ≡ y → y ≡ z → x ≡ z
+  trans {x = x} p q i = hcomp (λ j → \ { (i = i0) → x ; (i = i1) → q j }) (p i)
 
   refl : {x : A} → x ≡ x
   refl {x} = λ _ → x
@@ -22,9 +24,6 @@ module _ {ℓ} {A : Set ℓ} where
 
   coe : ∀ {ℓ : Level} {A B : Set ℓ} → A ≡ B → A → B
   coe p a = primComp (λ i → p i) i0 (λ _ → empty) a
-
-  compPath : {x y z : A} → x ≡ y → y ≡ z → x ≡ z
-  compPath {x = x} p q i = hcomp (λ j → \ { (i = i0) → x ; (i = i1) → q j }) (p i)
 
 module _ {ℓ ℓ'} {A : Set ℓ} {x : A} (P : ∀ y → x ≡ y → Set ℓ') (d : P x refl) where
 
@@ -85,7 +84,7 @@ nonDepPath _ _ = refl
 
 isOfHLevel : ∀ {ℓ} → ℕ → Set ℓ → Set ℓ
 isOfHLevel zero A = isContr A
-isOfHLevel (suc n) A = (x y : A) → isOfHLevel n (x ≡ y)
+isOfHLevel (succ n) A = (x y : A) → isOfHLevel n (x ≡ y)
 
 HLevel : ∀ {ℓ} → ℕ → Set _
 HLevel {ℓ} n = Σ[ A ∈ Set ℓ ] (isOfHLevel n A)

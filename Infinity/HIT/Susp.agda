@@ -1,15 +1,16 @@
-{-# OPTIONS --cubical #-}
-module Cubical.HITs.Susp where
+{-# OPTIONS --cubical --safe #-}
+module Infinity.HIT.Susp where
 
-open import Cubical.Core.Primitives
-open import Cubical.Core.Prelude
-open import Cubical.Core.Glue
+open import Infinity.Core public
+open import Infinity.Proto
+open import Infinity.Path
+open import Infinity.Inductive.Two
+open import Infinity.Equiv
+open import Infinity.Univ
+open import Infinity.HIT.S1
+open import Infinity.HIT.S2
 
-open import Cubical.Basics.Bool
-open import Cubical.Basics.Equiv
-
-open import Cubical.HITs.S1
-open import Cubical.HITs.S2
+open import Agda.Builtin.Bool public
 
 data Susp {ℓ} (A : Set ℓ) : Set ℓ where
   north : Susp A
@@ -27,7 +28,7 @@ SuspBool→S¹ (merid true i)  = base
 
 S¹→SuspBool : S¹ → SuspBool
 S¹→SuspBool base     = north
-S¹→SuspBool (loop i) = compPath (merid false) (sym (merid true)) i
+S¹→SuspBool (loop i) = trans (merid false) (sym (merid true)) i
 
 SuspBool→S¹→SuspBool : (x : SuspBool) → Path _ (S¹→SuspBool (SuspBool→S¹ x)) x
 SuspBool→S¹→SuspBool north = refl

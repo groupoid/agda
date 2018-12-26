@@ -1,0 +1,13 @@
+cubicaltt
+    filter remove_haskell_comments >filename<
+    extension ctt
+    3rd_gen_scale 2.11
+Lean
+    filter remove_haskell_comments >filename<
+    filter remove_between_general /- -/
+    extension lean
+    3rd_gen_scale 2.11
+Agda
+    filter remove_haskell_comments >filename<
+    extension agda
+    3rd_gen_scale 2.11

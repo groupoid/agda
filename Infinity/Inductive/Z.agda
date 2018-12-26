@@ -11,32 +11,32 @@ data ℤ : Set where
   negsuc : (n : ℕ) → ℤ
 
 sucℤ : ℤ → ℤ
-sucℤ (pos n)          = pos (suc n)
-sucℤ (negsuc zero)    = pos zero
-sucℤ (negsuc (suc n)) = negsuc n
+sucℤ (pos n)           = pos (succ n)
+sucℤ (negsuc zero)     = pos zero
+sucℤ (negsuc (succ n)) = negsuc n
 
 predℤ : ℤ → ℤ
-predℤ (pos zero)      = negsuc zero
-predℤ (pos (suc n))   = pos n
-predℤ (negsuc n)      = negsuc (suc n)
+predℤ (pos zero)       = negsuc zero
+predℤ (pos (succ n))   = pos n
+predℤ (negsuc n)       = negsuc (succ n)
 
 sucPred : ∀ i → sucℤ (predℤ i) ≡ i
-sucPred (pos zero)       = refl
-sucPred (pos (suc n))    = refl
-sucPred (negsuc zero)    = refl
-sucPred (negsuc (suc n)) = refl
+sucPred (pos zero)        = refl
+sucPred (pos (succ n))    = refl
+sucPred (negsuc zero)     = refl
+sucPred (negsuc (succ n)) = refl
 
 predSuc : ∀ i → predℤ (sucℤ i) ≡ i
-predSuc (pos zero)       = refl
-predSuc (pos (suc n))    = refl
-predSuc (negsuc zero)    = refl
-predSuc (negsuc (suc n)) = refl
+predSuc (pos zero)        = refl
+predSuc (pos (succ n))    = refl
+predSuc (negsuc zero)     = refl
+predSuc (negsuc (succ n)) = refl
 
 oneℤ : ℤ 
-oneℤ = pos (suc zero)
+oneℤ = pos (succ zero)
 
 twoℤ : ℤ
-twoℤ = pos (suc (suc zero))
+twoℤ = pos (succ (succ zero))
 
 suc-equiv : ℤ ≃ ℤ
 suc-equiv .π⃐ = sucℤ

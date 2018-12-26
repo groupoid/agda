@@ -11,7 +11,7 @@ Cantor : Set
 Cantor = ℕ → 𝟚
 
 decreasing : Cantor → Set 
-decreasing f = (i : ℕ) → f i ≥ f (suc i)
+decreasing f = (i : ℕ) → f i ≥ f (succ i)
 
 ℕ∞ : Set 
 ℕ∞ = ∃ λ (a : Cantor) → decreasing a
