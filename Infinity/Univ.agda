@@ -1,11 +1,11 @@
 {-# OPTIONS --cubical --safe #-}
 module Infinity.Univ where
 
-open import Agda.Builtin.Sigma renaming ( snd to π⃑; fst to π⃐)
 open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.Equiv
-open import Infinity.Sigma
+open import Infinity.Sigma public
+
 open import Agda.Builtin.Cubical.Glue public
      using ( isEquiv
            ; _≃_
