@@ -14,6 +14,7 @@ open import Infinity.Inductive.Empty public
 open import Infinity.Inductive.One public
 open import Infinity.Inductive.Two public
 open import Infinity.Inductive.Fin public
+open import Infinity.Inductive.Nat public
 open import Infinity.Reason hiding ( _≡_ ; _≡⟨_⟩_ ; _∎ ) public
 open import Infinity.Group.Homotopy hiding (∣_∣) public
 open import Infinity.Group.Hopf public

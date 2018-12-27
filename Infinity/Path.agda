@@ -5,6 +5,7 @@ module Infinity.Path where
 open import Infinity.Core public
 open import Infinity.Proto
 open import Infinity.Sigma
+open import Infinity.Inductive.Empty
 
 module _ {ℓ} {A : Set ℓ} where
 
@@ -90,6 +91,12 @@ isContr→isProp (x , p) a b i = hcomp (λ j → λ { (i = i0) → p a j ; (i = 
 
 inhProp→isContr : ∀ {A : Set ℓ} → A → isProp A → isContr A
 inhProp→isContr x h = x , h x
+
+isProp⊥ : isProp ⊥
+isProp⊥ x = ⊥-elim x
+
+isProp¬ : ∀ {l} → (A : Set l) → isProp (¬ A)
+isProp¬ A p q i x = isProp⊥ (p x) (q x) i
 
 isProp→isSet : ∀ {A : Set ℓ} → isProp A → isSet A
 isProp→isSet h a b p q j i = hcomp (λ k → λ { (i = i0) → h a a k ; (i = i1) → h a b k
