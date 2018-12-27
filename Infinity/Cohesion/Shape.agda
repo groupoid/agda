@@ -1,11 +1,11 @@
 {-# OPTIONS --cubical --type-in-type #-}
 
-module Infinity.Cohesion.Shape where 
+module Infinity.Cohesion.Shape where
 
-variable 𝔸 : Set 
+variable 𝔸 : Set
 
-data #∫ (A : Set₀) : Set₀ where 
-    #σ  :  A → #∫ A 
+data #∫ (A : Set₀) : Set₀ where
+    #σ  :  A → #∫ A
     #κ  : (𝔸 → #∫ A) → #∫ A
     #κ' : (𝔸 → #∫ A) → #∫ A
 

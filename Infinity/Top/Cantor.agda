@@ -7,13 +7,13 @@ open import Infinity.Sigma
 open import Infinity.Path
 open import Infinity.Inductive.Two
 
-Cantor : Set 
+Cantor : Set
 Cantor = ℕ → 𝟚
 
-decreasing : Cantor → Set 
+decreasing : Cantor → Set
 decreasing f = (i : ℕ) → f i ≥ f (succ i)
 
-ℕ∞ : Set 
+ℕ∞ : Set
 ℕ∞ = ∃ λ (a : Cantor) → decreasing a
 
 -- ∞ : ℕ∞

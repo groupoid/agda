@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Cohesion.Etale where 
+module Infinity.Cohesion.Etale where
 
-open import Infinity.Proto 
+open import Infinity.Proto
 

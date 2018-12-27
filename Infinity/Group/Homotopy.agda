@@ -7,7 +7,7 @@ open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.HIT.S1
 open import Infinity.HIT.Trunc hiding (∣_∣)
-open import Infinity.Inductive.Z 
+open import Infinity.Inductive.Z
 
 Set₊ : Set
 Set₊ = Σ[ A ∈ Set ] A
@@ -19,7 +19,6 @@ pt : (A : Set₊) → ∣ A ∣
 pt = π⃑
 
 Ω : Set₊ → Set₊
--- Ω X = ((S¹ → ∣ X ∣) , (base → (pt X)))
 Ω X = ((pt X) ≡ (pt X)) , refl
 
 Map₊ : Set₊ → Set₊ → Set

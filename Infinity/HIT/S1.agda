@@ -20,22 +20,22 @@ helix : S¹ → Set
 helix base = ℤ
 helix (loop i) = sucPathInt i
 
-loopS¹ : Set 
-loopS¹ = base ≡ base 
+loopS¹ : Set
+loopS¹ = base ≡ base
 
-invloop : base ≡ base 
+invloop : base ≡ base
 invloop = λ i → loop (~ i)
 
-_∘S¹_ : loopS¹ → loopS¹ → loopS¹ 
+_∘S¹_ : loopS¹ → loopS¹ → loopS¹
 _∘S¹_ = trans
 
-module S¹-Elim {P : S¹ → Set ℓ} (base* : P base) (loop* : PathP (λ i → P (loop i)) base* base*) where 
-  postulate S¹-elim : ∀ x → P x 
+module S¹-Elim {P : S¹ → Set ℓ} (base* : P base) (loop* : PathP (λ i → P (loop i)) base* base*) where
+  postulate S¹-elim : ∀ x → P x
 
 open S¹-Elim public
 
-π₁S¹ : Set 
-π₁S¹ = base ≡ base 
+π₁S¹ : Set
+π₁S¹ = base ≡ base
 
 oneTurn : ∀ {l : loopS¹} → loopS¹
 oneTurn {l = l} = l ∘S¹ loop
@@ -47,12 +47,12 @@ loop̂⁻¹ᵢ : ℕ → loopS¹
 loop̂⁻¹ᵢ zero = invloop
 loop̂⁻¹ᵢ (succ n) = invTurn {l = loop̂⁻¹ᵢ n}
 
-natLoop : ℕ → base ≡ base 
-natLoop zero    = refl 
+natLoop : ℕ → base ≡ base
+natLoop zero    = refl
 natLoop (succ n) = trans (natLoop n) loop
 
-intLoop : ℤ → base ≡ base 
-intLoop (pos    n) = natLoop n 
+intLoop : ℤ → base ≡ base
+intLoop (pos    n) = natLoop n
 intLoop (negsuc n) = sym (natLoop (succ n))
 
 -- Hopf prerequisites

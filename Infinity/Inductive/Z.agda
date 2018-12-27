@@ -12,10 +12,10 @@ data ℤ : Set where
   negsuc : (n : ℕ) → ℤ
 
 ℤtoℕ : ℤ → ℕ
-ℤtoℕ (pos    n) = n 
+ℤtoℕ (pos    n) = n
 ℤtoℕ (negsuc n) = n
 
-ℕtoℤ : ℕ → ℤ 
+ℕtoℤ : ℕ → ℤ
 ℕtoℤ zero     = pos zero
 ℕtoℤ (succ n) = pos n
 
@@ -41,7 +41,7 @@ predSuc (pos (succ n))    = refl
 predSuc (negsuc zero)     = refl
 predSuc (negsuc (succ n)) = refl
 
-oneℤ : ℤ 
+oneℤ : ℤ
 oneℤ = pos (succ zero)
 
 twoℤ : ℤ
