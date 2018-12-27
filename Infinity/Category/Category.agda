@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical #-}
+
 module Infinity.Category.Category where
 
 open import Infinity.Core public

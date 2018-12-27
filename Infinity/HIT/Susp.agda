@@ -33,24 +33,21 @@ S¹→SuspBool (loop i) = trans (merid false) (sym (merid true)) i
 
 SuspBool→S¹→SuspBool : (x : SuspBool) → Path _ (S¹→SuspBool (SuspBool→S¹ x)) x
 SuspBool→S¹→SuspBool north = refl
-SuspBool→S¹→SuspBool south = merid true 
+SuspBool→S¹→SuspBool south = merid true
 SuspBool→S¹→SuspBool (merid false i) = λ j → hcomp (λ k → (λ { (j = i1) → merid false i
                                                              ; (i = i0) → north
-                                                             ; (i = i1) → merid true (j ∨ ~ k)}))
-                                                   (merid false i)
+                                                             ; (i = i1) → merid true (j ∨ ~ k)})) (merid false i)
 SuspBool→S¹→SuspBool (merid true i)  = λ j → merid true (i ∧ j)
 
 S¹→SuspBool→S¹ : (x : S¹) → SuspBool→S¹ (S¹→SuspBool x) ≡ x
 S¹→SuspBool→S¹ base     = refl
-S¹→SuspBool→S¹ (loop i) = λ j →
-  hfill (λ k → \ { (i = i0) → base; (i = i1) → base }) (inc (loop i)) (~ j)
+S¹→SuspBool→S¹ (loop i) = λ j → hfill (λ k → \ { (i = i0) → base; (i = i1) → base }) (inc (loop i)) (~ j)
 
 S¹≃SuspBool : S¹ ≃ SuspBool
 S¹≃SuspBool = isoToEquiv S¹→SuspBool SuspBool→S¹ SuspBool→S¹→SuspBool S¹→SuspBool→S¹
 
 S¹≡SuspBool : S¹ ≡ SuspBool
 S¹≡SuspBool = isoToPath S¹→SuspBool SuspBool→S¹ SuspBool→S¹→SuspBool S¹→SuspBool→S¹
-
 
 -- Now the sphere
 
@@ -67,5 +64,4 @@ S²→SuspS¹ base = north
 S²→SuspS¹ (surf i j) = hcomp (λ k → λ { (i = i0) → north
                                       ; (i = i1) → merid base (~ k)
                                       ; (j = i0) → merid base (~ k ∧ i)
-                                      ; (j = i1) → merid base (~ k ∧ i) })
-                             (merid (loop j) i)
+                                      ; (j = i1) → merid base (~ k ∧ i) }) (merid (loop j) i)

@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Group.Hopf where
 
 open import Infinity.Core public

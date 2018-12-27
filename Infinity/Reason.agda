@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Reason where
 
 open import Agda.Builtin.Sigma public

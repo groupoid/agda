@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Proto where
 
 open import Agda.Builtin.Nat public using (zero; _+_; _*_) renaming (Nat to ℕ ; suc to succ)

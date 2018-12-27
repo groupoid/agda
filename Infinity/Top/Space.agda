@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Top.Space where
 
 open import Infinity.Proto

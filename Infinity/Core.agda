@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Core where
 
 open import Agda.Builtin.Cubical.Path public
