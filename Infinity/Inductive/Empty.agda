@@ -1,12 +1,14 @@
 module Infinity.Inductive.Empty where
 
+open import Infinity.Proto using (ℓ)
+
 data ⊥ : Set where
 
-efq : ∀ {ℓ} {A : Set ℓ} → ⊥ → A
+efq : ∀ {A : Set ℓ} → ⊥ → A
 efq ()
 
 infix 3 ¬_
 
-¬_ : ∀ {ℓ} → Set ℓ → Set ℓ
+¬_ : Set ℓ → Set ℓ
 ¬ P = P → ⊥
 

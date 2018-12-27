@@ -1,10 +1,12 @@
 module Infinity.Inductive.Either where
 
-data _ω_ {l} (A B : Set l) : Set l where
-  inl : A → A ω B
-  inr : B → A ω B
+open import Infinity.Proto
 
-either : ∀ {l} {A B C : Set l} → (A → C) → (B → C) → A ω B → C
+data _⊎_ (A B : Set ℓ) : Set ℓ where
+  inl : A → A ⊎ B
+  inr : B → A ⊎ B
+
+either : ∀ {A B C : Set ℓ} → (A → C) → (B → C) → A ⊎ B → C
 either f g (inl x) = f x
 either f g (inr x) = g x
 

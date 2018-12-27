@@ -6,14 +6,14 @@ open import Infinity.Proto
 open import Infinity.Sigma
 
 postulate 
-    ℑ : ∀ {i} → Set i → Set i
-    ι : ∀ {ℓ} {A : Set ℓ} → A → ℑ A 
+    ℑ : Set ℓ → Set ℓ
+    ι : ∀ {A : Set ℓ} → A → ℑ A 
     
-ℑ-unit-at : ∀ {ℓ} → (A : Set ℓ) → (A → ℑ A)
+ℑ-unit-at : (A : Set ℓ) → (A → ℑ A)
 ℑ-unit-at A = ι {_} {A}
 
 postulate 
-  _is-coreduced : ∀ {ℓ} → Set ℓ → Set ℓ
+  _is-coreduced : Set ℓ → Set ℓ
 -- A is-coreduced = ι {_} {A} isEquiv
 
 ℑ-Set₀ : Set₁
@@ -23,5 +23,5 @@ postulate
 ι-ℑ-Set₀ (A , _) = A
 
 postulate 
-    ℑ-is-coreduced : ∀ {ℓ} → (A : Set ℓ) → (ℑ A) is-coreduced 
+    ℑ-is-coreduced : (A : Set ℓ) → (ℑ A) is-coreduced 
     

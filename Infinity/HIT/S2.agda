@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.HIT.S2 where
 
 open import Infinity.Core public

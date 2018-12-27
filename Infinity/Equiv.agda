@@ -1,16 +1,18 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Equiv where
 
-open import Infinity.Path public
-open import Infinity.Sigma public
-open import Agda.Builtin.Cubical.Glue public using (isEquiv ; _≃_)
+open import Infinity.Path
+open import Infinity.Sigma 
+
+open import Agda.Builtin.Cubical.Glue using (isEquiv ; _≃_)
 
 open isEquiv public
 
-isPropIsEquiv' : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) → isProp (isEquiv f)
+isPropIsEquiv' : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) → isProp (isEquiv f)
 equiv-proof (isPropIsEquiv' f u0 u1 i) y = isPropIsContr (u0 .equiv-proof y) (u1 .equiv-proof y) i
 
-isPropIsEquiv : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) → isProp (isEquiv f)
+isPropIsEquiv : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) → isProp (isEquiv f)
 equiv-proof (isPropIsEquiv f p q i) y =
   let p2 = p .equiv-proof y .π⃑
       q2 = q .equiv-proof y .π⃑
@@ -19,7 +21,7 @@ equiv-proof (isPropIsEquiv f p q i) y =
                                                            ; (j = i0) → p2 (q2 w (~ k)) i
                                                            ; (j = i1) → w }) (p2 w (i ∨ j))
 
-module _ {ℓ ℓ'} {A : Set ℓ} {B : A → Set ℓ'} where
+module _ {A : Set ℓ₁} {B : A → Set ℓ₂} where
 
   propPi : (h : (x : A) → isProp (B x)) → isProp ((x : A) → B x)
   propPi h f0 f1 i x = h x (f0 x) (f1 x) i
@@ -27,10 +29,10 @@ module _ {ℓ ℓ'} {A : Set ℓ} {B : A → Set ℓ'} where
   isProp→PathP : ((x : A) → isProp (B x)) → {a0 a1 : A} (p : a0 ≡ a1) (b0 : B a0) (b1 : B a1) → PathP (λ i → B (p i)) b0 b1
   isProp→PathP P p b0 b1 i = P (p i) (transp (λ j → B (p (i ∧ j))) (~ i) b0) (transp (λ j → B (p (i ∨ ~ j))) i b1) i
 
-equivEq : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (e f : A ≃ B) → (h : e .π⃐ ≡ f .π⃐) → e ≡ f
+equivEq : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (e f : A ≃ B) → (h : e .π⃐ ≡ f .π⃐) → e ≡ f
 equivEq e f h = λ i → (h i) , isProp→PathP isPropIsEquiv h (e .π⃑) (f .π⃑) i
 
-module _ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) (g : B → A)
+module _ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) (g : B → A)
          (s : (y : B) → f (g y) ≡ y) (t : (x : A) → g (f x) ≡ x) where
 
   private
@@ -73,7 +75,7 @@ module _ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (f : A → B) (g : B → A)
   isoToEquiv : A ≃ B
   isoToEquiv = _ , isoToIsEquiv
 
-module _ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (w : A ≃ B) where
+module _ {A : Set ℓ₁} {B : Set ℓ₂} (w : A ≃ B) where
 
   invEq : B → A
   invEq y = π⃐ (π⃐ (π⃑ w .equiv-proof y))
@@ -84,10 +86,10 @@ module _ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} (w : A ≃ B) where
   retEq : (y : B) → π⃐ w (invEq y) ≡ y
   retEq y = λ i → π⃑ (π⃐ (π⃑ w .equiv-proof y)) i
 
-invEquiv : ∀ {ℓ ℓ'} {A : Set ℓ} {B : Set ℓ'} → A ≃ B → B ≃ A
+invEquiv : ∀ {A : Set ℓ₁} {B : Set ℓ₂} → A ≃ B → B ≃ A
 invEquiv f = isoToEquiv (invEq f) (π⃐ f) (secEq f) (retEq f)
 
-compEquiv : ∀ {ℓ ℓ' ℓ''} {A : Set ℓ} {B : Set ℓ'} {C : Set ℓ''} → A ≃ B → B ≃ C → A ≃ C
+compEquiv : ∀ {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃} → A ≃ B → B ≃ C → A ≃ C
 compEquiv f g = isoToEquiv (λ x → g .π⃐ (f .π⃐ x))
                            (λ x → invEq f (invEq g x))
                            (λ y → compPath (cong (g .π⃐) (retEq f (invEq g y))) (retEq g y))

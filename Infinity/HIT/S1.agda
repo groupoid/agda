@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --rewriting #-}
+
 module Infinity.HIT.S1 where
 
 open import Infinity.Core
@@ -28,7 +29,7 @@ invloop = λ i → loop (~ i)
 _∘S¹_ : loopS¹ → loopS¹ → loopS¹ 
 _∘S¹_ = trans
 
-module S¹-Elim {ℓ : Level} {P : S¹ → Set ℓ} (base* : P base) (loop* : PathP (λ i → P (loop i)) base* base*) where 
+module S¹-Elim {P : S¹ → Set ℓ} (base* : P base) (loop* : PathP (λ i → P (loop i)) base* base*) where 
   postulate S¹-elim : ∀ x → P x 
 
 open S¹-Elim public
@@ -65,7 +66,7 @@ rot : S¹ → S¹ → S¹
 rot base x     = x
 rot (loop i) x = rotLoop x i
 
-isPropFamS¹ : ∀ {ℓ} (P : S¹ → Set ℓ) (pP : (x : S¹) → isProp (P x)) (b0 : P base) → PathP (λ i → P (loop i)) b0 b0
+isPropFamS¹ : (P : S¹ → Set ℓ) (pP : (x : S¹) → isProp (P x)) (b0 : P base) → PathP (λ i → P (loop i)) b0 b0
 isPropFamS¹ P pP b0 i = pP (loop i) (transp (λ j → P (loop (i ∧ j))) (~ i) b0) (transp (λ j → P (loop (i ∨ ~ j))) i b0) i
 
 rotIsEquiv : (a : S¹) → isEquiv (rot a)

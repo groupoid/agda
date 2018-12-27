@@ -1,8 +1,8 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --type-in-type #-}
 
 module Infinity.Cohesion.Shape where 
 
-postulate 𝔸 : Set 
+variable 𝔸 : Set 
 
 data #∫ (A : Set₀) : Set₀ where 
     #σ  :  A → #∫ A 

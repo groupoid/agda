@@ -4,7 +4,7 @@ module Infinity.Proto where
 open import Agda.Builtin.Nat public using (zero; _+_; _*_) renaming (Nat to ℕ ; suc to succ)
 open import Infinity.Core public
 
-module _ {ℓ₁ ℓ₂ ℓ₃} {A : Set ℓ₁} where
+module _ {A : Set ℓ₁} where
 
   flip : ∀ {B : Set ℓ₂} {C : A → B → Set ℓ₃} → ((x : A) (y : B) → C x y) → ((y : B) (x : A) → C x y)
   flip f = λ y x → f x y
@@ -20,16 +20,16 @@ module _ {ℓ₁ ℓ₂ ℓ₃} {A : Set ℓ₁} where
         → (x : A) → (y : B x) → D x y (f x y)
   g ⦂ f = λ x y → g (f x y)
 
-idFun : ∀ {ℓ} → (A : Set ℓ) → A → A
+idFun : (A : Set ℓ) → A → A
 idFun A x = x
 
-apply : ∀ {ℓ} {A B : Set ℓ} (f : A → B) (x : A) → B
+apply : ∀ {A B : Set ℓ} (f : A → B) (x : A) → B
 apply f x = f x
 
-typeof : ∀ {ℓ} {A : Set ℓ} → A → Set ℓ
+typeof : ∀ {A : Set ℓ} → A → Set ℓ
 typeof {A = A} _ = A
 
-record ⇑ {ℓ₁ ℓ₂} (X : Set ℓ₁) : Set (ℓ₁ ⊔ ℓ₂) where
+record ⇑ (X : Set ℓ₁) : Set (ℓ₁ ⊔ ℓ₂) where
     constructor ↑
     field ↓ : X
 

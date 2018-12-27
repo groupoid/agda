@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.HIT.Susp where
 
 open import Infinity.Core public
@@ -12,7 +13,7 @@ open import Infinity.HIT.S2
 
 open import Agda.Builtin.Bool public
 
-data Susp {ℓ} (A : Set ℓ) : Set ℓ where
+data Susp (A : Set ℓ) : Set ℓ where
   north : Susp A
   south : Susp A
   merid : (a : A) → north ≡ south

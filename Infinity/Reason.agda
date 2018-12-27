@@ -5,7 +5,7 @@ open import Agda.Builtin.Sigma public
 open import Infinity.Core public
 open import Infinity.Path public
 
-module _ {ℓ} {A : Set ℓ} where
+module _ {A : Set ℓ} where
 
   infix  3 _≡-qed _∎
   infixr 2 _≡⟨⟩_ _≡⟨_⟩_

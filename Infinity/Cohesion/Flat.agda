@@ -3,15 +3,15 @@
 module Infinity.Cohesion.Flat where 
 
 open import Infinity.Proto
-open import Infinity.Univalence
+open import Infinity.Univ
 
 -- data Crisp {ℓ : Level} (A : Set ℓ) : Set ℓ where 
     -- _is-crisp : A → Crisp A 
 
-_is-crisp : ∀ {ℓ : Level} → Set ℓ → Set ℓ
+_is-crisp : Set ℓ → Set ℓ
 A is-crisp = A
 
-data ♭ {ℓ : Level} (A : Set ℓ) : Set ℓ where 
+data ♭ (A : Set ℓ) : Set ℓ where 
     _^♭ : (a : A is-crisp) → ♭ A
 
 ♭-ind : ∀ {ç : Level} {ℓ : Level is-crisp} {A : Set ℓ is-crisp} 
@@ -29,11 +29,11 @@ postulate _is-discrete : ∀ (A : Set₀ is-crisp) → Set₀
 
 postulate ♭-indempotent : ∀ (A : Set₀ is-crisp) → (♭ A) is-crisp
 
-let♭ : ∀ {ℓ₁ ℓ₂} {A : Set ℓ₁ is-crisp} {C : ♭ A → Set ℓ₂ is-crisp} 
+let♭ : ∀ {A : Set ℓ₁ is-crisp} {C : ♭ A → Set ℓ₂ is-crisp} 
      → (s : ♭ A) → (t : (u : A is-crisp) → C (u ^♭)) → C s 
 let♭ (a ^♭) t = t a
 
-let♭' : ∀ {ℓ₁ ℓ₂} {A : Set ℓ₁ is-crisp} {C : ♭ A → Set ℓ₂ is-crisp} 
+let♭' : ∀ {A : Set ℓ₁ is-crisp} {C : ♭ A → Set ℓ₂ is-crisp} 
      → (s : ♭ A) → (t : (u : A is-crisp) → C (u ^♭)) → C s 
 let♭' {C = C} x t = let♭ {C = C} x t
 

@@ -1,4 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
+
 module Infinity.Inductive.Z where
 
 open import Infinity.Proto
@@ -9,6 +10,14 @@ open import Infinity.Univ
 data ℤ : Set where
   pos    : (n : ℕ) → ℤ
   negsuc : (n : ℕ) → ℤ
+
+ℤtoℕ : ℤ → ℕ
+ℤtoℕ (pos    n) = n 
+ℤtoℕ (negsuc n) = n
+
+ℕtoℤ : ℕ → ℤ 
+ℕtoℤ zero     = pos zero
+ℕtoℤ (succ n) = pos n
 
 sucℤ : ℤ → ℤ
 sucℤ (pos n)           = pos (succ n)

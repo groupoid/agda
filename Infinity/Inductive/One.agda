@@ -1,3 +1,3 @@
 module Infinity.Inductive.One where
 
-data ⊤ : Set where unit : ⊤
+record ⊤ : Set where constructor unit 

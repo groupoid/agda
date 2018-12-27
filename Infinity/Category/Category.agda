@@ -7,7 +7,7 @@ open import Infinity.Path
 open import Infinity.Sigma
 
 -- Functor
-record Func {ℓ} : Set (ℓ-suc ℓ) where
+record Func : Set (ℓ-succ ℓ) where
   field
     map      : Set ℓ → Set ℓ
     fmap     : {A B : Set ℓ} → (A → B) → map A → map B
@@ -16,13 +16,13 @@ record Func {ℓ} : Set (ℓ-suc ℓ) where
                  fmap (g ∘ f) ≡ (fmap g) ∘ (fmap f)
 
 -- Functor Path
-record Func≡ {ℓ} : Set (ℓ-suc ℓ) where
+record Func≡ : Set (ℓ-succ ℓ) where
   field F G : Func {ℓ}
   module L = Func F
   module R = Func G
 
   field
-    map≡      : (A : Set ℓ) → Path (L.map A)        (R.map A)
+    map≡      : (A : Set ℓ) → (L.map A) ≡ (R.map A)
     fmap≡     : {A B : Set ℓ} → (f : A → B) → PathP (λ i → map≡ A i → map≡ B i) (L.fmap f)       (R.fmap f)
     presId≡   : (A : Set ℓ) → PathP (λ i → fmap≡ (idFun A) i ≡ idFun (map≡ A i)) (L.presId A)     (R.presId A)
     presComp≡ : {A B C : Set ℓ} → (f : A → B) → (g : B → C) → PathP (λ i → fmap≡ (g ∘ f) i ≡ (fmap≡ g) i ∘ (fmap≡ f) i)
@@ -51,7 +51,7 @@ G ∘ᶠ F = record
   } where module F = Func F
           module G = Func G
 
-idᶠLeft : ∀{ℓ}{F : Func {ℓ}} → idᶠ ∘ᶠ F ≡ F
+idᶠLeft : ∀ {F : Func {ℓ}} → idᶠ ∘ᶠ F ≡ F
 idᶠLeft {ℓ} {F} =
   directpath where
   -- Func≡.path r where
@@ -88,7 +88,7 @@ idᶠLeft {ℓ} {F} =
 
 -- Natural Transformation
 infixr 40 _⇒ⁿ_
-record _⇒ⁿ_ {ℓ} (F G : Func {ℓ}) : Set (ℓ-suc ℓ) where
+record _⇒ⁿ_ {ℓ} (F G : Func {ℓ}) : Set (ℓ-succ ℓ) where
   module F = Func F
   module G = Func G
   field
