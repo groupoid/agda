@@ -28,8 +28,7 @@ open import Infinity.HIT.S2 public
 open import Infinity.HIT.Susp public
 open import Infinity.HIT.Pushout public
 open import Infinity.HIT.Pullback public
-open import Infinity.Cohesion.Flat public 
-open import Infinity.Cohesion.Im public 
-open import Infinity.Cohesion.Shape public 
-
-
+open import Infinity.Cohesion.Flat public
+open import Infinity.Cohesion.Im public
+open import Infinity.Cohesion.Shape public
+open import Infinity.Cohesion.Bundle
