@@ -13,8 +13,7 @@ record Func : Set (ℓ-succ ℓ) where
     map      : Set ℓ → Set ℓ
     fmap     : {A B : Set ℓ} → (A → B) → map A → map B
     presId   : (A : Set ℓ) → fmap (idFun A) ≡ idFun (map A)
-    presComp : {A B C : Set ℓ} → (f : A → B) → (g : B → C) →
-                 fmap (g ∘ f) ≡ (fmap g) ∘ (fmap f)
+    presComp : {A B C : Set ℓ} → (f : A → B) → (g : B → C) → fmap (g ∘ f) ≡ (fmap g) ∘ (fmap f)
 
 -- Functor Path
 record Func≡ : Set (ℓ-succ ℓ) where

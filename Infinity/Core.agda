@@ -24,6 +24,7 @@ variable
     ℓ₁ : Level
     ℓ₂ : Level
     ℓ₃ : Level
+    ℓ₄ : Level
     ℓₚ : I → Level
 
 infix 4 _[_≡_]
