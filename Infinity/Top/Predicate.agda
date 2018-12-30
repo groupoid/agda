@@ -16,7 +16,7 @@ module _ {A : Set ℓ} where
     _∉_ : A → Pred A → Set _
     x ∉ P = ¬ x ∈ P
 
-    _⊆_ : Pred A → Pred A → Set _
+    _⊆_ : Pred A → Pred A → Set ℓ
     P ⊆ Q = ∀ {x} → x ∈ P → x ∈ Q
 
     _⊈_ : Pred A → Pred A → Set _

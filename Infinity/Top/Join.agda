@@ -2,4 +2,4 @@
 
 module Infinity.Top.Join
 
-open imoprt Infinity.Proto
+open import Infinity.Proto

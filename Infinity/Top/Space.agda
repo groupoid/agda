@@ -89,3 +89,4 @@ stable-path→isSet {A = A} st a b p q j i =
 -- Hedberg's theorem
 discrete→isSet : ∀ {ℓ} {A : Set ℓ} → discrete A → isSet A
 discrete→isSet d = stable-path→isSet (λ x y → dec→stable (x ≡ y) (d x y))
+
