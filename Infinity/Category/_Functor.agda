@@ -2,72 +2,133 @@
 
 module Infinity.Category._Functor where
 
--- open import Infinity.Core 
+open import Infinity.Core public
 open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.Sigma
-open import Infinity.Category.Cat
 
--- Canonical Functor definition
-record Functor {Ob-A : Set ℓ} {Hom-A : Ob-A → Ob-A → Set ℓ} (Cat-A : Category Hom-A)
-               {Ob-B : Set ℓ} {Hom-B : Ob-B → Ob-B → Set ℓ} (Cat-B : Category Hom-B)
-               (Ob-F : Ob-A → Ob-B) : Set (ℓ-succ ℓ) where
-  private module A = Category Cat-A
-  private module B = Category Cat-B
-  field 
-    fmap          : ∀ {A B   : Ob-A} (_ : Hom-A A B)                 → Hom-B (Ob-F A) (Ob-F B)
-    .{{presId}}   : ∀ {A     : Ob-A}                                 → fmap (A.id {A}) ≡ B.id {Ob-F A}
-    .{{presComp}} : ∀ {A B C : Ob-A} (f : Hom-A A B) (g : Hom-A B C) → fmap (f A.◯ g)  ≡ (fmap f) B.◯ (fmap g)
+-- Functor
+record Func : Set (ℓ-succ ℓ) where
+  field
+    map      : Set ℓ → Set ℓ
+    fmap     : {A B : Set ℓ} → (A → B) → map A → map B
+    presId   : (A : Set ℓ) → fmap (idFun A) ≡ idFun (map A)
+    presComp : {A B C : Set ℓ} → (f : A → B) → (g : B → C) → fmap (g ∘ f) ≡ (fmap g) ∘ (fmap f)
 
--- Identity Functor 
-idᶠ : ∀ {Ob : Set ℓ} {Hom : Ob → Ob → Set ℓ} {C : Category Hom} → Functor {ℓ} C C λ X → X
-idᶠ {_} {Ob} {Hom} {C} = record { -- map      = λ x → Category.id C {x}
-                                  fmap     = λ {A B} → idFun (Hom A B)
-                                ; presId   = λ _   → id
-                                ; presComp = λ _ _ → refl }
-  where open Category C
+-- Functor Path
+record Func≡ : Set (ℓ-succ ℓ) where
+  field F G : Func {ℓ}
+  module L = Func F
+  module R = Func G
 
--- Internal agda error 
--- module _ {Obj-A : Set ℓ} {Arr-A : Obj-A -> Obj-A -> Set ℓ} {Cat-A : Category Arr-A}
---          {Obj-B : Set ℓ} {Arr-B : Obj-B -> Obj-B -> Set ℓ} {Cat-B : Category Arr-B}
---          {Obj-C : Set ℓ} {Arr-C : Obj-C -> Obj-C -> Set ℓ} {Cat-C : Category Arr-C}
---          {Obj-F : Obj-A -> Obj-B} {Obj-G : Obj-B -> Obj-C} where
---   private
---     module R = Category Cat-A
---     module S = Category Cat-B
---     module T = Category Cat-C
-    
---     _○ᶠ_ : Functor Cat-A Cat-B Obj-F
---          → Functor Cat-B Cat-C Obj-G
---          → Functor Cat-A Cat-C (λ x → Obj-G (Obj-F x))
---     (F ○ᶠ G) = record { map = ?
---                       ; fmap = λ x → G.fmap (F.fmap x)
---                       ; presId = λ A → trans (cong G.fmap (F.presId A)) (G.presId _)
---                       } where module F = Functor F 
---                               module G = Functor G
---     infixr 20 _○ᶠ_
-    
--- Composition of Functors 
-module _ {Obj-A : Set} {Arr-A : Obj-A → Obj-A → Set} {Cat-A : Category Arr-A}
-         {Obj-B : Set} {Arr-B : Obj-B → Obj-B → Set} {Cat-B : Category Arr-B}
-         {Obj-C : Set} {Arr-C : Obj-C → Obj-C → Set} {Cat-C : Category Arr-C}
-         {Obj-F : Obj-A → Obj-B} {Obj-G : Obj-B → Obj-C}
-  where
-  private
-    module R = Category Cat-A
-    module S = Category Cat-B
-    module T = Category Cat-C
+  field
+    map≡      : (A : Set ℓ) → (L.map A) ≡ (R.map A)
+    fmap≡     : {A B : Set ℓ} → (f : A → B) → PathP (λ i → map≡ A i → map≡ B i) (L.fmap f)       (R.fmap f)
+    presId≡   : (A : Set ℓ) → PathP (λ i → fmap≡ (idFun A) i ≡ idFun (map≡ A i)) (L.presId A)     (R.presId A)
+    presComp≡ : {A B C : Set ℓ} → (f : A → B) → (g : B → C) → PathP (λ i → fmap≡ (g ∘ f) i ≡ (fmap≡ g) i ∘ (fmap≡ f) i)
+                (L.presComp f g) (R.presComp f g)
 
-  _○ᶠ_ : Functor Cat-A Cat-B Obj-F
-       → Functor Cat-B Cat-C Obj-G
-       → Functor Cat-A Cat-C (λ x → Obj-G (Obj-F x))
-  Functor.fmap (F ○ᶠ G) = λ x → G.fmap (F.fmap x)
-    where module F = Functor F 
-          module G = Functor G 
-  Functor.presId (F ○ᶠ G) = λ A → trans (cong G.fmap (F.presId A)) (G.presId _)
-    where module F = Functor F
-          module G = Functor G
-  Functor.presComp (F ○ᶠ G) f g = λ f g → trans (cong G.fmap (F.presComp f g)) (G.presComp _ _)
-    where module F = Functor F
-          module G = Functor G
-  infixr 20 _○ᶠ_
+  path : F ≡ G
+  path i = record { map      = λ A   → map≡      A   i
+                  ; fmap     = λ f   → fmap≡     f   i
+                  ; presId   = λ A   → presId≡   A   i
+                  ; presComp = λ f g → presComp≡ f g i }
+
+idᶠ : ∀{ℓ} → Func {ℓ}
+idᶠ = record { map      = idFun (Set _)
+             ; fmap     = λ {A B} → idFun (A → B)
+             ; presId   = λ _ → refl
+             ; presComp = λ _ _ → refl }
+
+-- Composition of Functor
+infixr 45 _∘ᶠ_
+_∘ᶠ_ : ∀{ℓ} → Func {ℓ} → Func {ℓ} → Func {ℓ}
+G ∘ᶠ F = record
+  { map      = G.map ∘ F.map
+  ; fmap     = G.fmap ∘ F.fmap
+  ; presId   = λ A → trans (cong G.fmap (F.presId A)) (G.presId _)
+  ; presComp = λ f g → trans (cong G.fmap (F.presComp f g)) (G.presComp _ _)
+  } where module F = Func F
+          module G = Func G
+
+-- idᶠLeft : ∀ {F : Func {ℓ}} → idᶠ ∘ᶠ F ≡ F
+-- idᶠLeft {ℓ} {F} =
+--   directpath where
+--   -- Func≡.path r where
+--   module L = Func (idᶠ ∘ᶠ F)
+--   module R = Func F
+--   -- map≡ : L.map ≡ R.map
+--   -- map≡ = funExt (λ _ → refl)
+--   -- r = record { F         = idᶠ ∘ᶠ F
+--   --            ; G         = F
+--   --            ; map≡      = λ A → refl
+--   --            ; fmap≡     = λ f → funExt λ _ → refl
+--   --            ; presId≡   = λ A → {!!}
+--   --            ; presComp≡ = λ f g → {!!}
+--   --            }
+
+--   trans-id : ∀ {ℓ}{A : Set ℓ} {x y : A} → (p : x ≡ y) → trans p (\ i → y) ≡ p
+--   trans-id {A = A} {x} {y} p i j = Infinity.Core.fill (λ _ → A) _
+--                                              (λ { i (j = i0) → x
+--                                                 ; i (j = i1) → y })
+--                                              (inc (p j))
+--                                              (~ i)
+
+--   directpath : idᶠ ∘ᶠ F ≡ F
+--   directpath i = record
+--     { map = R.map
+--     ; fmap = R.fmap
+--     ; presId = λ A → trans-id (R.presId A) i
+--     ; presComp = \ f g → trans-id (R.presComp f g) i
+--     }
+
+-- idᶠRight : ∀{ℓ}{F : Func {ℓ}} → F ∘ᶠ idᶠ ≡ F
+-- idᶠRight {ℓ} {F} = TODO
+
+
+-- Natural Transformation
+infixr 40 _⇒ⁿ_
+record _⇒ⁿ_ {ℓ} (F G : Func {ℓ}) : Set (ℓ-succ ℓ) where
+  module F = Func F
+  module G = Func G
+  field
+    map : (A : Set ℓ) → F.map A → G.map A
+    nat : ∀{A B} → (f : A → B) → (G.fmap f) ∘ (map A) ≡ (map B) ∘ (F.fmap f)
+
+-- Natural Transformation identity over Functor
+idⁿ : ∀{ℓ} → (F : Func {ℓ}) → F ⇒ⁿ F
+idⁿ F = record { map = λ A → idFun (Func.map F A)
+               ; nat = λ _ → refl }
+
+-- Vertical Composition of Natural Transformation
+infixr 35 _∘ⁿ_
+_∘ⁿ_ : ∀{ℓ}{F G H : Func {ℓ}} → G ⇒ⁿ H → F ⇒ⁿ G → F ⇒ⁿ H
+_∘ⁿ_ {F = F} {H = H} β α = record { map = λ A → β.map A ∘ α.map A
+                                  ; nat = nat } where
+  module F = Func F
+  module H = Func H
+  module α = _⇒ⁿ_ α
+  module β = _⇒ⁿ_ β
+  nat : ∀{A B} → (f : A → B) → H.fmap f ∘ (β.map A ∘ α.map A)
+                            ≡ (β.map B ∘ α.map B) ∘ F.fmap f
+  nat {A} {B} f = trans (λ i → β.nat f i ∘ α.map A) (λ i → β.map B ∘ α.nat f i)
+
+
+-- Horizontal Composition of Natural Transformation
+infixr 35 _⋆ⁿ_
+_⋆ⁿ_ : ∀{ℓ}{F F' G G' : Func {ℓ}} → F ⇒ⁿ G → F' ⇒ⁿ G' → (F' ∘ᶠ F) ⇒ⁿ (G' ∘ᶠ G)
+_⋆ⁿ_ {ℓ} {F} {F'} {G} {G'} α β = record { map = map ; nat = nat } where
+  module F  = Func F
+  module F' = Func F'
+  module G  = Func G
+  module G' = Func G'
+  module F'∘F = Func (F' ∘ᶠ F)
+  module G'∘G = Func (G' ∘ᶠ G)
+  module α  = _⇒ⁿ_ α
+  module β  = _⇒ⁿ_ β
+  map : (A : Set ℓ) → F'∘F.map A → G'∘G.map A
+  map A = β.map (G.map A) ∘ F'.fmap (α.map A)
+  nat : ∀{A B} → (f : A → B) → G'∘G.fmap f ∘ map A ≡ map B ∘ F'∘F.fmap f
+  nat {A} {B} f = trans (λ i → β.nat (G.fmap f) i ∘ F'.fmap (α.map A))
+    (cong (β.map (G.map B) ∘_) (trans (sym (F'.presComp (α.map A) (G.fmap f)))
+    (trans (cong F'.fmap (α.nat f)) (F'.presComp (F.fmap f) (α.map B)))))
