@@ -9,22 +9,22 @@ open import Infinity.Sigma
 open import Infinity.Category.Cat
 
 -- Canonical Functor definition
-record Functor {Ob-A : Set ℓ} {Hom-A : Ob-A → Ob-A → Set ℓ} (Cat-A : Category Hom-A)
-               {Ob-B : Set ℓ} {Hom-B : Ob-B → Ob-B → Set ℓ} (Cat-B : Category Hom-B)
-               (Ob-F : Ob-A → Ob-B) : Set (ℓ-succ ℓ) where
+record Functor {Ob-A : Set} {Hom-A : Ob-A → Ob-A → Set} (Cat-A : Category Hom-A)
+               {Ob-B : Set} {Hom-B : Ob-B → Ob-B → Set} (Cat-B : Category Hom-B) : Set where
   private module A = Category Cat-A
   private module B = Category Cat-B
   field 
-    fmap          : ∀ {A B   : Ob-A} (_ : Hom-A A B)                 → Hom-B (Ob-F A) (Ob-F B)
-    .{{presId}}   : ∀ {A     : Ob-A}                                 → fmap (A.id {A}) ≡ B.id {Ob-F A}
+    map           : Ob-A → Ob-B
+    fmap          : ∀ {A B   : Ob-A} (_ : Hom-A A B)                 → Hom-B (map A) (map B)
+    .{{presId}}   : ∀ {A     : Ob-A}                                 → fmap (A.id {A}) ≡ B.id {map A}
     .{{presComp}} : ∀ {A B C : Ob-A} (f : Hom-A A B) (g : Hom-A B C) → fmap (f A.○ g)  ≡ (fmap f) B.○ (fmap g)
 
 -- Identity Functor 
-idᶠ : ∀ {Ob : Set ℓ} {Hom : Ob → Ob → Set ℓ} {C : Category Hom} → Functor {ℓ} C C λ X → X
-idᶠ {_} {Ob} {Hom} {C} = record { -- map      = λ x → Category.id C {x}
-                                  fmap     = λ {A B} → idFun (Hom A B)
-                                ; presId   = λ _   → id
-                                ; presComp = λ _ _ → refl }
+idᶠ : ∀ {Ob : Set} {Hom : Ob → Ob → Set} {C : Category Hom} → Functor C C 
+idᶠ {Ob} {Hom} {C} = record { -- map      = λ x → Category.id C {x}
+                              fmap     = λ {A B} → idFun (Hom A B)
+                            ; presId   = λ _   → id
+                            ; presComp = λ _ _ → refl }
   where open Category C
 
 -- Internal agda error 
@@ -51,8 +51,7 @@ idᶠ {_} {Ob} {Hom} {C} = record { -- map      = λ x → Category.id C {x}
 -- module _ {Obj-A : Set} {Arr-A : Obj-A → Obj-A → Set} {Cat-A : Category Arr-A}
 --          {Obj-B : Set} {Arr-B : Obj-B → Obj-B → Set} {Cat-B : Category Arr-B}
 --          {Obj-C : Set} {Arr-C : Obj-C → Obj-C → Set} {Cat-C : Category Arr-C}
---          {Obj-F : Obj-A → Obj-B} {Obj-G : Obj-B → Obj-C}
---   where
+--          {Obj-F : Obj-A → Obj-B} {Obj-G : Obj-B → Obj-C} where
 --   private
 --     module R = Category Cat-A
 --     module S = Category Cat-B
