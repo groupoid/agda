@@ -1,4 +1,4 @@
-{-# OPTIONS --type-in-type #-}
+{-# OPTIONS --cubical --type-in-type #-}
 
 module Infinity.Category.InfinityCategories where
 
