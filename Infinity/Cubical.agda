@@ -2,6 +2,7 @@
 
 module Infinity.Cubical where
 
+open import Infinity.Category.InfinityCategories
 open import Infinity.Core public
 open import Infinity.Proto public
 open import Infinity.Sigma public
