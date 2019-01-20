@@ -23,14 +23,10 @@ install:
   - cd ..
 
 script:
-  - ls ./agda/
-  - ls ./agda/.stack-work/dist/
-  - ls ./agda/.stack-work/dist/x86_64-linux
-  - ls ./agda/.stack-work/install
   - ls ./agda/.stack-work/install/x86_64-linux
-  - ls ./agda/.stack-work/install/x86_64-linux/ghc-8.6.3
-  - ls ./agda/.stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3
-  - ls ./agda/.stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3/bin/
+  - ls ./agda/.stack-work/install/x86_64-linux/lts-13.3
+  - ls ./agda/.stack-work/install/x86_64-linux/lts-13.3/8.6.3
+  - ls ./agda/.stack-work/install/x86_64-linux/lts-13.3/8.6.3/bin/
   - $AGDA Infinity/Cubical.agda
 
 branches:
