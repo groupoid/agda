@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical #-}
 
-module Infinity.Category.Category where
+module Infinity.Category._Functor where
 
 open import Infinity.Core public
 open import Infinity.Proto
@@ -13,8 +13,7 @@ record Func : Set (ℓ-succ ℓ) where
     map      : Set ℓ → Set ℓ
     fmap     : {A B : Set ℓ} → (A → B) → map A → map B
     presId   : (A : Set ℓ) → fmap (idFun A) ≡ idFun (map A)
-    presComp : {A B C : Set ℓ} → (f : A → B) → (g : B → C) →
-                 fmap (g ∘ f) ≡ (fmap g) ∘ (fmap f)
+    presComp : {A B C : Set ℓ} → (f : A → B) → (g : B → C) → fmap (g ∘ f) ≡ (fmap g) ∘ (fmap f)
 
 -- Functor Path
 record Func≡ : Set (ℓ-succ ℓ) where
@@ -52,36 +51,36 @@ G ∘ᶠ F = record
   } where module F = Func F
           module G = Func G
 
-idᶠLeft : ∀ {F : Func {ℓ}} → idᶠ ∘ᶠ F ≡ F
-idᶠLeft {ℓ} {F} =
-  directpath where
-  -- Func≡.path r where
-  module L = Func (idᶠ ∘ᶠ F)
-  module R = Func F
-  -- map≡ : L.map ≡ R.map
-  -- map≡ = funExt (λ _ → refl)
-  -- r = record { F         = idᶠ ∘ᶠ F
-  --            ; G         = F
-  --            ; map≡      = λ A → refl
-  --            ; fmap≡     = λ f → funExt λ _ → refl
-  --            ; presId≡   = λ A → {!!}
-  --            ; presComp≡ = λ f g → {!!}
-  --            }
+-- idᶠLeft : ∀ {F : Func {ℓ}} → idᶠ ∘ᶠ F ≡ F
+-- idᶠLeft {ℓ} {F} =
+--   directpath where
+--   -- Func≡.path r where
+--   module L = Func (idᶠ ∘ᶠ F)
+--   module R = Func F
+--   -- map≡ : L.map ≡ R.map
+--   -- map≡ = funExt (λ _ → refl)
+--   -- r = record { F         = idᶠ ∘ᶠ F
+--   --            ; G         = F
+--   --            ; map≡      = λ A → refl
+--   --            ; fmap≡     = λ f → funExt λ _ → refl
+--   --            ; presId≡   = λ A → {!!}
+--   --            ; presComp≡ = λ f g → {!!}
+--   --            }
 
-  trans-id : ∀ {ℓ}{A : Set ℓ} {x y : A} → (p : x ≡ y) → trans p (\ i → y) ≡ p
-  trans-id {A = A} {x} {y} p i j = Infinity.Core.fill (λ _ → A) _
-                                             (λ { i (j = i0) → x
-                                                ; i (j = i1) → y })
-                                             (inc (p j))
-                                             (~ i)
+--   trans-id : ∀ {ℓ}{A : Set ℓ} {x y : A} → (p : x ≡ y) → trans p (\ i → y) ≡ p
+--   trans-id {A = A} {x} {y} p i j = Infinity.Core.fill (λ _ → A) _
+--                                              (λ { i (j = i0) → x
+--                                                 ; i (j = i1) → y })
+--                                              (inc (p j))
+--                                              (~ i)
 
-  directpath : idᶠ ∘ᶠ F ≡ F
-  directpath i = record
-    { map = R.map
-    ; fmap = R.fmap
-    ; presId = λ A → trans-id (R.presId A) i
-    ; presComp = \ f g → trans-id (R.presComp f g) i
-    }
+--   directpath : idᶠ ∘ᶠ F ≡ F
+--   directpath i = record
+--     { map = R.map
+--     ; fmap = R.fmap
+--     ; presId = λ A → trans-id (R.presId A) i
+--     ; presComp = \ f g → trans-id (R.presComp f g) i
+--     }
 
 -- idᶠRight : ∀{ℓ}{F : Func {ℓ}} → F ∘ᶠ idᶠ ≡ F
 -- idᶠRight {ℓ} {F} = TODO
@@ -132,4 +131,4 @@ _⋆ⁿ_ {ℓ} {F} {F'} {G} {G'} α β = record { map = map ; nat = nat } where
   nat : ∀{A B} → (f : A → B) → G'∘G.fmap f ∘ map A ≡ map B ∘ F'∘F.fmap f
   nat {A} {B} f = trans (λ i → β.nat (G.fmap f) i ∘ F'.fmap (α.map A))
     (cong (β.map (G.map B) ∘_) (trans (sym (F'.presComp (α.map A) (G.fmap f)))
-      (trans (cong F'.fmap (α.nat f)) (F'.presComp (F.fmap f) (α.map B)))))
+    (trans (cong F'.fmap (α.nat f)) (F'.presComp (F.fmap f) (α.map B)))))

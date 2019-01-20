@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Category.Precategory where
+module Infinity.Top.Wedge 
 
 open import Infinity.Proto
