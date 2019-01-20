@@ -1,6 +1,6 @@
 {-# OPTIONS --type-in-type #-}
 
-module InfinityCategories where
+module Infinity.Category.InfinityCategories where
 
 module Size where
   open import Agda.Builtin.Size public
@@ -115,6 +115,7 @@ module ∞ℕ where
 
   open [∞ℕ] public
 
+  {-# TERMINATING #-}
   ∞ : ∞ℕ
   ∞ = succ λ { .force → ∞ }
 
