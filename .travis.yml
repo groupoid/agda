@@ -20,6 +20,10 @@ install:
   - git clone --single-branch --branch master git://github.com/agda/agda && cd agda
   - stack build --stack-yaml stack-8.6.3.yaml
   - AGDA=./agda/.stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3/bin/agda
+  - ls ./agda/.stack-work/install/x86_64-linux
+  - ls ./agda/.stack-work/install/x86_64-linux/ghc-8.6.3
+  - ls ./agda/.stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3
+  - ls ./agda/.stack-work/install/x86_64-linux/ghc-8.6.3/8.6.3/bin/
   - cd ..
 
 script:
