@@ -4,6 +4,7 @@ module Infinity.HIT.S1 where
 
 open import Infinity.Core
 open import Infinity.Proto
+open import Infinity.NType
 open import Infinity.Path public
 open import Infinity.Equiv public
 open import Infinity.Univ public

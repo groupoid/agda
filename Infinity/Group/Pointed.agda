@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Top.Cone where 
+module Infinity.Group.Pointed where 
 
 open import Infinity.Proto

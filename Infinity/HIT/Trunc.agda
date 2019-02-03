@@ -4,6 +4,7 @@ module Infinity.HIT.Trunc where
 
 open import Infinity.Proto
 open import Infinity.Path
+open import Infinity.NType
 
 data ∥_∥ (A : Set ℓ) : Set ℓ where
   ∣_∣ : A → ∥ A ∥

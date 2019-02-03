@@ -4,6 +4,7 @@ module Infinity.Equiv where
 
 open import Infinity.Path
 open import Infinity.Sigma
+open import Infinity.NType
 
 open import Agda.Builtin.Cubical.Glue using (isEquiv ; _≃_)
 

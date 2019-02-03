@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Top.Universe
+module Infinity.Top.Universe where 
 
-open imoprt Infinity.Proto
+open import Infinity.Proto

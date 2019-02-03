@@ -41,6 +41,9 @@ predSuc (pos (succ n))    = refl
 predSuc (negsuc zero)     = refl
 predSuc (negsuc (succ n)) = refl
 
+zeroℤ : ℤ
+zeroℤ = pos zero
+
 oneℤ : ℤ
 oneℤ = pos (succ zero)
 

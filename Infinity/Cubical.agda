@@ -2,34 +2,69 @@
 
 module Infinity.Cubical where
 
-open import Infinity.Category.InfinityCategories
-open import Infinity.Core public
-open import Infinity.Proto public
-open import Infinity.Sigma public
-open import Infinity.Path public
-open import Infinity.Equiv public
-open import Infinity.Univ public
-open import Infinity.Inductive.Z public
-open import Infinity.Inductive.Either public
-open import Infinity.Inductive.Empty public
-open import Infinity.Inductive.One public
-open import Infinity.Inductive.Two public
-open import Infinity.Inductive.Fin public
-open import Infinity.Inductive.Nat public
-open import Infinity.Reason hiding ( _≡_ ; _≡⟨_⟩_ ; _∎ ) public
-open import Infinity.Group.Homotopy hiding (∣_∣) public
-open import Infinity.Group.Hopf public
-open import Infinity.Top.Space public
-open import Infinity.Top.Cantor public
-open import Infinity.Top.Predicate public
-open import Infinity.HIT.Interval public
-open import Infinity.HIT.Trunc public
-open import Infinity.HIT.S1 public
-open import Infinity.HIT.S2 public
-open import Infinity.HIT.Susp public
-open import Infinity.HIT.Pushout public
-open import Infinity.HIT.Pullback public
-open import Infinity.Cohesion.Flat public
-open import Infinity.Cohesion.Im public
-open import Infinity.Cohesion.Shape public
+open import Infinity.Core 
+open import Infinity.Proto 
+open import Infinity.Sigma
+open import Infinity.Path
+open import Infinity.Equiv 
+open import Infinity.Univ
+open import Infinity.NType
+open import Infinity.Reason
+open import Infinity.Inductive.Z 
+open import Infinity.Inductive.Either 
+open import Infinity.Inductive.Empty
+open import Infinity.Inductive.One 
+open import Infinity.Inductive.Two
+open import Infinity.Inductive.Fin
+open import Infinity.Inductive.Nat
+open import Infinity.Reason 
+open import Infinity.Group.Base
+open import Infinity.Group.Abelian
+open import Infinity.Group.Chain
+open import Infinity.Group.Homology
+open import Infinity.Group.Cohomology
+open import Infinity.Group.Kernel
+open import Infinity.Group.Cokernel
+open import Infinity.Group.Free
+open import Infinity.Group.Homomorphism
+open import Infinity.Group.Quotient
+open import Infinity.Group.Image
+open import Infinity.Group.Subgroup
+open import Infinity.Group.Pointed
+open import Infinity.Group.Homotopy 
+open import Infinity.Group.Hopf
+open import Infinity.Top.CW
+open import Infinity.Top.Cone
+open import Infinity.Top.Cover
+open import Infinity.Top.Join
+open import Infinity.Top.Simplex
+open import Infinity.Top.Space
+open import Infinity.Top.Universe
+open import Infinity.Top.Wedge
+open import Infinity.Top.Cantor 
+open import Infinity.Top.Predicate 
+open import Infinity.HIT.Interval
+open import Infinity.HIT.Trunc
+open import Infinity.HIT.S1 
+open import Infinity.HIT.S2 
+open import Infinity.HIT.Susp 
+open import Infinity.HIT.Pushout 
+open import Infinity.HIT.Pullback 
+open import Infinity.Cohesion.Flat 
+open import Infinity.Cohesion.Bosonic
+open import Infinity.Cohesion.Etale
+open import Infinity.Cohesion.Fermionic
+open import Infinity.Cohesion.Reduced
+open import Infinity.Cohesion.Rhenomic
+open import Infinity.Cohesion.Im 
+open import Infinity.Cohesion.Shape 
 open import Infinity.Cohesion.Bundle
+open import Infinity.Category.Base
+open import Infinity.Category.Adjunction
+open import Infinity.Category.Cat
+open import Infinity.Category.Functor
+open import Infinity.Category.InfinityCategories
+open import Infinity.Category.K
+open import Infinity.Category.Monoid
+open import Infinity.Category.Profunctor
+open import Infinity.Category.Topos

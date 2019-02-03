@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical #-}
 
-module Infinity.K where
+module Infinity.Category.K where
 
 open import Infinity.Proto
