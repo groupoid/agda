@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Group.Free where 
+module Infinity.Algebra.Theory.Excision where 
 
 open import Infinity.Proto

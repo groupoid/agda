@@ -4,7 +4,7 @@ module Infinity.HIT.S1 where
 
 open import Infinity.Core
 open import Infinity.Proto
-open import Infinity.NType
+open import Infinity.HIT.NType
 open import Infinity.Path public
 open import Infinity.Equiv public
 open import Infinity.Univ public
@@ -45,16 +45,16 @@ invTurn : ∀ {l : loopS¹} → loopS¹
 invTurn {l = l} = l ∘S¹ invloop
 
 loop̂⁻¹ᵢ : ℕ → loopS¹
-loop̂⁻¹ᵢ zero = invloop
+loop̂⁻¹ᵢ  zero    = invloop
 loop̂⁻¹ᵢ (succ n) = invTurn {l = loop̂⁻¹ᵢ n}
 
 natLoop : ℕ → base ≡ base
-natLoop zero    = refl
+natLoop  zero    = refl
 natLoop (succ n) = trans (natLoop n) loop
 
 intLoop : ℤ → base ≡ base
-intLoop (pos    n) = natLoop n
-intLoop (negsuc n) = sym (natLoop (succ n))
+intLoop (pos n) = natLoop n
+intLoop (neg n) = sym (natLoop (succ n))
 
 -- Hopf prerequisites
 
@@ -71,7 +71,7 @@ isPropFamS¹ : (P : S¹ → Set ℓ) (pP : (x : S¹) → isProp (P x)) (b0 : P b
 isPropFamS¹ P pP b0 i = pP (loop i) (transp (λ j → P (loop (i ∧ j))) (~ i) b0) (transp (λ j → P (loop (i ∨ ~ j))) i b0) i
 
 rotIsEquiv : (a : S¹) → isEquiv (rot a)
-rotIsEquiv base = idIsEquiv S¹
+rotIsEquiv  base    = idIsEquiv S¹
 rotIsEquiv (loop i) = isPropFamS¹ (λ x → isEquiv (rot x)) (λ x → isPropIsEquiv (rot x)) (idIsEquiv _) i
 
 rotLoopInv : (a : S¹) → PathP (λ i → rotLoop (rotLoop a (~ i)) i ≡ a) refl refl

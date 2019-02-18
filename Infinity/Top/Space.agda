@@ -5,7 +5,7 @@ module Infinity.Top.Space where
 open import Infinity.Proto
 open import Infinity.Sigma
 open import Infinity.Path
-open import Infinity.NType
+open import Infinity.HIT.NType
 open import Infinity.Inductive.Either
 open import Infinity.Inductive.Empty
 open import Infinity.Inductive.One

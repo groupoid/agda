@@ -1,19 +1,17 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Group.Chain where 
+module Infinity.Algebra.Chain where 
 
 open import Infinity.Proto
 open import Infinity.Inductive.Z 
-open import Infinity.Group.Homomorphism
-open import Infinity.Group.Base
-open import Infinity.Group.Abelian
+open import Infinity.Algebra.Base
 
 record ChainComplex ℓ : Set (ℓ-succ ℓ) where
   field
-    seq  : Abᴳ ℓ
-    idx : ℕ → Abᴳ ℓ
-    aug : Abᴳ.grp (idx zero) →ᴳ Abᴳ.grp seq
-    β   : ∀ n → (Abᴳ.grp (idx (succ n)) →ᴳ Abᴳ.grp (idx n))
+    seq  : Abelian ℓ
+    idx : ℕ → Abelian ℓ
+    aug : Abelian.grp (idx zero) →ᴳ Abelian.grp seq
+    β   : ∀ n → (Abelian.grp (idx (succ n)) →ᴳ Abelian.grp (idx n))
 
 C = ChainComplex
 
@@ -27,10 +25,10 @@ C = ChainComplex
 
 record CochainComplex ℓ : Set (ℓ-succ ℓ) where
   field 
-    seq : Abᴳ ℓ
-    idx : ℕ → Abᴳ ℓ
-    aug : Abᴳ.grp seq →ᴳ Abᴳ.grp (idx zero) 
-    δ   : ∀ n → Abᴳ.grp (idx n) →ᴳ Abᴳ.grp (idx (succ n))
+    seq : Abelian ℓ
+    idx : ℕ → Abelian ℓ
+    aug : Abelian.grp seq →ᴳ Abelian.grp (idx zero) 
+    δ   : ∀ n → Abelian.grp (idx n) →ᴳ Abelian.grp (idx (succ n))
 
 C* = CochainComplex
 

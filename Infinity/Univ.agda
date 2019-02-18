@@ -5,7 +5,7 @@ module Infinity.Univ where
 open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.Equiv
-open import Infinity.NType
+open import Infinity.HIT.NType
 open import Infinity.Sigma public
 
 open import Agda.Builtin.Cubical.Glue public

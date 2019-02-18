@@ -1,13 +1,14 @@
 {-# OPTIONS --cubical --allow-unsolved-metas #-}
 
-module Infinity.Group.Subgroup where 
+module Infinity.Algebra.Subgroup where 
 
 open import Infinity.Proto hiding (_∘_)
 open import Infinity.Path
 open import Infinity.Sigma
-open import Infinity.Group.Base
+open import Infinity.Algebra.Base
 open import Infinity.HIT.Trunc
-open import Infinity.NType
+open import Infinity.HIT.Subtype
+open import Infinity.HIT.NType
 
 record SubgroupProp ℓ₂ (G : Group ℓ₁) : Set (ℓ₁ ⊔ (ℓ-succ ℓ₂)) where 
   private 
@@ -60,3 +61,11 @@ module _ {G : Group ℓ₁} (P : SubgroupProp ℓ₂ G) where
   Subgroup : Group (ℓ₁ ⊔ ℓ₂)
   Subgroup = group _ subgroup-skeleton
     -- where abstract instance SubE-level = Subtype-level P.subE-prop
+
+module Subgroup {G : Group ℓ₁} (P : SubgroupProp ℓ₂ G) where 
+  private 
+    module P = SubgroupProp P
+    module G = Group G 
+    
+  g = Subgroup P 
+  open Group g public 

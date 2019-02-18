@@ -4,7 +4,8 @@ module Infinity.Equiv where
 
 open import Infinity.Path
 open import Infinity.Sigma
-open import Infinity.NType
+open import Infinity.HIT.NType
+open import Infinity.HIT.Subtype
 
 open import Agda.Builtin.Cubical.Glue using (isEquiv ; _≃_)
 
@@ -18,9 +19,9 @@ equiv-proof (isPropIsEquiv f p q i) y =
   let p2 = p .equiv-proof y .π⃑
       q2 = q .equiv-proof y .π⃑
    in p2 (q .equiv-proof y .π⃐) i , λ w j → hcomp (λ k → λ { (i = i0) → p2 w j
-                                                           ; (i = i1) → q2 w (j ∨ ~ k)
-                                                           ; (j = i0) → p2 (q2 w (~ k)) i
-                                                           ; (j = i1) → w }) (p2 w (i ∨ j))
+                                                          ; (i = i1) → q2 w (j ∨ ~ k)
+                                                          ; (j = i0) → p2 (q2 w (~ k)) i
+                                                          ; (j = i1) → w }) (p2 w (i ∨ j))
 
 module _ {A : Set ℓ₁} {B : A → Set ℓ₂} where
 
@@ -96,3 +97,12 @@ compEquiv f g = isoToEquiv (λ x → g .π⃐ (f .π⃐ x))
                            (λ y → compPath (cong (g .π⃐) (retEq f (invEq g y))) (retEq g y))
                            (λ y → compPath (cong (invEq f) (secEq g (f .π⃐ y))) (secEq f y))
 
+record IsEquivClass (X : Set ℓ₁) (_~_ : R X ℓ₂) (P : SubtypeProp ℓ₂ X) : Set (ℓ₁ ⊔ ℓ₂) where 
+  constructor isEquivClass
+  private 
+    module P = SubtypeProp P
+  field 
+    inhab : isContr (Subtype P) 
+    lift  : ∀ (x₁ x₂ : X) → x₁ ~ x₂ → P.carr x₁ → P.carr x₂ 
+    rel   : ∀ (x₁ x₂ : X) → P.carr x₁ → P.carr x₂ → x₁ ~ x₂
+    

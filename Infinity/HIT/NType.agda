@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.NType where 
+module Infinity.HIT.NType where 
 
 open import Infinity.Proto
 open import Infinity.Path
@@ -75,13 +75,3 @@ isPropIsContr z0 z1 j = ( z0 .π⃑ (z1 .π⃐) j , λ x i → hcomp (λ k → �
                                                                    ; (j = i0) → z0 .π⃑ x (i ∧ k)
                                                                    ; (j = i1) → z1 .π⃑ x i }) (z0 .π⃑ (z1 .π⃑ x i) j))
                                                                    
-SubtypeProp : ∀ ℓ₂ → (A : Set ℓ₁) → Set (ℓ₁ ⊔ (ℓ-succ ℓ₂)) 
-SubtypeProp ℓ₂ A = Σ[ P ∈ (A → Set ℓ₂) ] ∀ x → isProp (P x)
-
-module SubtypeProp {A : Set ℓ₁} (P : SubtypeProp ℓ₂ A) where 
-  prop  = π⃐ P
-  level = π⃑ P 
-  
-Subtype : ∀ {A : Set ℓ₁} (P : SubtypeProp ℓ₂ A) → Set (ℓ₁ ⊔ ℓ₂)
-Subtype {A = A} P = Σ A P.prop
-  where module P = SubtypeProp P

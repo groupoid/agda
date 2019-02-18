@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Group.Image where 
+module Infinity.Algebra.Theory.Kunneth where 
 
 open import Infinity.Proto

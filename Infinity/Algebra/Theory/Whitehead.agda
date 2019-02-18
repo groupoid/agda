@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Group.Quotient where 
+module Infinity.Algebra.Theory.Whitehead where 
 
 open import Infinity.Proto

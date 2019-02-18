@@ -7,7 +7,7 @@ open import Infinity.Proto
 open import Infinity.Inductive.Empty
 open import Infinity.Inductive.Either
 open import Infinity.Path
-open import Infinity.NType
+open import Infinity.HIT.NType
 open import Infinity.Top.Space
 
 predℕ : ℕ → ℕ

@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --type-in-type #-}
 
-module Infinity.Group.Homotopy where
+module Infinity.Algebra.Homotopy where
 
 open import Infinity.Sigma
 open import Infinity.Proto

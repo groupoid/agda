@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Group.Cohomology where 
+module Infinity.Algebra.Pointed where 
 
 open import Infinity.Proto
