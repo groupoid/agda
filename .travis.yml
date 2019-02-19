@@ -15,9 +15,7 @@ before_install:
 
 install:
   - mkdir -p ~/.agda/libs/cubical
-  - printf "name:" > ~/.agda/libs/cubical/cubical.agda-lib
-  - printf " cubical" >> ~/.agda/libs/cubical/cubical.agda-lib
-  - printf "cubical" > ~/.agda/defaults
+  - printf "Infinity" > ~/.agda/defaults
   - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
   - git clone --single-branch --branch master git://github.com/agda/agda && cd agda
   - stack build --stack-yaml stack-8.6.3.yaml
