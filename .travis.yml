@@ -14,9 +14,9 @@ before_install:
   - export PATH=$HOME/.local/bin:$PATH;
 
 install:
-  - mkdir -p ~/.agda/libs/Infinity
-  - printf "Infinity" > ~/.agda/defaults
-  - printf "$HOME/.agda/libs/cubical/Infinity.agda-lib" > ~/.agda/libraries
+  - mkdir -p ~/.agda/libs/cubical
+  - printf "cubical" > ~/.agda/defaults
+  - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
   - git clone --single-branch --branch master git://github.com/agda/agda && cd agda
   - stack build --stack-yaml stack-8.6.4.yaml
   - AGDA=./agda/.stack-work/install/x86_64-linux/lts-13.12/8.6.4/bin/agda
