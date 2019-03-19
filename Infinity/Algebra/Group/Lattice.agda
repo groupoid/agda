@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Algebra.Pointed where 
+module Infinity.Algebra.Group.Lattice where 
 
 open import Infinity.Proto

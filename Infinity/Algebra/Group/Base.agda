@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --allow-unsolved-metas #-}
 
-module Infinity.Algebra.Group where 
+module Infinity.Algebra.Group.Base where 
 
 open import Infinity.Proto hiding (_∘_)
 open import Infinity.Path
@@ -37,8 +37,8 @@ record Group-Skeleton (E : Set ℓ) : Set ℓ where
   -- exp e (negsucc 0) = e ⁻¹
   -- exp e (negsucc (S n)) = e ⁻¹ ∘ (exp e (negsucc n))
   
-  _-_ : E → E → E 
-  g - h = g ∘ h ⁻¹
+  _-ᴳ_ : E → E → E 
+  g -ᴳ h = g ∘ h ⁻¹
   
   conj : E → E → E 
   conj g h = (g ∘ h) ∘ g ⁻¹
@@ -78,4 +78,4 @@ module _ {A : Set ℓ₁} {ℓ₂} (r : R A ℓ₂) where
 0ᴳ = group _ 0ᴳ-Skeleton
 
 _↑ᴳ : Group ℓ₁ → Group (ℓ₁ ⊔ ℓ₂)
-G ↑ᴳ = ? -- group (↑ E) (↑ᴳ-Skeleton group-struct) where open Group G 
+G ↑ᴳ = {!!} -- group (↑ E) (↑ᴳ-Skeleton group-struct) where open Group G 

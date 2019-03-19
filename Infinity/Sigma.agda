@@ -34,3 +34,5 @@ A × B = Σ[ _ ∈ A ] B
 uncurry : ∀ {A : Set ℓ₁} {B : A → Set ℓ₂} {C : (x : A) → B x → Set ℓ₃} → (∀ x y → C x y) → (∀ s → C (π⃐ s) (π⃑ s))
 uncurry f (x , y) = f x y
 
+curry : ∀ {A : Set ℓ₁} {B : A → Set ℓ₂} {C : Σ A B → Set ℓ₃} → (∀ s → C s) → (∀ a b → C (a , b))
+curry f a b = f (a , b)

@@ -4,6 +4,7 @@ module Infinity.Algebra.Hopf where
 
 open import Infinity.Core public
 open import Infinity.Proto
+open import Infinity.Sigma
 open import Infinity.Path
 open import Infinity.Equiv public
 open import Infinity.Univ

@@ -2,16 +2,19 @@
 
 module Infinity.Reason where
 
-open import Agda.Builtin.Sigma public
-open import Infinity.Core public
-open import Infinity.Path public
+open import Agda.Builtin.Cubical.Glue using (_≃_)
 
-module _ {A : Set ℓ} where
+open import Infinity.Core
+open import Infinity.Path
+
+open import Infinity.Path using (refl) public
+
+module Reason-≡ {A : Set ℓ} where
 
   infix  3 _≡-qed _∎
   infixr 2 _≡⟨⟩_ _≡⟨_⟩_
   infix  1 ≡-proof_ begin_
-
+  
   ≡-proof_ begin_ : {x y : A} → x ≡ y → x ≡ y
   ≡-proof x≡y = x≡y
   begin_ = ≡-proof_
@@ -26,3 +29,6 @@ module _ {A : Set ℓ} where
   _ ≡-qed  = refl
   _∎ = _≡-qed
 
+open Reason-≡ public
+
+module Reason-≃ {A : Set ℓ} where 

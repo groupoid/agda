@@ -35,4 +35,3 @@ record ⇑ (X : Set ℓ₁) : Set (ℓ₁ ⊔ ℓ₂) where
     field ↓ : X
 
 open ⇑ public
-

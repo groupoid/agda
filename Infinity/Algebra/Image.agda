@@ -9,8 +9,8 @@ open import Infinity.HIT.Trunc
 open import Infinity.HIT.NType
 open import Infinity.HIT.Subtype
 open import Infinity.Algebra.Base
-open import Infinity.Algebra.Quotient
-open import Infinity.Algebra.Subgroup
+open import Infinity.Algebra.Group.Quotient
+open import Infinity.Algebra.Group.Subgroup
 
 module _ {G : Group ℓ₁} {H : Group ℓ₂} (φ : G →ᴳ H) where 
   private 
@@ -31,7 +31,7 @@ module _ {G : Group ℓ₁} {H : Group ℓ₂} (φ : G →ᴳ H) where
         id : prop H.id
         id = {!!} -- G.id , φ.preserves-id
 
-        diff : {h₁ h₂ : H.E} → prop h₁ → prop h₂ → prop (h₁ H.- h₂)
+        diff : {h₁ h₂ : H.E} → prop h₁ → prop h₂ → prop (h₁ H.-ᴳ h₂)
         diff = {!!} -- trunc-map λ { (g₁ , p₁) (g₂ , p₂) → G._-_ g₁ g₂ , φ.preserves-difference g₁ g₂ ∘ ap₂ H._-_ p₁ p₂ }
         
 module Image {G : Group ℓ₁} {H : Group ℓ₂} (φ : G →ᴳ H) where 
@@ -57,4 +57,4 @@ module Image {G : Group ℓ₁} {H : Group ℓ₂} (φ : G →ᴳ H) where
   
   -- Image : Group (ℓ₁ ⊔ ℓ₂)
   Im : Group (ℓ-succ ℓ₁ ⊔ ℓ-succ ℓ₂)
-  Im =  group _ image-skeleton
+  Im = group _ image-skeleton

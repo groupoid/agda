@@ -3,7 +3,7 @@
 module Infinity.Algebra.Homomorphism where 
 
 open import Infinity.Proto
-open import Infinity.Algebra.Group
+open import Infinity.Algebra.Group.Base
 
 record Homᴳ-Skeleton {eᴳ : Set ℓ₁} {eᴴ : Set ℓ₂} (Sᴳ : Group-Skeleton eᴳ) (Sᴴ : Group-Skeleton eᴴ) : Set (ℓ₁ ⊔ ℓ₂) where 
   constructor hom-skeleton
@@ -21,7 +21,7 @@ record Homᴳ-Skeleton {eᴳ : Set ℓ₁} {eᴴ : Set ℓ₂} (Sᴳ : Group-Ske
     preserves-⁻¹ : ∀ g → p (g G.⁻¹) ≡ (p g) H.⁻¹
     preserves-⁻¹ g = {!!}
     
-    preserves-difference : ∀ g h → p (g G.- h) ≡ (p g) H.- (p h)
+    preserves-difference : ∀ g h → p (g G.-ᴳ h) ≡ (p g) H.-ᴳ (p h)
     preserves-difference g h = {!!} 
     
 

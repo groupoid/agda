@@ -4,6 +4,7 @@ module Infinity.HIT.T1 where
 
 open import Infinity.Proto
 open import Infinity.Path
+open import Infinity.Sigma
 open import Infinity.HIT.S1
 
 data T¹ : Set where 

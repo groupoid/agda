@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --allow-unsolved-metas #-}
 
-module Infinity.Algebra.Subgroup where 
+module Infinity.Algebra.Group.Subgroup where 
 
 open import Infinity.Proto hiding (_∘_)
 open import Infinity.Path
@@ -16,7 +16,7 @@ record SubgroupProp ℓ₂ (G : Group ℓ₁) : Set (ℓ₁ ⊔ (ℓ-succ ℓ₂
   field 
     prop      : G.E → Set ℓ₂
     id        : prop G.id 
-    _-_       : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (g₁ G.- g₂)
+    _-_       : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (g₁ G.-ᴳ g₂)
     {{level}} : ∀ {g} → isProp (prop g)
   abstract 
     _⁻¹ : ∀ {g} → prop g → prop (g G.⁻¹)

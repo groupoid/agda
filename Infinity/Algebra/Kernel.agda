@@ -5,11 +5,12 @@ module Infinity.Algebra.Kernel where
 open import Infinity.Proto
 open import Infinity.Sigma
 open import Infinity.Univ
+open import Infinity.Equiv
 open import Infinity.HIT.Trunc
 open import Infinity.HIT.Subtype
 open import Infinity.Algebra.Base
-open import Infinity.Algebra.Quotient
-open import Infinity.Algebra.Subgroup
+open import Infinity.Algebra.Group.Quotient
+open import Infinity.Algebra.Group.Subgroup
 
 module _ {G : Group ℓ₁} {H : Group ℓ₂} (ϕ : G →ᴳ H) where
   private 
@@ -26,7 +27,7 @@ module _ {G : Group ℓ₁} {H : Group ℓ₂} (ϕ : G →ᴳ H) where
         id : prop G.id
         id = ϕ.preserves-id
         
-        _-_ : ∀ {e₁ e₂ : G.E} → prop e₁ → prop e₂ → prop (e₁ G.- e₂)
+        _-_ : ∀ {e₁ e₂ : G.E} → prop e₁ → prop e₂ → prop (e₁ G.-ᴳ e₂)
         -- _-_ {e₁} {e₂} p₁ p₂ = ϕ.preserves-_-_ e₁ e₂ ∘ ap₂ _-_ p₁ p₂ ∘ H.inv-r H.id
         _-_ = {!!}
 
@@ -40,7 +41,7 @@ module Kernel {G : Group ℓ₁} {H : Group ℓ₂} (ψ : G →ᴳ H) where
   module Ker = Subgroup (ker-propᴳ ψ)
     
   ker-R' : R H.E (ℓ₁ ⊔ ℓ₂)
-  ker-R' h₁ h₂ = ∥ fiber ψ.p (h₁ H.- h₂) ∥
+  ker-R' h₁ h₂ = ∥ fiber ψ.p (h₁ H.-ᴳ h₂) ∥
 
   -- ker-R : R Ker.E (ℓ₁ ⊔ ℓ₂)
   -- ker-R (h₁ , _) (h₂ , _) = ∥ fiber ψ.p (h₁ H.- h₂) ∥

@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Algebra.Semigroup where 
+module Infinity.Algebra.Group.Semigroup where 
 
 open import Infinity.Proto hiding (_∘_)
 open import Infinity.Path

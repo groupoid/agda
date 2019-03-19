@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --allow-unsolved-metas #-}
 
-module Infinity.Algebra.Quotient where 
+module Infinity.Algebra.Group.Quotient where 
 
 open import Infinity.Proto
 open import Infinity.Path
@@ -20,5 +20,6 @@ data Quotient {A : Set ℓ} (R : A → A → Set ℓ) : Set ℓ where
 _/_ : (A : Set ℓ) (R : A → A → Set ℓ) → Set (ℓ-succ ℓ)
 A / R = /₀ {X = A} R
 
+infix 0 _/ᴳ_
 _/ᴳ_ : (G : Group ℓ) (R : G →ᴳ G → Group ℓ) → Group (ℓ-succ ℓ)
-G /ᴳ R = {!!}
+G /ᴳ R = {!!} -- /₀ {X = G} R

@@ -33,7 +33,7 @@ module _ {ℓ} where
 
   isSet : Set ℓ → Set ℓ
   isSet A = (x y : A) → isProp (x ≡ y)
-
+  
 nonDepPath : ∀ {ℓ} {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)
 nonDepPath _ _ = refl
 
