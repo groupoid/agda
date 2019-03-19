@@ -1,4 +1,4 @@
-{-# OPTIONS --allow-unsolved-metas #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Algebra.Base where
 

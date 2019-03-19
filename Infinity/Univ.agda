@@ -33,6 +33,9 @@ idEquiv A = (λ a → a) , idIsEquiv A
 ua : ∀ {A B : Set ℓ} → A ≃ B → A ≡ B
 ua {A = A} {B = B} e i = Glue B (λ { (i = i0) → (A , e) ; (i = i1) → (B , idEquiv B) })
 
+coe≃ : ∀ {A B : Set ℓ} → (A ≃ B) → (A → B)
+coe≃ = Infinity.Path.coe ∘ ua
+
 isoToPath : ∀ {A B : Set ℓ} (f : A → B)(g : B → A)(s : (y : B) → f (g y) ≡ y)(t : (x : A) → g (f x) ≡ x) → A ≡ B
 isoToPath f g s t = ua (isoToEquiv f g s t)
 

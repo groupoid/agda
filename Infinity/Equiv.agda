@@ -84,7 +84,7 @@ module _ {A : Set ℓ₁} {B : Set ℓ₂} (w : A ≃ B) where
 
   retEq : (y : B) → π⃐ w (invEq y) ≡ y
   retEq y = λ i → π⃑ (π⃐ (π⃑ w .equiv-proof y)) i
-
+  
 invEquiv : ∀ {A : Set ℓ₁} {B : Set ℓ₂} → A ≃ B → B ≃ A
 invEquiv f = isoToEquiv (invEq f) (π⃐ f) (secEq f) (retEq f)
 

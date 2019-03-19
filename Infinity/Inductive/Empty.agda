@@ -1,3 +1,5 @@
+{-# OPTIONS --cubical --safe #-}
+
 module Infinity.Inductive.Empty where
 
 open import Infinity.Proto using (ℓ)

@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --rewriting #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.HIT.S1 where
 
@@ -30,10 +30,10 @@ invloop = λ i → loop (~ i)
 _∘S¹_ : loopS¹ → loopS¹ → loopS¹
 _∘S¹_ = trans
 
-module S¹-Elim {P : S¹ → Set ℓ} (base* : P base) (loop* : PathP (λ i → P (loop i)) base* base*) where
-  postulate S¹-elim : ∀ x → P x
+-- module S¹-Elim {P : S¹ → Set ℓ} (base* : P base) (loop* : PathP (λ i → P (loop i)) base* base*) where
+--   postulate S¹-elim : ∀ x → P x
 
-open S¹-Elim public
+-- open S¹-Elim public
 
 π₁S¹ : Set
 π₁S¹ = base ≡ base

@@ -1,7 +1,9 @@
 {-# OPTIONS --cubical #-}
 
 module Infinity.Cohesion.Bundle where
-open import Agda.Primitive using (Level; lzero; lsuc; _⊔_) public
+
+open import Infinity.Proto
+open import Infinity.Sigma
 
 -- best introduction to modern constructive algebraic topology
 -- (с) @felixwellen http://www.math.kit.edu/iag3/~wellen/media/diss.pdf
@@ -20,17 +22,13 @@ open import Agda.Primitive using (Level; lzero; lsuc; _⊔_) public
 --      G-sets (Covering Spaces)
 --      Fiber Bundle (4 definitions)
 
--- $ brew install agda
--- $ agda bundle.agda
--- Checking bundle (bundle.agda).
--- Finished bundle.
 
 -- Prelude
 
-U : (i : Level) → Set (lsuc i)
-U i = Set i
-U₀ = U lzero
-U₁ = U (lsuc lzero)
+U : (ℓ : Level) → Set (ℓ-succ ℓ)
+U ℓ = Set ℓ
+U₀ = U ℓ-zero
+U₁ = U (ℓ-succ ℓ-zero )
 𝒰₀ = U₀
 𝒰₁ = U₁
 𝒰 = U
@@ -45,26 +43,13 @@ infix 5 _≈_
 infix 60 _×_
 infix 20 _,_
 infix 20 _⇒_
-infix 30 _∘_
 infix 60 _⁻¹ -- \^-\^1
 
-record ∑ {i j} {A : 𝒰 i} (P : A → 𝒰 j) : 𝒰 (i ⊔ j) where
-  constructor _,_
-  field
-    a : A
-    p : P a
-
-Σ : ∀ {i j} → (A : Type i) (P : A → Type j) → Type _
-Σ _ P = ∑ P
-
-∑π₁ : ∀ {i} {j} {A : 𝒰 i} {P : A → 𝒰 j}  → ∑ P → A
+∑π₁ : ∀ {i} {j} {A : 𝒰 i} {P : A → 𝒰 j}  → Σ P → A
 ∑π₁ (a , _) = a
 
-∑π₁-from_ : ∀ {i} {j} {A : 𝒰 i} (P : A → 𝒰 j) → ∑ P → A
+∑π₁-from_ : ∀ {i} {j} {A : 𝒰 i} (P : A → 𝒰 j) → Σ P → A
 ∑π₁-from P = ∑π₁
-
-_×_ : ∀ {i j} → (A : 𝒰 i) → (B : 𝒰 j) → 𝒰 (i ⊔ j)
-A × B = ∑ (λ (a : A) → B)
 
 π₁ : ∀ {i} {A : 𝒰 i} {B : 𝒰 i} → A × B → A
 π₁ (a , b) = a
@@ -81,8 +66,8 @@ identity-on A = (λ (x : A) → x)
 Π : ∀ {i j} → {A : 𝒰 i} → (P : A → 𝒰 j) → 𝒰 (i ⊔ j)
 Π {_} {_} {A} P = (a : A) → P a
 
-_∘_ : ∀ {i j k} {A : 𝒰 i} {B : 𝒰 j} {C : 𝒰 k} → (B → C) → (A → B) → (A → C)
-g ∘ f = λ x → g(f(x))
+-- _∘_ : ∀ {i j k} {A : 𝒰 i} {B : 𝒰 j} {C : 𝒰 k} → (B → C) → (A → B) → (A → C)
+-- g ∘ f = λ x → g(f(x))
 
 -- Path types
 
@@ -255,7 +240,7 @@ the-square-with-right f bottom g top z₁ left z₂ commuting-by γ is-a-pullbac
 -- Image
 
 the-image-of_contains : ∀ {i j} {A : U i} {B : U j} → (f : A → B) → (B → U (i ⊔ j))
-the-image-of f contains b = ∥ ∑ (λ a → f(a) ≈ b) ∥
+the-image-of f contains b = ∥ Σ (λ a → f(a) ≈ b) ∥
 
 image : ∀ {i j} {A : U i} {B : U j} → (f : A → B) → U (i ⊔ j)
 image f = ∑ (λ b → the-image-of f contains b)

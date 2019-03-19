@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --allow-unsolved-metas #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Pointed where 
 
@@ -52,13 +52,13 @@ diag₊ = (λ x → x , x) , refl
 ×-π⃑₊ : (A : Set₊ ℓ₁) (B : Set₊ ℓ₂) → B →₊ A ×₊ B
 ×-π⃑₊ [ _ , a ]₊ _ = (λ b → a , b) , refl
 
-infixr 3 _∼₊_ 
-_∼₊_ : ∀ {A : Set₊ ℓ₁} {B : Set₊ ℓ₂} (f g : A →₊ B) → Set (ℓ₁ ⊔ ℓ₂) 
-_∼₊_ {A = A} {B = B} (f , f₀) (g , g₀) = {!!} -- pointed congruence 
+-- infixr 3 _∼₊_ 
+-- _∼₊_ : ∀ {A : Set₊ ℓ₁} {B : Set₊ ℓ₂} (f g : A →₊ B) → Set (ℓ₁ ⊔ ℓ₂) 
+-- _∼₊_ {A = A} {B = B} (f , f₀) (g , g₀) = {!!} -- pointed congruence 
 
-∘₊-pt : ∀ {A : Set ℓ₁} {B : Set ℓ₂} {a₁ a₂ : A} {b : B} (f : A → B) → a₁ ≡ a₂ → f a₂ ≡ b → f a₁ ≡ b
-∘₊-pt f p q = {!!} -- ap f p ∙ q
+-- ∘₊-pt : ∀ {A : Set ℓ₁} {B : Set ℓ₂} {a₁ a₂ : A} {b : B} (f : A → B) → a₁ ≡ a₂ → f a₂ ≡ b → f a₁ ≡ b
+-- ∘₊-pt f p q = {!!} -- ap f p ∙ q
 
-infixr 8 _∘₊_ 
-_∘₊_ : ∀ {A : Set₊ ℓ₁} {B : Set₊ ℓ₂} {C : Set₊ ℓ₃} (g : B →₊ C) (f : A →₊ B) → A →₊ C 
-(g , g₀) ∘₊ (f , f₀) = (g ∘ f) , ∘₊-pt g f₀ g₀
+-- infixr 8 _∘₊_ 
+-- _∘₊_ : ∀ {A : Set₊ ℓ₁} {B : Set₊ ℓ₂} {C : Set₊ ℓ₃} (g : B →₊ C) (f : A →₊ B) → A →₊ C 
+-- (g , g₀) ∘₊ (f , f₀) = (g ∘ f) , ∘₊-pt g f₀ g₀
