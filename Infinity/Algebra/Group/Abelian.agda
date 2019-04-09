@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --safe #-}
+{-# OPTIONS --cubical #-}
 
 module Infinity.Algebra.Group.Abelian where
 
@@ -7,7 +7,8 @@ open import Infinity.Sigma
 open import Infinity.Algebra.Group.Base
 
 is-abelian : Group ℓ → Set ℓ
-is-abelian G = (a b : Group.E G) → (Group._∘_ G a b) ≡ (Group._∘_ G b a)
+is-abelian G = (a b : Group.E G) → (a · b) ≡ (b · a)
+  where open Group G 
 
 Abelian : ∀ ℓ → Set (ℓ-succ ℓ)
 Abelian = λ ℓ → Σ (Group ℓ) is-abelian

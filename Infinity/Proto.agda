@@ -24,11 +24,22 @@ module _ {A : Set ℓ₁} where
 idFun : (A : Set ℓ) → A → A
 idFun A x = x
 
+-- const : ∀ {A : Set ℓ} {B : A → Set ℓ} → (a : A) → B a → A 
+const : ∀ {A B : Set ℓ} → A → B → A 
+const = λ a _ → a 
+
 apply : ∀ {A B : Set ℓ} (f : A → B) (x : A) → B
 apply f x = f x
 
+infixr 0 _$_ 
+_$_ : ∀ {A : Set ℓ₁} {B : A → Set ℓ₂} → (∀ x → B x) → (∀ x → B x)
+f $ x = f x 
+
 typeof : ∀ {A : Set ℓ} → A → Set ℓ
 typeof {A = A} _ = A
+
+instanceof : ∀ {A : Set ℓ} {{a : A}} → A
+instanceof {{a}} = a
 
 record ⇑ (X : Set ℓ₁) : Set (ℓ₁ ⊔ ℓ₂) where
     constructor ↑

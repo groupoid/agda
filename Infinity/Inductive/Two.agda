@@ -4,6 +4,7 @@ module Infinity.Inductive.Two where
 
 open import Infinity.Proto
 open import Infinity.Sigma
+open import Infinity.Path 
 
 -- Boolean
 
@@ -27,3 +28,8 @@ a ≤ b = a ≡ 𝟙 → b ≡ 𝟙
 _≥_ : (a b : 𝟚) → Set
 _≥_ = flip _≤_
 
+shannon : ∀ {A : Set} (f : 𝟚 → A) → 𝟚 → A 
+shannon = apply
+
+shannon-≡ : ∀ {A : Set} (f : 𝟚 → A) → f ≡ shannon f
+shannon-≡ f = refl

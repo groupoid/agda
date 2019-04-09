@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --allow-unsolved-metas #-}
+{-# OPTIONS --cubical #-}
 
 module Infinity.Algebra.Group.Quotient where 
 
@@ -22,4 +22,6 @@ A / R = /₀ {X = A} R
 
 infix 0 _/ᴳ_
 _/ᴳ_ : (G : Group ℓ) (R : G →ᴳ G → Group ℓ) → Group (ℓ-succ ℓ)
-G /ᴳ R = {!!} -- /₀ {X = G} R
+-- G /ᴳ R = /₀ {X = Group.E G} R
+_/ᴳ_ {ℓ = ℓ} G R = Σ[ A ∈ SubtypeProp ℓ (Group.E G) ] IsEquivClass (Group.E G) R A 
+  where open import Infinity.Algebra.Group.Base 

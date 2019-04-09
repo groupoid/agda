@@ -7,34 +7,29 @@ open import Infinity.Path
 open import Infinity.Sigma
 open import Infinity.Inductive.Empty
 
-module _ {ℓ} {A : Set ℓ} where
+singl : ∀ {A : Set ℓ} (a : A) → Set ℓ
+singl {A = A} a = Σ A (λ x → a ≡ x)
 
-  singl : (a : A) → Set ℓ
-  singl a = Σ A (λ x → a ≡ x)
+contrSingl : ∀ {A : Set ℓ} {a b : A} (p : a ≡ b) → Path (singl a) (a , refl) (b , p)
+contrSingl p i = (p i , λ j → p (i ∧ j))
 
-  contrSingl : {a b : A} (p : a ≡ b) → Path (singl a) (a , refl) (b , p)
-  contrSingl p i = (p i , λ j → p (i ∧ j))
-
-module _ {ℓ} {A : I → Set ℓ} {x : A i0} {y : A i1} where
-
+module _ {A : I → Set ℓ} {x : A i0} {y : A i1} where
   toPathP : transp A i0 x ≡ y → PathP A x y
   toPathP p i = hcomp (λ j → λ { (i = i0) → x ; (i = i1) → p j }) (transp (λ j → A (i ∧ j)) (~ i) x)
 
   fromPathP : PathP A x y → transp A i0 x ≡ y
   fromPathP p i = transp (λ j → A (i ∨ j)) i (p i)
 
-module _ {ℓ} where
+isContr : Set ℓ → Set ℓ
+isContr A = Σ[ x ∈ A ] ∀ y → x ≡ y
 
-  isContr : Set ℓ → Set ℓ
-  isContr A = Σ A (λ x → ∀ y → x ≡ y)
+isProp : Set ℓ → Set ℓ
+isProp A = (x y : A) → x ≡ y
 
-  isProp : Set ℓ → Set ℓ
-  isProp A = (x y : A) → x ≡ y
+isSet : Set ℓ → Set ℓ
+isSet A = (x y : A) → isProp (x ≡ y)
 
-  isSet : Set ℓ → Set ℓ
-  isSet A = (x y : A) → isProp (x ≡ y)
-  
-nonDepPath : ∀ {ℓ} {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)
+nonDepPath : ∀ {A : Set ℓ} → (t u : A) → (t ≡ u) ≡ (PathP (λ i → A) t u)
 nonDepPath _ _ = refl
 
 isOfHLevel : ∀ {ℓ} → ℕ → Set ℓ → Set ℓ
@@ -49,6 +44,12 @@ isContr→isProp (x , p) a b i = hcomp (λ j → λ { (i = i0) → p a j ; (i = 
 
 inhProp→isContr : ∀ {A : Set ℓ} → A → isProp A → isContr A
 inhProp→isContr x h = x , h x
+
+-- contr-center : ∀ {A : Set ℓ} (p : isContr A) → A 
+-- contr-center = π⃐
+
+-- contr-path : ∀ {A : Set ℓ} (p : isContr A) (y : A) → contr-center p ≡ y 
+-- contr-path = π⃑
 
 isProp⊥ : isProp ⊥
 isProp⊥ x = ⊥-elim x
@@ -75,3 +76,8 @@ isPropIsContr z0 z1 j = ( z0 .π⃑ (z1 .π⃐) j , λ x i → hcomp (λ k → �
                                                                    ; (j = i0) → z0 .π⃑ x (i ∧ k)
                                                                    ; (j = i1) → z1 .π⃑ x i }) (z0 .π⃑ (z1 .π⃑ x i) j))
                                                                    
+prop-≡ : ∀ {A : Set ℓ} (p : isProp A) → isProp A -- TODO : instanciate p
+prop-≡ p x y = p x y
+
+
+

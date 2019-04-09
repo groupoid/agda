@@ -13,7 +13,7 @@ kernel : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) → Set (ℓ₁ ⊔
 kernel {A = A} {B = B} f = pullback {A = A} {A} {B} f f 
 
 hofiber : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) (b : B) → Set (ℓ₁ ⊔ ℓ₂)
-hofiber {A = A} {B = B} f b = pullback {A = A} {⊤} {B} f λ (_ : ⊤) → b
+hofiber {ℓ₁} {ℓ₂} {A = A} {B = B} f b = pullback {ℓ₁} {ℓ₂} {A = A} {⊤} {B} f λ (_ : ⊤) → b
 
 pb₁ : ∀ {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃} {f : A → C} {g : B → C} (p : pullback f g) → A
 pb₁ = π⃐ 

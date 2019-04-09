@@ -19,9 +19,9 @@ open import Infinity.Inductive.Empty
 open import Infinity.Inductive.One 
 open import Infinity.Inductive.Two
 open import Infinity.Inductive.Fin
-open import Infinity.Inductive.Nat
+-- open import Infinity.Inductive.Nat
 open import Infinity.Reason 
--- open import Infinity.Algebra.Group.Base
+open import Infinity.Algebra.Group.Base
 -- open import Infinity.Algebra.Group.Abelian
 -- open import Infinity.Algebra.Group.Free
 -- open import Infinity.Algebra.Group.Lattice
@@ -58,7 +58,7 @@ open import Infinity.Top.Cone
 -- open import Infinity.Top.Cover
 open import Infinity.Top.Join
 open import Infinity.Top.Simplex
-open import Infinity.Top.Space
+-- open import Infinity.Top.Space
 open import Infinity.Top.Universe
 open import Infinity.Top.Wedge
 open import Infinity.Top.Cantor 
@@ -79,7 +79,7 @@ open import Infinity.Cohesion.Fermionic
 open import Infinity.Cohesion.Reduced
 open import Infinity.Cohesion.Rhenomic
 open import Infinity.Cohesion.Im 
-open import Infinity.Cohesion.Shape 
+-- open import Infinity.Cohesion.Shape 
 -- open import Infinity.Cohesion.Bundle
 open import Infinity.Category.Base
 open import Infinity.Category.Adjunction

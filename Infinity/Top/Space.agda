@@ -52,6 +52,7 @@ Continuous : ∀ {{X Y : Space}} → (f : (C X) → (C Y)) → Set₁
 Continuous {{X}} {{Y}} f = ∀ B → (Open Y) B → (Open X) (preimage f B)
 
 Discrete : ∀ (A : Set) → Space
+-- Discrete A = space A (λ _ → ⇑ ⊤) (↑ unit) (↑ unit) (λ {A₁} f → ↑ unit) λ {n} f → ↑ unit
 Discrete A = space A (λ _ → ⇑ ⊤) (↑ unit) (↑ unit) (λ {A₁} f → ↑ unit) λ {n} f → ↑ unit
 
 stable : ∀ {ℓ} → Set ℓ → Set ℓ

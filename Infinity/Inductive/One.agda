@@ -2,4 +2,6 @@
 
 module Infinity.Inductive.One where
 
-record ⊤ : Set where constructor unit
+open import Infinity.Proto
+
+record ⊤ : Set ℓ where constructor unit

@@ -5,7 +5,7 @@ module Infinity.Equiv where
 open import Infinity.Path
 open import Infinity.Sigma
 open import Infinity.HIT.NType
-open import Infinity.HIT.Subtype
+-- open import Infinity.HIT.Subtype
 
 open import Agda.Builtin.Cubical.Glue using (isEquiv ; _≃_ ; equivFun) public
 
@@ -94,25 +94,3 @@ compEquiv f g = isoToEquiv (λ x → g .π⃐ (f .π⃐ x))
                            (λ y → compPath (cong (g .π⃐) (retEq f (invEq g y))) (retEq g y))
                            (λ y → compPath (cong (invEq f) (secEq g (f .π⃐ y))) (secEq f y))
 
-module _ {A : Set ℓ₁} {B : Set ℓ₂} where 
-  fiber : (f : A → B) (y : B) → Set (ℓ₁ ⊔ ℓ₂)
-  fiber f y = Σ[ x ∈ A ] (f x ≡ y)
-    where open import Infinity.Sigma using (Σ-syntax)
-        
-  equivIsEquiv : (e : A ≃ B) → isEquiv (equivFun e)
-  equivIsEquiv e = π⃑ e
-
-  equivCtr : (e : A ≃ B) (y : B) → fiber (equivFun e) y
-  equivCtr e y = e .π⃑ .equiv-proof y .π⃐
-
-  equivCtrPath : (e : A ≃ B) (y : B) → (v : fiber (equivFun e) y) → Path _ (equivCtr e y) v
-  equivCtrPath e y = e .π⃑ .equiv-proof y .π⃑
-
-record IsEquivClass (X : Set ℓ₁) (_~_ : R X ℓ₂) (P : SubtypeProp ℓ₂ X) : Set (ℓ₁ ⊔ ℓ₂) where 
-  constructor isEquivClass
-  private 
-    module P = SubtypeProp P
-  field 
-    inhab : isContr (Subtype P) 
-    lift  : ∀ (x₁ x₂ : X) → x₁ ~ x₂ → P.carr x₁ → P.carr x₂ 
-    rel   : ∀ (x₁ x₂ : X) → P.carr x₁ → P.carr x₂ → x₁ ~ x₂

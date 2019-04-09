@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --allow-unsolved-metas #-}
+{-# OPTIONS --cubical #-}
 
 module Infinity.Algebra.Homology where
 
@@ -9,7 +9,7 @@ open import Infinity.Algebra.Base
 open import Infinity.Algebra.Kernel
 open import Infinity.Algebra.Image
 open import Infinity.Algebra.Chain 
-open import Infinity.Algebra.Group.Quotient
+-- open import Infinity.Algebra.Group.Quotient
 
 module _ (c : C ℓ) where 
   private 

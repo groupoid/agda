@@ -5,6 +5,7 @@ module Infinity.Univ where
 open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.Equiv
+open import Infinity.Fibration
 open import Infinity.HIT.NType
 open import Infinity.Sigma
 

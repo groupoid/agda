@@ -20,27 +20,27 @@ data ℤ : Set where
 ℕtoℤ  zero    = pos zero
 ℕtoℤ (succ n) = pos n
 
-sucℤ : ℤ → ℤ
-sucℤ (pos       n ) = pos (succ n)
-sucℤ (neg  zero   ) = pos zero
-sucℤ (neg (succ n)) = neg n
+succℤ : ℤ → ℤ
+succℤ (pos       n ) = pos (succ n)
+succℤ (neg  zero   ) = pos zero
+succℤ (neg (succ n)) = neg n
 
 predℤ : ℤ → ℤ
 predℤ (pos  zero   ) = neg zero
 predℤ (pos (succ n)) = pos n
 predℤ (neg       n ) = neg (succ n)
 
-sucPred : (i : ℤ) → sucℤ (predℤ i) ≡ i
-sucPred (pos  zero   ) = refl
-sucPred (pos (succ n)) = refl
-sucPred (neg  zero   ) = refl
-sucPred (neg (succ n)) = refl
+succPred : (i : ℤ) → succℤ (predℤ i) ≡ i
+succPred (pos  zero   ) = refl
+succPred (pos (succ n)) = refl
+succPred (neg  zero   ) = refl
+succPred (neg (succ n)) = refl
 
-predSuc : (i : ℤ) → predℤ (sucℤ i) ≡ i
-predSuc (pos  zero   ) = refl
-predSuc (pos (succ _)) = refl
-predSuc (neg  zero   ) = refl
-predSuc (neg (succ _)) = refl
+predSucc : (i : ℤ) → predℤ (succℤ i) ≡ i
+predSucc (pos  zero   ) = refl
+predSucc (pos (succ _)) = refl
+predSucc (neg  zero   ) = refl
+predSucc (neg (succ _)) = refl
 
 negate : ℤ → ℤ 
 negate (pos  zero   ) = neg zero
@@ -70,12 +70,12 @@ n - m = n + (negate m)
 2ℤ : ℤ
 2ℤ = pos (succ (succ zero))
 
-suc-equiv : ℤ ≃ ℤ
-suc-equiv .π⃐ = sucℤ
-suc-equiv .π⃑ = isoToIsEquiv sucℤ predℤ sucPred predSuc
+succ-equiv : ℤ ≃ ℤ
+succ-equiv .π⃐ = succℤ
+succ-equiv .π⃑ = isoToIsEquiv succℤ predℤ succPred predSucc
 
-sucPathInt : ℤ ≡ ℤ
-sucPathInt = ua suc-equiv
+succ≡ℤ : ℤ ≡ ℤ
+succ≡ℤ = ua succ-equiv
 
 -- module _ {A : Set ℓ₁} {B : Set ℓ₂} where 
 --   π⃐≠π⃑ : (a : A) (b : B) (h : PathP (A + B) (π⃐ a) (π⃑ b)) → ⊥ 

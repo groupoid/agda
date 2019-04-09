@@ -5,21 +5,24 @@ module Infinity.HIT.S1 where
 open import Infinity.Core
 open import Infinity.Proto
 open import Infinity.HIT.NType
-open import Infinity.Path public
-open import Infinity.Equiv public
-open import Infinity.Univ public
+open import Infinity.Path 
+open import Infinity.Equiv 
+open import Infinity.Univ 
 open import Infinity.Inductive.Z
 
 data S¹ : Set where
    base : S¹
    loop : base ≡ base
+   
+path-fib : S¹ → Set
+path-fib s = s ≡ base
 
 ΩS¹ : Set
 ΩS¹ = base ≡ base
 
 helix : S¹ → Set
 helix base = ℤ
-helix (loop i) = sucPathInt i
+helix (loop i) = succ≡ℤ i
 
 loopS¹ : Set
 loopS¹ = base ≡ base
@@ -55,6 +58,15 @@ natLoop (succ n) = trans (natLoop n) loop
 intLoop : ℤ → base ≡ base
 intLoop (pos n) = natLoop n
 intLoop (neg n) = sym (natLoop (succ n))
+
+-- compInvS¹ : ∀ {A : Set ℓ} (a x : A) (p : a ≡ x) → p ≡ comp≡ a x (sym p) p
+-- compInvS¹ a x p = ?
+
+-- succ-path : ℤ ≡ ℤ 
+-- succ-path = ua succ-equiv
+
+-- universal-cover : S¹ → Set 
+-- universal-cover = S¹-rec Set ℤ succ-path
 
 -- Hopf prerequisites
 

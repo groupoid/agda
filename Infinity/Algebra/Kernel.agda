@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --allow-unsolved-metas #-}
+{-# OPTIONS --cubical #-}
 
 module Infinity.Algebra.Kernel where 
 
@@ -57,4 +57,4 @@ module Kernel {G : Group ℓ₁} {H : Group ℓ₂} (ψ : G →ᴳ H) where
   --     id : ker-E
   
   Ker : Group (ℓ₁ ⊔ ℓ₂)
-  Ker = {!!} -- group _ kernel-skeleton
+  Ker = group _ kernel-skeleton
