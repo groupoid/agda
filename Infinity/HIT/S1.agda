@@ -93,4 +93,4 @@ rotLoopInv a i j = hcomp (λ k → λ { (i = i0) → a;
                                     (j = i1) → rotLoop a (i ∧ ~ k)} ) (rotLoop (rotLoop a ((~ i) ∨ j)) i)
 
 rotLoopEquiv : (i : I) → S¹ ≃ S¹
-rotLoopEquiv i = isoToEquiv (λ a → rotLoop a i) (λ a → rotLoop a (~ i)) (λ a → rotLoopInv a i) (λ a → rotLoopInv a (~ i))
+rotLoopEquiv i = ≈→≃ (λ a → rotLoop a i) (λ a → rotLoop a (~ i)) (λ a → rotLoopInv a i) (λ a → rotLoopInv a (~ i))

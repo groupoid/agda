@@ -43,11 +43,11 @@ S¹→SuspBool→S¹ : (x : S¹) → SuspBool→S¹ (S¹→SuspBool x) ≡ x
 S¹→SuspBool→S¹ base     = refl
 S¹→SuspBool→S¹ (loop i) = λ j → hfill (λ k → \ { (i = i0) → base; (i = i1) → base }) (inc (loop i)) (~ j)
 
-S¹≃SuspBool : S¹ ≃ SuspBool
-S¹≃SuspBool = isoToEquiv S¹→SuspBool SuspBool→S¹ SuspBool→S¹→SuspBool S¹→SuspBool→S¹
+-- S¹≃SuspBool : S¹ ≃ SuspBool
+-- S¹≃SuspBool = isoToEquiv S¹→SuspBool SuspBool→S¹ SuspBool→S¹→SuspBool S¹→SuspBool→S¹
 
 S¹≡SuspBool : S¹ ≡ SuspBool
-S¹≡SuspBool = isoToPath S¹→SuspBool SuspBool→S¹ SuspBool→S¹→SuspBool S¹→SuspBool→S¹
+S¹≡SuspBool = ≃→≡ S¹→SuspBool SuspBool→S¹ SuspBool→S¹→SuspBool S¹→SuspBool→S¹
 
 -- Now the sphere
 

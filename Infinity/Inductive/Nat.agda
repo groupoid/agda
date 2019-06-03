@@ -8,7 +8,7 @@ open import Infinity.Inductive.Empty
 open import Infinity.Inductive.Either
 open import Infinity.Path
 open import Infinity.HIT.NType
-open import Infinity.Top.Space
+-- open import Infinity.Top.Space
 
 predℕ : ℕ → ℕ
 predℕ  zero    = 0
@@ -17,6 +17,10 @@ predℕ (succ n) = n
 ℕ-rec : ∀ {A : Set ℓ} (a₀ aₛ : A) → ℕ → A
 ℕ-rec a₀ _        0  = a₀
 ℕ-rec _  aₛ (succ _) = aₛ
+
+_^_ : ℕ → ℕ → ℕ
+_ ^ zero   = 1
+x ^ succ n = x * (x ^ n)
 
 z¬s : ∀ {n : ℕ} → ¬ (0 ≡ succ n)
 z¬s eq = subst (ℕ-rec ℕ ⊥) eq 0
@@ -44,13 +48,21 @@ iter : ∀ {A : Set ℓ} → ℕ → (A → A) → A → A
 iter  zero    _ z = z
 iter (succ n) f z = f (iter n f z)
 
-discreteℕ : discrete ℕ
-discreteℕ  zero     zero    = inl refl
-discreteℕ  zero    (succ _) = inr z¬s
-discreteℕ (succ _)  zero    = inr s¬z
-discreteℕ (succ m) (succ n) with discreteℕ m n
-...                       | inl p = inl (cong succ p)
-...                       | inr p = inr (λ x → p (injSuc x))
+-- discreteℕ : discrete ℕ
+-- discreteℕ  zero     zero    = inl refl
+-- discreteℕ  zero    (succ _) = inr z¬s
+-- discreteℕ (succ _)  zero    = inr s¬z
+-- discreteℕ (succ m) (succ n) with discreteℕ m n
+-- ...                       | inl p = inl (cong succ p)
+-- ...                       | inr p = inr (λ x → p (injSuc x))
 
-isSetℕ : isSet ℕ
-isSetℕ = discrete→isSet discreteℕ
+-- isSetℕ : isSet ℕ
+-- isSetℕ = discrete→isSet discreteℕ
+
+1+m+n=m+1+n : (m n : ℕ) → succ (m + n) ≡ m + succ n
+1+m+n=m+1+n  zero    _ = refl
+1+m+n=m+1+n (succ m) n = cong succ (1+m+n=m+1+n m n)
+
+
+
+-- module Logarithm where

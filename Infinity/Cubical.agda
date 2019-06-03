@@ -21,7 +21,7 @@ open import Infinity.Inductive.Two
 open import Infinity.Inductive.Fin
 -- open import Infinity.Inductive.Nat
 open import Infinity.Reason 
-open import Infinity.Algebra.Group.Base
+open import Infinity.Algebra.Base
 -- open import Infinity.Algebra.Group.Abelian
 -- open import Infinity.Algebra.Group.Free
 -- open import Infinity.Algebra.Group.Lattice
@@ -82,7 +82,7 @@ open import Infinity.Cohesion.Im
 -- open import Infinity.Cohesion.Shape 
 -- open import Infinity.Cohesion.Bundle
 open import Infinity.Category.Base
-open import Infinity.Category.Adjunction
+-- open import Infinity.Category.Adjunction
 -- open import Infinity.Category.Cat
 -- open import Infinity.Category.Functor
 open import Infinity.Category.InfinityCategories

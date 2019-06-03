@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Category.Functor where
 
@@ -14,17 +14,17 @@ record Functor {Ob-A : Set} {Hom-A : Ob-A → Ob-A → Set} (Cat-A : Category Ho
   private module A = Category Cat-A
   private module B = Category Cat-B
   field 
-    map           : Ob-A → Ob-B
-    fmap          : ∀ {A B   : Ob-A} (_ : Hom-A A B)                 → Hom-B (map A) (map B)
-    .{{presId}}   : ∀ {A     : Ob-A}                                 → fmap (A.id {A}) ≡ B.id {map A}
-    .{{presComp}} : ∀ {A B C : Ob-A} (f : Hom-A A B) (g : Hom-A B C) → fmap (f A.○ g)  ≡ (fmap f) B.○ (fmap g)
+    map          : Ob-A → Ob-B
+    fmap         : ∀ {A B   : Ob-A} (_ : Hom-A A B)                 → Hom-B (map A) (map B)
+    preserves-id : ∀ {A     : Ob-A}                                 → fmap (A.id {A}) ≡ B.id {map A}
+    preserves-∘  : ∀ {A B C : Ob-A} (f : Hom-A A B) (g : Hom-A B C) → fmap (f A.∘ g)  ≡ (fmap f) B.∘ (fmap g)
 
 -- Identity Functor 
 idᶠ : ∀ {Ob : Set} {Hom : Ob → Ob → Set} {C : Category Hom} → Functor C C 
-idᶠ {Ob} {Hom} {C} = record { -- map      = λ x → Category.id C {x}
-                              fmap     = λ {A B} → idFun (Hom A B)
-                            ; presId   = λ _   → id
-                            ; presComp = λ _ _ → refl }
+idᶠ {Ob} {Hom} {C} = record { -- map       = λ x → Category.id C {x}
+                              fmap         = λ {A B} → idFun (Hom A B)
+                            ; preserves-id = λ _   → id
+                            ; preserves-∘  = λ _ _ → refl }
   where open Category C
 
 -- Internal agda error 

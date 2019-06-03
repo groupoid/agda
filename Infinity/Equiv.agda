@@ -4,6 +4,7 @@ module Infinity.Equiv where
 
 open import Infinity.Path
 open import Infinity.Sigma
+open import Infinity.Retract
 open import Infinity.HIT.NType
 -- open import Infinity.HIT.Subtype
 
@@ -25,18 +26,15 @@ module _ {A : Set ℓ₁} {B : Set ℓ₂} where
                                                             ; (j = i0) → p₂ (q₂ w (~ k)) i
                                                             ; (j = i1) → w }) (p₂ w (i ∨ j))
 
-module _ {A : Set ℓ₁} {B : A → Set ℓ₂} where
-
-  propPi : (h : (x : A) → isProp (B x)) → isProp ((x : A) → B x)
-  propPi h f g i x = h x (f x) (g x) i
-
-  isProp→PathP : ((x : A) → isProp (B x)) → {a₁ a₂ : A} (p : a₁ ≡ a₂) (b₁ : B a₁) (b₂ : B a₂) → PathP (λ i → B (p i)) b₁ b₂
-  isProp→PathP P p b₁ b₂ i = P (p i) (transp (λ j → B (p (i ∧ j))) (~ i) b₁) (transp (λ j → B (p (i ∨ ~ j))) i b₂) i
-
-equivEq : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (e f : A ≃ B) → (h : e .π⃐ ≡ f .π⃐) → e ≡ f
-equivEq e f h = λ i → (h i) , isProp→PathP isPropIsEquiv h (e .π⃑) (f .π⃑) i
-
-module _ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) (g : B → A) (s : (y : B) → f (g y) ≡ y) (t : (x : A) → g (f x) ≡ x) where
+record ≈-Skeleton {A : Set ℓ₁} {B : Set ℓ₂} : Set (ℓ₁ ⊔ ℓ₂) where 
+  constructor iso
+  field 
+    f : A → B
+    g : B → A 
+    s : section f g 
+    t : retract f g 
+    
+module _ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) (g : B → A) (s : section f g) (t : retract f g) where
   private
     module _ (y : B) (a₁ a₂ : A) (p₁ : f a₁ ≡ y) (p₂ : f a₂ ≡ y) where
 
@@ -67,30 +65,40 @@ module _ {A : Set ℓ₁} {B : Set ℓ₂} (f : A → B) (g : B → A) (s : (y :
       lemIso : (a₁ , p₁) ≡ (a₂ , p₂)
       lemIso = λ i → p i , λ j → sq₂ i (~ j)
 
-  isoToIsEquiv : isEquiv f
-  isoToIsEquiv .equiv-proof y .π⃐ .π⃐ = g y
-  isoToIsEquiv .equiv-proof y .π⃐ .π⃑ = s y
-  isoToIsEquiv .equiv-proof y .π⃑ z = lemIso y (g y) (π⃐ z) (s y) (π⃑ z)
+  ≈→IsEquiv : isEquiv f
+  ≈→IsEquiv .equiv-proof y .π⃐ .π⃐ = g y
+  ≈→IsEquiv .equiv-proof y .π⃐ .π⃑ = s y
+  ≈→IsEquiv .equiv-proof y .π⃑ z = lemIso y (g y) (π⃐ z) (s y) (π⃑ z)
 
-  isoToEquiv : A ≃ B
-  isoToEquiv = _ , isoToIsEquiv
+  ≈→≃ : A ≃ B
+  ≈→≃ = _ , ≈→IsEquiv
+
+module _ {A : Set ℓ₁} {B : A → Set ℓ₂} where
+
+  propPi : (h : (x : A) → isProp (B x)) → isProp ((x : A) → B x)
+  propPi h f g i x = h x (f x) (g x) i
+
+  isProp→PathP : ((x : A) → isProp (B x)) → {a₁ a₂ : A} (p : a₁ ≡ a₂) (b₁ : B a₁) (b₂ : B a₂) → PathP (λ i → B (p i)) b₁ b₂
+  isProp→PathP P p b₁ b₂ i = P (p i) (transp (λ j → B (p (i ∧ j))) (~ i) b₁) (transp (λ j → B (p (i ∨ ~ j))) i b₂) i
+
+equivEq : ∀ {A : Set ℓ₁} {B : Set ℓ₂} (e f : A ≃ B) → (h : e .π⃐ ≡ f .π⃐) → e ≡ f
+equivEq e f h = λ i → (h i) , isProp→PathP isPropIsEquiv h (e .π⃑) (f .π⃑) i
 
 module _ {A : Set ℓ₁} {B : Set ℓ₂} (w : A ≃ B) where
-  invEq : B → A
-  invEq y = π⃐ (π⃐ (π⃑ w .equiv-proof y))
+  inv≃ : B → A
+  inv≃ y = w .π⃑ .equiv-proof y .π⃐ .π⃐
 
-  secEq : (x : A) → invEq (π⃐ w x) ≡ x
-  secEq x = λ i → π⃐ (π⃑ (π⃑ w .equiv-proof (π⃐ w x)) (x , (λ j → π⃐ w x)) i)
+  sec≃ : (x : A) → inv≃ (π⃐ w x) ≡ x
+  sec≃ x = λ i → w .π⃑ .equiv-proof (w .π⃐ x) .π⃑ (x , λ j → π⃐ w x) i .π⃐
 
-  retEq : (y : B) → π⃐ w (invEq y) ≡ y
-  retEq y = λ i → π⃑ (π⃐ (π⃑ w .equiv-proof y)) i
+  ret≃ : (y : B) → π⃐ w (inv≃ y) ≡ y
+  ret≃ y = w .π⃑ .equiv-proof y .π⃐ .π⃑ 
   
-invEquiv : ∀ {A : Set ℓ₁} {B : Set ℓ₂} → A ≃ B → B ≃ A
-invEquiv f = isoToEquiv (invEq f) (π⃐ f) (secEq f) (retEq f)
+≃⁻¹ : ∀ {A : Set ℓ₁} {B : Set ℓ₂} → A ≃ B → B ≃ A
+≃⁻¹ f = ≈→≃ (inv≃ f) (π⃐ f) (sec≃ f) (ret≃ f)
 
 compEquiv : ∀ {A : Set ℓ₁} {B : Set ℓ₂} {C : Set ℓ₃} → A ≃ B → B ≃ C → A ≃ C
-compEquiv f g = isoToEquiv (λ x → g .π⃐ (f .π⃐ x))
-                           (λ x → invEq f (invEq g x))
-                           (λ y → compPath (cong (g .π⃐) (retEq f (invEq g y))) (retEq g y))
-                           (λ y → compPath (cong (invEq f) (secEq g (f .π⃐ y))) (secEq f y))
-
+compEquiv f g = ≈→≃ (λ x → g .π⃐ (f .π⃐ x))
+                    (λ x → inv≃ f (inv≃ g x))
+                    (λ y → compPath (cong (π⃐    g) (ret≃ f (inv≃ g y))) (ret≃ g y))
+                    (λ y → compPath (cong (inv≃ f) (sec≃ g (  f .π⃐ y))) (sec≃ f y))

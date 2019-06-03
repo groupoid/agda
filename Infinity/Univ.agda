@@ -5,6 +5,7 @@ module Infinity.Univ where
 open import Infinity.Proto
 open import Infinity.Path
 open import Infinity.Equiv
+open import Infinity.Retract
 open import Infinity.Fibration
 open import Infinity.HIT.NType
 open import Infinity.Sigma
@@ -22,8 +23,8 @@ open import Agda.Builtin.Cubical.Glue public
               ; pathToEquiv to lineToEquiv
               )
 
-Glue : (A : Set ℓ₁) {φ : I} → (Te : Partial φ (Σ[ T ∈ Set ℓ₂ ] T ≃ A)) → Set ℓ₂
-Glue A Te = primGlue A (λ x → Te x .π⃐) (λ x → Te x .π⃑)
+Glue : (A : Set ℓ₁) {φ : I} → (e : Partial φ (Σ[ T ∈ Set ℓ₂ ] T ≃ A)) → Set ℓ₂
+Glue A e = primGlue A (λ x → e x .π⃐) (λ x → e x .π⃑)
 
 idIsEquiv : (A : Set ℓ) → isEquiv (λ (a : A) → a)
 equiv-proof (idIsEquiv A) y = (y , refl) , λ z i → z .π⃑ (~ i) , λ j → z .π⃑ (~ i ∨ j)
@@ -31,16 +32,24 @@ equiv-proof (idIsEquiv A) y = (y , refl) , λ z i → z .π⃑ (~ i) , λ j → 
 idEquiv : (A : Set ℓ) → A ≃ A
 idEquiv A = (λ a → a) , idIsEquiv A
 
-ua : ∀ {A B : Set ℓ} → A ≃ B → A ≡ B
-ua {A = A} {B = B} e i = Glue B (λ { (i = i0) → (A , e) ; (i = i1) → (B , idEquiv B) })
+module _ {A B : Set ℓ} where 
+    ua : A ≃ B → A ≡ B
+    ua e i = Glue B (λ { (i = i0) → (A , e) ; (i = i1) → (B , idEquiv B) })
+
+    uaβ : (e : A ≃ B) (x : A) → coe (ua e) x ≡ e .π⃐ x 
+    uaβ = coe≡ ⦂ π⃐
 
 coe≃ : ∀ {A B : Set ℓ} → (A ≃ B) → (A → B)
 coe≃ = Infinity.Path.coe ∘ ua
 
-isoToPath : ∀ {A B : Set ℓ} (f : A → B)(g : B → A)(s : (y : B) → f (g y) ≡ y)(t : (x : A) → g (f x) ≡ x) → A ≡ B
-isoToPath f g s t = ua (isoToEquiv f g s t)
+≃→≡ : ∀ {A B : Set ℓ} (f : A → B) (g : B → A) (s : (y : B) → f (g y) ≡ y) (t : (x : A) → g (f x) ≡ x) → A ≡ B
+≃→≡ = ua ⦂⦂ ≈→≃
 
-unglueIsEquiv : ∀ (A : Set ℓ) (φ : I) (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) → isEquiv {A = Glue A f} (unglue {φ = φ})
+≈→≡ : ∀ {A B : Set ℓ} (f : A → B) (g : B → A) (s : section f g) (t : retract f g) → A ≡ B 
+≈→≡ {_} {A} {B} f g s t = λ i → Glue B (λ { (i = i0) → _ , ≈→≃ f g s t 
+                                          ; (i = i1) → _ , _ , idIsEquiv B })
+
+unglueIsEquiv : (A : Set ℓ) (φ : I) (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) → isEquiv {A = Glue A f} (unglue {φ = φ})
 equiv-proof (unglueIsEquiv A φ f) = λ (b : A) →
   let u : I → Partial φ A
       u i = λ{ (φ = i1) → equivCtr (f 1=1 .π⃑) b .π⃑ (~ i) }

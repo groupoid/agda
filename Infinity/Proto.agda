@@ -12,14 +12,30 @@ module _ {A : Set ℓ₁} where
 
   infixr 80 _∘_
 
-  _∘_ : ∀ {B : A → Set ℓ₂} {C : (a : A) → (B a → Set ℓ₃)}
-          (g : {a : A} → (x : B a) → (C a x)) → (f : (x : A) → B x) → (x : A) → C x (f x)
-  g ∘ f = λ x → g (f x)
+  _∘_ : ∀ {B :      A        → Set ℓ₂} 
+          {C : (a : A) → B a → Set ℓ₃}
+          (g : {a : A} → (b : B a) → C a b) 
+          (f : (a : A) →      B a) 
+        → (a : A) → C a (f a)
+  g ∘ f = λ a → g (f a)
 
-  _⦂_ : ∀ {B : A → Set ℓ₂} {C : (a : A) → (B a → Set ℓ₃)} {D : (a : A) → (b : B a) → C a b → Set ℓ₃}
-        → (g : {a : A} {b : B a} → (x : C a b) → D a b x) → (f : (x : A) → (y : B x) → C x y)
-        → (x : A) → (y : B x) → D x y (f x y)
-  g ⦂ f = λ x y → g (f x y)
+  _⦂_ : ∀ {B :      A                      → Set ℓ₂} 
+          {C : (a : A) →      B a          → Set ℓ₃} 
+          {D : (a : A) → (b : B a) → C a b → Set ℓ₄}
+          (g : {a : A} {b : B a} → (c : C a b) → D a b c) 
+          (f : (a : A) (b : B a) →      C a b)
+        → (a : A) (b : B a) → D a b (f a b)
+  g ⦂ f = λ a b → g (f a b)
+  
+  _⦂⦂_ : ∀ {B :      A                                                        → Set ℓ₂} 
+           {C : (a : A) →      B a                                            → Set ℓ₃} 
+           {D : (a : A) → (b : B a) →      C a b                              → Set ℓ₄}
+           {E : (a : A) → (b : B a) → (c : C a b) →      D a b c              → Set ℓ₅}
+           {F : (a : A) → (b : B a) → (c : C a b) → (d : D a b c) → E a b c d → Set ℓ₆}
+           (g : {a : A} {b : B a} {c : C a b} {d : D a b c} (e : E a b c d) → F a b c d e) 
+           (f : (a : A) (b : B a) (c : C a b) (d : D a b c) →    E a b c d)
+         → (a : A) (b : B a) (c : C a b) (d : D a b c) → F a b c d (f a b c d)
+  g ⦂⦂ f = λ a b c d → g (f a b c d)
 
 idFun : (A : Set ℓ) → A → A
 idFun A x = x

@@ -1,6 +1,6 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Algebra.Group.Base where 
+module Infinity.Algebra.Group where 
 
 open import Infinity.Proto hiding (_∘_)
 open import Infinity.Path

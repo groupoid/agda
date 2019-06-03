@@ -1,5 +1,5 @@
 {-# OPTIONS --cubical --safe #-}
 
-module Infinity.Algebra.Group.Free where 
+module Infinity.Algebra.Groupoid where 
 
 open import Infinity.Proto

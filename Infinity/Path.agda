@@ -31,7 +31,11 @@ infixl 4 cong
 syntax cong c p = p |in c 
 
 coe : ∀ {A : Set ℓ₁} {B : Set ℓ₁} → A ≡ B → A → B
-coe p a = primComp (λ i → p i) i0 (λ _ → empty) a
+-- coe p a = primComp (λ i → p i) i0 (λ _ → empty) a
+coe p a = transp (λ i → p i) i0 a
+
+coe≡ : ∀ {A : Set ℓ₁} (x : A) → coe refl x ≡ x 
+coe≡ {A = A} x = λ i → transp (λ _ → A) i x
 
 module _ {A : Set ℓ₁} {x : A} (P : ∀ y → x ≡ y → Set ℓ₂) (d : P x refl) where
 

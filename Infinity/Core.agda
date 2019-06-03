@@ -9,7 +9,6 @@ open import Agda.Primitive.Cubical public
      renaming ( primIMin       to _∧_
               ; primIMax       to _∨_
               ; primINeg       to ~_
-              ; isOneEmpty     to empty
               ; primHComp      to hcomp
               ; primTransp     to transp
               ; itIsOne        to 1=1 )
@@ -25,7 +24,12 @@ variable
     ℓ₂ : Level
     ℓ₃ : Level
     ℓ₄ : Level
+    ℓ₅ : Level
+    ℓ₆ : Level
     ℓₚ : I → Level
+    
+empty : {A : Set ℓ} → Partial i0 A 
+empty ()
 
 infix 4 _[_≡_]
 
@@ -43,11 +47,11 @@ infix 4 _[_↦_]
 ouc : ∀ {A : Set ℓ} {φ : I} {u : Partial φ A} → A [ φ ↦ u ] → A
 ouc = primSubOut
 
-hfill : ∀ {A : Set ℓ} {φ : I} (u : ∀ i → Partial φ A) (u0 : A [ φ ↦ u i0 ]) (i : I) → A
-hfill {φ = φ} u u0 i = hcomp (λ j → λ { (φ = i1) → u (i ∧ j) 1=1 ; (i = i0) → ouc u0 }) (ouc u0)
-
 comp : (A : ∀ i → Set (ℓₚ i)) {φ : I} (u : ∀ i → Partial φ (A i)) (u0 : A i0 [ φ ↦ u i0 ]) → A i1
 comp A {φ = φ} u u0 = hcomp (λ i → λ { (φ = i1) → transp (λ j → A (i ∨ j)) i (u _ 1=1) }) (transp A i0 (ouc u0))
+
+hfill : ∀ {A : Set ℓ} {φ : I} (u : I → Partial φ A) (u0 : A [ φ ↦ u i0 ]) (i : I) → A
+hfill {φ = φ} u u0 = λ i → hcomp (λ j → λ { (φ = i1) → u (i ∧ j) 1=1 ; (i = i0) → ouc u0 }) (ouc u0)
 
 fill : (A : ∀ i → Set (ℓₚ i)) {φ : I} (u : ∀ i → Partial φ (A i)) (u0 : A i0 [ φ ↦ u i0 ]) → ∀ i →  A i
 fill A {φ = φ} u u0 i = comp (λ j → A (i ∧ j))

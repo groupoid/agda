@@ -72,7 +72,7 @@ n - m = n + (negate m)
 
 succ-equiv : ℤ ≃ ℤ
 succ-equiv .π⃐ = succℤ
-succ-equiv .π⃑ = isoToIsEquiv succℤ predℤ succPred predSucc
+succ-equiv .π⃑ = ≈→IsEquiv succℤ predℤ succPred predSucc
 
 succ≡ℤ : ℤ ≡ ℤ
 succ≡ℤ = ua succ-equiv

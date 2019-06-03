@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Algebra.Group.Abelian where
 

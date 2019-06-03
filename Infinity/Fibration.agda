@@ -4,7 +4,7 @@ module Infinity.Fibration where
 
 open import Infinity.Proto
 open import Infinity.Sigma
-open import Infinity.Reason
+-- open import Infinity.Reason
 
 open import Agda.Builtin.Cubical.Glue using (isEquiv ; _≃_ ; equivFun)
 

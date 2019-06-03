@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Algebra.Kernel where 
 
@@ -7,10 +7,10 @@ open import Infinity.Sigma
 open import Infinity.Univ
 open import Infinity.Equiv
 open import Infinity.HIT.Trunc
-open import Infinity.HIT.Subtype
+-- open import Infinity.HIT.Subtype
 open import Infinity.Algebra.Base
-open import Infinity.Algebra.Group.Quotient
-open import Infinity.Algebra.Group.Subgroup
+open import Infinity.Algebra.Quotient
+open import Infinity.Algebra.Subgroup
 
 module _ {G : Group ℓ₁} {H : Group ℓ₂} (ϕ : G →ᴳ H) where
   private 

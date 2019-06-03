@@ -1,9 +1,9 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.Algebra.Homomorphism where 
 
 open import Infinity.Proto
-open import Infinity.Algebra.Group.Base
+open import Infinity.Algebra.Group
 
 record Homᴳ-Skeleton {eᴳ : Set ℓ₁} {eᴴ : Set ℓ₂} (Sᴳ : Group-Skeleton eᴳ) (Sᴴ : Group-Skeleton eᴴ) : Set (ℓ₁ ⊔ ℓ₂) where 
   constructor hom-skeleton

@@ -1,6 +1,6 @@
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
-module Infinity.Algebra.Group.Subgroup where 
+module Infinity.Algebra.Subgroup where 
 
 open import Infinity.Proto hiding (_∘_)
 open import Infinity.Path
@@ -59,7 +59,7 @@ module _ {G : Group ℓ₁} (P : SubgroupProp ℓ₂ G) where
         ⊤⃐ (g , _) = <:≡:>→≡ P.subE-prop (G.⊤⃐ g)
         
         assoc : ∀ g₁ g₂ g₃ → (g₁ · g₂) · g₃ ≡ g₁ · (g₂ · g₃) 
-        assoc (g₁ , _) (g₂ , _) (g₃ , _) = prop-≡ P.subE-prop (G.assoc g₁ g₂ g₃)
+        assoc (g₁ , _) (g₂ , _) (g₃ , _) = <:≡:>→≡ P.subE-prop (G.assoc g₁ g₂ g₃)
 
   Subgroup : Group (ℓ₁ ⊔ ℓ₂)
   Subgroup = group _ subgroup-skeleton

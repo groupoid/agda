@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical --allow-unsolved-metas #-}
+{-# OPTIONS --cubical --safe #-}
 
 module Infinity.HIT.Subtype where
 
@@ -35,7 +35,7 @@ module SubtypeProp {A : Set ℓ₁} (P : SubtypeProp ℓ₂ A) where
 Subtype : ∀ {A : Set ℓ₁} (P : SubtypeProp ℓ₂ A) → Set (ℓ₁ ⊔ ℓ₂)
 Subtype {A = A} P = Σ A (π⃐ P)
 
-module _ {A : Set ℓ} (P : SubtypeProp ℓ A) where 
+module _ {A : Set ℓ₁} (P : Σ[ C ∈ (A → Set ℓ₁) ] ∀ x → isProp (C x)) where -- (P : SubtypeProp ℓ₂ A) where 
   private 
     module P = SubtypeProp P 
     
@@ -43,11 +43,13 @@ module _ {A : Set ℓ} (P : SubtypeProp ℓ A) where
     -- Subtype-level
     
   -- TODO : equivalence typeclass 
-  _<:≡:>_ : (a b : Subtype P) → Set ℓ
+  _<:≡:>_ : (a b : Subtype P) → Set ℓ₁
   a <:≡:> b = π⃐ a ≡ π⃐ b
   
-  <:≡:>→≡ : ∀ {a b : Subtype P} → a <:≡:> b → a ≡ b 
-  <:≡:>→≡ {a = a} {b = b} s = Σ-entwine a b s ? -- (prop-≡ _ _)
+  -- <:≡:>→≡ : ∀ {a b : Subtype P} → a <:≡:> b → a ≡ b 
+  <:≡:>→≡ : ∀ {a b : Σ A (P.carr)} → a <:≡:> b → a ≡ b 
+  -- <:≡:>→≡ {a = a} {b = b} s = Σ-entwine a b s (prop-≡ _) --(λ p → {!!}) -- {!!} -- (λ p x y → p x y)
+  <:≡:>→≡ {a = a} {b = b} s = coe (sym (propΣ-≡ P.prop a b)) (a ≡ b)
 
 record IsEquivClass (X : Set ℓ₁) (_~_ : R X ℓ₂) (P : SubtypeProp ℓ₂ X) : Set (ℓ₁ ⊔ ℓ₂) where 
   constructor isEquivClass
