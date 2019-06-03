@@ -3,14 +3,10 @@
 Groupoid Infinity
 =================
 
-The Groupoid Infinity cubical base library for Agda 2.6.0 (--cubical).
+The Groupoid Infinity cubical base library for Agda.
 
 Credits
 -------
 
 * Maxim Sokhatsky
-* Andrea Vezzosi
-* Anders Mörtberg
-
-
-
+* Adam
