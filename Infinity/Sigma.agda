@@ -37,4 +37,3 @@ module _ {A : Set ℓ₁} {B : A → Set ℓ₂} where
 
     curry : ∀ {C : Σ A B → Set ℓ₃} → (∀ s → C s) → (∀ a b → C (a , b))
     curry f a b = f (a , b)
-    

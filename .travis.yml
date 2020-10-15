@@ -1,31 +1,10 @@
 language: generic
 
-cache:
-  directories:
-  - $HOME/.stack
-
-before_install:
-  - mkdir -p ~/.local/bin
-  - sudo apt update 
-  - sudo apt install tree 
-  - ARCH=https://www.stackage.org/stack/linux-x86_64
-  - travis_retry curl -L $ARCH | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-  - export PATH=/opt/ghc/$GHC_VER/bin:/opt/cabal/$CABAL_VER/bin:$PATH;
-  - export PATH=$HOME/.local/bin:$PATH;
-
 install:
-  - mkdir -p ~/.agda/libs/cubical
-  - printf "name:" > ~/.agda/libs/cubical/cubical.agda-lib
-  - printf " cubical" >> ~/.agda/libs/cubical/cubical.agda-lib
-  - printf "cubical" > ~/.agda/defaults
-  - printf "$HOME/.agda/libs/cubical/cubical.agda-lib" > ~/.agda/libraries
-  - git clone --single-branch --branch master git://github.com/agda/agda && cd agda
-  - stack build --stack-yaml stack-8.6.5.yaml
-  - AGDA=./agda/.stack-work/install/x86_64-linux/lts-13.21/8.6.5/bin/agda
-  - cd ..
+  - sudo apt install agda
 
 script:
-  - $AGDA Infinity/Cubical.agda
+  - agda Infinity/Cubical.agda
 
 branches:
   only:

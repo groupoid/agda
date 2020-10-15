@@ -65,9 +65,17 @@ equiv-proof (unglueIsEquiv A φ f) = λ (b : A) →
 
 unglueEquiv : (A : Set ℓ) (φ : I) (f : PartialP φ (λ o → Σ[ T ∈ Set ℓ ] T ≃ A)) → (Glue A f) ≃ A
 unglueEquiv _ φ _ .π⃐ = unglue {φ = φ}
-unglueEquiv A φ f .π⃑ = unglueIsEquiv A φ f 
+unglueEquiv A φ f .π⃑ = unglueIsEquiv A φ f
 
 EquivContr : (A : Set ℓ) → isContr (Σ[ T ∈ Set ℓ ] T ≃ A)
-EquivContr {ℓ} A = ((A , idEquiv A) , λ w i → let f : PartialP (~ i ∨ i) (λ x → Σ[ T ∈ Set ℓ ] T ≃ A) 
-                                                  f = λ { (i = i0) → A , idEquiv A ; (i = i1) → w }
-                                              in (Glue A f , unglueEquiv _ _ f))
+EquivContr {ℓ} A =
+  ( ( A , idEquiv A ) , idEquiv≡ )
+ where
+  idEquiv≡ : (y : Σ[ T ∈ Set ℓ ] T ≃ A) → (A , idEquiv A) ≡ y
+  idEquiv≡ w = \ { i .π⃐                   → Glue A (f i)
+                 ; i .π⃑ .π⃐              → unglueEquiv _ _ (f i) .π⃐
+                 ; i .π⃑ .π⃑ .equiv-proof → unglueEquiv _ _ (f i) .π⃑ .equiv-proof
+                 }
+    where
+      f : ∀ i → PartialP (~ i ∨ i) (λ x → Σ[ T ∈ Set ℓ ] T ≃ A)
+      f i = λ { (i = i0) → A , idEquiv A ; (i = i1) → w }
